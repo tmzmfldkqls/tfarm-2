@@ -8,5 +8,6 @@ public interface CommonService {
 
 	int getNextSeq();
 	PageNavigation makePageNavigation(Map<String, String> map);
+	String getCategory(int bcode);
 	
 }

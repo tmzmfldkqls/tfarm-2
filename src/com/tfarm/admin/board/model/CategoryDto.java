@@ -5,12 +5,12 @@ public class CategoryDto {
 	private int ctype;
 	private String cname;
 
-	public int getCcode() {
+	public int getCtype() {
 		return ctype;
 	}
 
-	public void setCcode(int ccode) {
-		this.ctype = ccode;
+	public void setCtype(int ctype) {
+		this.ctype = ctype;
 	}
 
 	public String getCname() {
