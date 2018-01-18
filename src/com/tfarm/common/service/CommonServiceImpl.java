@@ -41,6 +41,12 @@ public class CommonServiceImpl implements CommonService {
 		return navigation;
 	}
 
+	@Override
+	public String getCategory(int bcode) {
+		CommonDao commonDao = sqlSession.getMapper(CommonDao.class);
+		return commonDao.getCategory(bcode);
+	}
+
 }
 
 

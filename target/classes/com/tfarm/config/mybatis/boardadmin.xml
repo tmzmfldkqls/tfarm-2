@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tfarm.admin.board.dao.BoardAdminDao">
+    <select id="boardMenu" resultType="com.tfarm.admin.board.model.BoardListDto">
+        select bl.bcode, bl.bname, bl.btype, c.ctype, c.cname, 
+                    decode(bl.btype, 2, 'reboard', 
+                    3, 'ticket', 
+                    4, 'black', 
+                    'board') controller  
+        from board_list bl, category c 
+        where bl.ctype = c.ctype 
+        order by bl.bcode
+    </select>    
+</mapper>
