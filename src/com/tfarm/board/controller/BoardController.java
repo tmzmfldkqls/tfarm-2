@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 import com.tfarm.admin.board.model.BoardListDto;
 import com.tfarm.admin.board.service.BoardAdminService;
@@ -67,7 +68,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/write.tfarm", method = RequestMethod.GET)
-	public ModelAndView write(@RequestParam Map<String, String> map) {
+	public ModelAndView write(@RequestParam Map<String, String> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		mav.addObject("querystring", map);
@@ -79,6 +80,7 @@ public class BoardController {
 	@RequestMapping(value = "/write.tfarm", method = RequestMethod.POST)
 	public ModelAndView write(ReboardDto reboardDto, @RequestParam Map<String, String> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		MemberDto memberDto = (MemberDto)session.getAttribute("userInfo");
 		int seq = commonService.getNextSeq();
 		reboardDto.setSeq(seq);
 		reboardDto.setId("admin");
@@ -100,19 +102,15 @@ public class BoardController {
 	public ModelAndView view(@RequestParam Map<String, String> map,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
-			int seq = Integer.parseInt(map.get("seq"));
-			String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-			System.out.println(category);
-			BoardDto boardDto = boardService.viewArticle(seq);
-			mav.addObject("querystring", map);
-			mav.addObject("article", boardDto);
-			mav.addObject("category", category);
-			mav.setViewName("/WEB-INF/notice/view");
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		int seq = Integer.parseInt(map.get("seq"));
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		System.out.println(category);
+		BoardDto boardDto = boardService.viewArticle(seq);
+		mav.addObject("querystring", map);
+		mav.addObject("article", boardDto);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/notice/view");
+		
 		return mav;
 	}
 }

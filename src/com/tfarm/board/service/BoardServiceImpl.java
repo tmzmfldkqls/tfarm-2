@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDto viewArticle(int seq) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		boardDao.updateHit(seq);
 		return boardDao.viewArticle(seq);
 	}
 

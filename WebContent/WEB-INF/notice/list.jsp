@@ -41,21 +41,23 @@ control = "/board";
 	</table>
  
 <!-- ************************글쓰기 버튼**************************** -->	
+<c:if test="${userInfo.mem_state == 1}">
 	<div style="float:right; margin-bottom:10px">
 		<button type="button" class="btn btn-info" onclick="javascript:moveWrite('${bcode}');">글쓰기</button>
 	</div>
+</c:if>
 <!-- ************************페이지 네비바 시작**************************** -->
 ${navigator.navigator}
 <!-- ************************페이지 네비바 종료**************************** -->
 
 <!-- ************************검색창**************************** -->
 	<div style="padding-left:280px">
-		<form class="form-inline my-2 my-lg-0">
+		<form class="form-inline my-2 my-lg-0" name="searchForm" id="searchForm">
 		  <select class="custom-select" style="width:100px">
-		      <option selected="">전체</option>
-		      <option value="1">글번호</option>
-		      <option value="2">작성자</option>
-		      <option value="3">제목</option>
+		      <option selected="">선택하세요</option>
+		      <option value="seq">글번호</option>
+		      <option value="id">작성자</option>
+		      <option value="subject">제목</option>
 	      </select>
 	      <input class="form-control mr-sm-2" type="text" placeholder="Sdddsfsearch" style="width:300px">
 	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>

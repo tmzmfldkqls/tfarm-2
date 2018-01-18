@@ -36,15 +36,23 @@ function moveReply() {
 
 
 	<div class="form-group" >
-	<button class="btn btn-secondary" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정</button>
-	<button class="btn btn-secondary" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</button>	
+		<c:if test="${userInfo.mem_id == article.id}">
+			<button class="btn btn-secondary" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정</button>
+			<button class="btn btn-secondary" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</button>	
+			<c:if test="${userInfo.mem_id == 1}">
+				<button class="btn btn-secondary" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</button>
+			</c:if>
+		</c:if>
+		
+		<span  style="float:right;">
+		
+		<c:if test="${userInfo.mem_state == 1}">
+			<button class="btn btn-secondary" onclick="javascript:moveReply();"><i class="fa fa-reply" aria-hidden="true"></i> 답변</button>
+		</c:if>
+			<button class="btn btn-secondary" type="button"><i class="fa fa-list" aria-hidden="true"></i> 목록</button>
 	
-	<span  style="float:right;">
-	<button class="btn btn-secondary" onclick="javascript:moveReply();"><i class="fa fa-reply" aria-hidden="true"></i> 답변</button>
-	<button class="btn btn-secondary" type="button"><i class="fa fa-list" aria-hidden="true"></i> 목록</button>
-
-	</span>
-	
+		</span>
+		
 	</div>
 
 

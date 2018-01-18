@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tfarm.board.model.ReboardDto;
 import com.tfarm.board.service.ReboardService;
 import com.tfarm.common.service.CommonService;
+import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 import com.tfarm.util.BoardConstance;
 import com.tfarm.util.PageNavigation;
@@ -31,22 +32,27 @@ public class ReboardController {
 	private CommonService commonService;
 	
 	@RequestMapping("/list.tfarm")
-	public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request) {
+	public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-		List<ReboardDto> list = reboardService.listArticle(map);
-		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
-		PageNavigation navigation = commonService.makePageNavigation(map);
-		navigation.setRoot(request.getContextPath());
-		navigation.setBcode(Integer.parseInt(map.get("bcode")));
-		navigation.setKey(map.get("key"));
-		navigation.setWord(map.get("word"));
-		navigation.setNavigator();
-		mav.addObject("articlelist", list);
-		mav.addObject("navigator", navigation);
-		mav.addObject("querystring", map);
-		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/reboard/list");
+		MemberDto memberDto = (MemberDto)session.getAttribute("userInfo");
+		if(memberDto!=null){
+			List<ReboardDto> list = reboardService.listArticle(map);
+			map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
+			PageNavigation navigation = commonService.makePageNavigation(map);
+			navigation.setRoot(request.getContextPath());
+			navigation.setBcode(Integer.parseInt(map.get("bcode")));
+			navigation.setKey(map.get("key"));
+			navigation.setWord(map.get("word"));
+			navigation.setNavigator();
+			mav.addObject("articlelist", list);
+			mav.addObject("navigator", navigation);
+			mav.addObject("querystring", map);
+			mav.addObject("category", category);
+			mav.setViewName("/WEB-INF/reboard/list");
+		}else{
+			mav.setViewName("/login/login");
+		}
 		return mav;
 	}
 	
@@ -65,12 +71,12 @@ public class ReboardController {
 			@RequestParam Map<String, String> map,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
 			int seq = commonService.getNextSeq();
 			reboardDto.setSeq(seq);
-			reboardDto.setId("memberDto.getId()");
-			reboardDto.setEmail("memberDto.getEmail1() @ memberDto.getEmail2()");
+			reboardDto.setId(memberDto.getMem_id());
+			reboardDto.setEmail("");
 			reboardDto.setRef(seq);
 			int cnt = reboardService.writeArticle(reboardDto);
 			mav.addObject("querystring", map);
@@ -80,9 +86,9 @@ public class ReboardController {
 			}else{
 				mav.setViewName("/WEB-INF/reboard/writefail");
 			}
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		} else {
+			mav.setViewName("/login/login");
+		}
 		return mav;
 	}
 	
@@ -91,8 +97,8 @@ public class ReboardController {
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
 			int seq = Integer.parseInt(map.get("seq"));
 			ReboardDto reboardDto = reboardService.viewArticle(seq);
 			
@@ -100,9 +106,9 @@ public class ReboardController {
 			mav.addObject("article", reboardDto);
 			mav.addObject("category", category);
 			mav.setViewName("/WEB-INF/reboard/view");
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		} else {
+			mav.setViewName("/login/login");
+		}
 		return mav;
 	}
 	
@@ -110,17 +116,17 @@ public class ReboardController {
 	public ModelAndView reply(@RequestParam Map<String, String> map,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
 			int seq = Integer.parseInt(map.get("seq"));
 			ReboardDto reboardDto = reboardService.viewArticle(seq);
 			System.out.println("lev==="+reboardDto.getLev());
 			mav.addObject("querystring", map);
 			mav.addObject("article", reboardDto);
 			mav.setViewName("/WEB-INF/reboard/reply");
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		} else {
+			mav.setViewName("/login/login");
+		}
 		return mav;
 	}
 	
@@ -128,8 +134,8 @@ public class ReboardController {
 	public ModelAndView reply(ReboardDto reboardDto, @RequestParam Map<String, String> map,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
+		if(memberDto != null) {
 			int seq = commonService.getNextSeq();
 			reboardDto.setSeq(seq);
 			reboardDto.setId("memberDto.getId()");
@@ -143,9 +149,9 @@ public class ReboardController {
 			}else{
 				mav.setViewName("/WEB-INF/reboard/writefail");
 			}
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		} else {
+			mav.setViewName("/login/login");
+		}
 		return mav;
 	}
 }
