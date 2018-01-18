@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.tfarm.member.model.dao">
+<mapper namespace="com.tfarm.member.model.dao.MemberDao">
     <select id="idCheck" parameterType="String" resultType="int">
         select count(mem_id)
         from member
-        where mem_id = #{userid}
+        where mem_id = #{sid}
+    </select>
+    
+    <insert id="registerMember" parameterType="com.tfarm.member.model.MemberDetailDto">
+         insert all
+             into member(mem_no,mem_id,mem_pw,mem_name,mem_birth,mem_state)
+             values(seq_mem_no.nextval,#{mem_id},#{mem_pw},#{mem_name},#{mem_birth},0)
+             into member_detail(mem_no,mem_email1,mem_email2,mem_join_date,mem_tel1,mem_tel2,mem_tel3,mem_zipcode1,mem_zipcode2,mem_address1,mem_address2)
+             values(seq_mem_no.currval,#{mem_email1},#{mem_email2},sysdate,#{mem_tel1},#{mem_tel2},#{mem_tel3},#{mem_zipcode1},#{mem_zipcode2},#{mem_address1},#{mem_address2})
+        select * from dual
+    </insert>
+    
+    <select id="login" parameterType="java.util.Map" resultType="com.tfarm.member.model.MemberDto">
+        select mem_no, mem_id, mem_name, mem_birth, mem_state
+        from member
+        where mem_id = #{userid} and mem_pw = #{userpwd}
     </select>
 </mapper>

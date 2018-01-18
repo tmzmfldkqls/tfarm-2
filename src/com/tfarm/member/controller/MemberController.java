@@ -1,6 +1,7 @@
 package com.tfarm.member.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,6 +22,9 @@ import com.tfarm.member.model.ZipDto;
 import com.tfarm.member.model.service.MemberService;
 import com.tfarm.util.StringEncoder;
 
+import net.tanesha.recaptcha.ReCaptchaImpl;
+import net.tanesha.recaptcha.ReCaptchaResponse;
+
 @Controller
 @RequestMapping("/user")
 public class MemberController {
@@ -28,46 +32,57 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-//	@RequestMapping(value="/join.tfarm", method=RequestMethod.GET)
-//	public String join() {
-//		return "redirect:/join/member.jsp";
-//	}
-//	
-//	@RequestMapping(value="/join.kitri", method=RequestMethod.POST)
-//	public ModelAndView join(MemberDetailDto memberDetailDto) {
-//		ModelAndView mav = new ModelAndView();
-//		int cnt = memberService.registerMember(memberDetailDto);
-//		String viewName = "/index";
-//		if(cnt != 0) {
-//			mav.addObject("registerinfo", memberDetailDto);
-//			viewName = "/WEB-INF/join/registerok";
-//		}
-//		mav.setViewName(viewName);
-//		return mav;
-//	}
-//	
-//	@RequestMapping(value="/login.kitri", method=RequestMethod.GET)
-//	public String login() {
-//		return "redirect:/login/login.jsp";
-//	}
-//	
-//	@RequestMapping(value="/login.kitri", method=RequestMethod.POST)
-//	public String login(@RequestParam(value="id", required=true) String id,
-//			@RequestParam(value="pass", required=true) String pass, HttpServletRequest request, HttpSession session) {
-//		String url = request.getHeader("referer");
-//		MemberDto memberDto = memberService.login(id, pass);
-//		session.setAttribute("userInfo", memberDto);
-//		if(url.contains("login.jsp")) {
-//			url = "/index.jsp";
-//		}
-//		return "redirect:"+url;
-//	}
-//	
-//	@RequestMapping("/logout.kitri")
-//	public String logout(HttpSession session) {
-//		session.removeAttribute("userInfo");
-//		return "redirect:/index.jsp";
-//	}
+	@RequestMapping(value="/join.tfarm", method=RequestMethod.GET)
+	public String join() {
+		return "redirect:/join/join.jsp";
+	}
+	
+	@RequestMapping(value="/join.tfarm", method=RequestMethod.POST)
+	public ModelAndView join(MemberDetailDto memberDetailDto) {
+		ModelAndView mav = new ModelAndView();
+		int cnt = memberService.registerMember(memberDetailDto);
+		String viewName = "/index";
+		if(cnt != 0) {
+			mav.addObject("registerinfo", memberDetailDto);
+			viewName = "/WEB-INF/join/registerok";
+		}
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@RequestMapping(value="/jusopopup.tfarm")
+	public String jusoPopup() {
+		return "redirect:/join/jusoPopup.jsp";
+	}
+	
+	@RequestMapping(value="/home.tfarm")
+	public String home() {
+		return "redirect:/index.jsp";
+	}
+	
+	@RequestMapping(value="/login.tfarm", method=RequestMethod.GET)
+	public String login() {
+		return "redirect:/login/login.jsp";
+	}
+	
+	@RequestMapping(value="/login.tfarm", method=RequestMethod.POST)
+	public String login(@RequestParam(value="mem_id", required=true) String id,
+			@RequestParam(value="mem_pw", required=true) String pass, HttpServletRequest request, HttpSession session) {
+		String url = request.getHeader("referer");
+		MemberDto memberDto = memberService.login(id, pass);
+		session.setAttribute("userInfo", memberDto);
+		if(url.contains("login.jsp")) {
+			url = "/index.jsp";
+		}
+		System.out.println("로그인 됬냐"+url);
+		return "redirect:"+url;
+	}
+	
+	@RequestMapping("/logout.tfarm")
+	public String logout(HttpSession session) {
+		session.removeAttribute("userInfo");
+		return "redirect:/index.jsp";
+	}
 //	
 //	@RequestMapping("/memberout.kitri")
 //	public String memberout(HttpSession session) {
@@ -86,7 +101,7 @@ public class MemberController {
 		json.put("sid", sid);
 		return json.toJSONString();//{idcount : 0, sid : java2} << json
 	}
-//	
+
 //	@RequestMapping(value="/zipsearch.kitri",method=RequestMethod.GET)
 //	public String zipSearch() {
 //		return "redirect:/join/zipsearch.jsp";
