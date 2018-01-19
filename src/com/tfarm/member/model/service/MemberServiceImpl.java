@@ -36,7 +36,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDto login(String id, String pass) {
+	public MemberDetailDto login(String id, String pass) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", id);
@@ -57,6 +57,15 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteMember(String id) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
 		memberDao.deleteMember(id);
+	}
+
+	@Override
+	public int pwCheck(String id, String pass) {
+		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("userid", id);
+		map.put("userpwd", pass);
+		return memberDao.pwCheck(map);
 	}
 
 }

@@ -17,8 +17,14 @@
         select * from dual
     </insert>
     
-    <select id="login" parameterType="java.util.Map" resultType="com.tfarm.member.model.MemberDto">
-        select mem_no, mem_id, mem_name, mem_birth, mem_state
+    <select id="login" parameterType="java.util.Map" resultType="com.tfarm.member.model.MemberDetailDto">
+        select m.mem_no, mem_id, mem_name, mem_birth, mem_join_date, mem_state, mem_email1, mem_email2, mem_tel1, mem_tel2, mem_tel3, mem_zipcode1, mem_address1, mem_address2
+        from member m, member_detail d
+        where m.mem_no= d.mem_no and mem_id = #{userid} and mem_pw = #{userpwd}
+    </select>
+    
+    <select id="pwCheck" parameterType="java.util.Map" resultType="int">
+        select count(mem_id)
         from member
         where mem_id = #{userid} and mem_pw = #{userpwd}
     </select>
