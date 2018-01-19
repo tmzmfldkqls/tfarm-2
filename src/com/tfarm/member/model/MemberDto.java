@@ -1,6 +1,6 @@
 package com.tfarm.member.model;
 
-public class MemberDto {
+public class MemberDto{
 	
 	private int mem_no;
 	private String mem_id;

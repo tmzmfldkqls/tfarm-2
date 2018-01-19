@@ -46,6 +46,9 @@ root = "${root}";
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/join.tfarm">회원가입</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="${root}/admin/adminpage.tfarm">임시admin버튼</a>
 	      </li>     
 	    </ul>
     </c:if>

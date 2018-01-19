@@ -13,5 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from board_list bl, category c 
         where bl.ctype = c.ctype 
         order by bl.bcode
-    </select>    
+    </select>  
+    
+    <select id="memberList" resultType="com.tfarm.member.model.MemberDetailDto">
+        select p.mem_no, p.mem_id, d.mem_email1,d.mem_email2,p.mem_state,d.mem_join_date
+        from member p, member_detail d
+        where p.mem_no = d.mem_no
+    </select>   
 </mapper>
