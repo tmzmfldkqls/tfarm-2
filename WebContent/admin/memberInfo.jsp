@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
             $(document).ready(function() { 
                 //전체 선택/해제
                 $("#chkAll").click(function(){
-                    var chk = $(this).is(":checked");
-                     
+                    var chk = $(this).is(":checked");                    
                     if(chk){
                         $('input[name*="deleteList"]').prop('checked', true);
                     }else{
@@ -26,61 +26,71 @@
                             alert($(this).val());
                         }
                     });
-                });
-                
-            });
+                });           
+            });   
+ 			
+//멤버 인포에 들어갈 것. 			
+            $("#memberli").click(function(){
+                var queryString = $("form[name=memberSearch]").serialize() ;   	
+            	 $.ajax({
+ 					type : "GET",
+ 					url : "${root}/admin/memberlist.tfarm",
+ 					dataType : "json",
+ 					data : queryString,
+ 					success : function(data) {
+ 						makeAlllist(data);	
+ 					}
+ 				});      
+            	
+              });
+function makeAlllist(data) {				
+            	$("#memberlist").empty();
+            	var len = data.memberList.length;
+            	var output = '';
+            	for(var i=0;i<len;i++) {
+            		var member = data.memberList[i];
+					output += "<tr><th class = \"pnt\"  data-toggle=\"modal\" data-target=\"#memberModal\">" + member.mno + "</th>";
+            		output += "<td>" + member.mid+"</td>";
+            		output += "<td>" + member.memail1+"@"+member.memail2+"</td>";
+            		output += "<td>" + member.joindate+"</td>";
+            		output += "<td>" + member.mstate+"</td>";
+            		output += "<td><input class=\"form-check-input\" type=\"checkbox\" name=\"deleteList\" value = \""+ member.mno+" \" ></td>";
+            	}  
+            	$("#memberlist").html(output);
+		}		
+ 			
 </script>
 	
 	<!-- 검색 폼 -->
 	<div class="row" style="margin-bottom: 3%;">
 	<div class="col"></div>
 	<div class = "col-8">
-		<form class="form-inline">
-			<select class="form-control" style="margin-right: 3%;">
-				<option>회원 ID</option>
-				<option>블랙리스트</option>
+		<form onsubmit="return false;" class="form-inline"name = "memberSearch" action = "" method = "GET">
+			<select name = "key" class="form-control" style="margin-right: 3%;">
+				<option value="ID">회원 ID</option>
+				<option value="STATE">회원상태</option>
 			</select> 
-			<input class="form-control mr-lg-2" type="text" placeholder="회원id 검색" style = "width:70%;">			
+			<input style="display:none;" />
+			<input name = "word" class="form-control mr-lg-2" type="text" placeholder="회원id 검색" style = "width:70%;" onkeypress="javascript:if(event.keyCode == 13) {memberlist();}">			
 		</form>
 	</div>
 	<div class="col"></div>
 	</div>
-	
+
 	<!--멤버 리스트 테이블-->
 	<div class="row" style="margin-bottom: 3%;">
 		<table class="tableDft table table-hover table-sm">
 			<thead>
 				<tr class="table-success">	
-					<td width = "25%">ID</td>
-					<td width = "25%">게시글</td>
-					<td width = "25%">댓글</td>
-					<td width = "20%">신고</td>
+					<td width = "15%">회원번호</td>
+					<td width = "20%">ID</td>
+					<td width = "20%">E-Mail</td>
+					<td width = "20%">가입일</td>
+					<td width = "20%">상태</td>
 					<td width = "5%"><input class="form-check-input" id ="chkAll" type="checkbox"></td>
 				</tr>
 			</thead>
-			<tbody>		
-				<tr>
-					<th class = "pnt"  data-toggle="modal" data-target="#memberModal">dpffpsk1113</th>
-					<td>25</td>
-					<td>165</td>
-					<td>9</td>
-					<td><input class="form-check-input" id ="chk" type="checkbox" name="deleteList" value = "첫번째"></td>
-				</tr>
-				
-				<tr>
-					<th class = "pnt" data-toggle="modal" data-target="#memberModal">test22</th>
-					<td>25</td>
-					<td>165</td>
-					<td>9</td>
-					<td><input class="form-check-input" type="checkbox" name="deleteList" value = "두번째"></td>
-				</tr>
-				<tr>
-					<th class = "pnt" data-toggle="modal" data-target="#memberModal">기장님</th>
-					<td>25</td>
-					<td>165</td>
-					<td>9</td>
-					<td><input class="form-check-input" type="checkbox" name="deleteList" value = "세번쨰"></td>
-				</tr>
+			<tbody id="memberlist">		
 			</tbody>
 		</table>
 	</div>
