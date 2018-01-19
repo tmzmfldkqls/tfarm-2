@@ -9,11 +9,12 @@ import com.tfarm.member.model.ZipDto;
 public interface MemberService {
 	
 	int idCheck(String id);
+	int pwCheck(String id, String pass);
 	List<ZipDto> zipSearch(String dong);
 	int registerMember(MemberDetailDto memberDetailDto);
 	void deleteMember(String id);
 	
-	MemberDto login(String id, String pass);
+	MemberDetailDto login(String id, String pass);
 	
 	List<MemberDetailDto> listMember(String key, String word);
 

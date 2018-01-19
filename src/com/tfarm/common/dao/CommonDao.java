@@ -8,5 +8,5 @@ public interface CommonDao {
 	void updateHit(int seq);
 	int getNewArticleCount(int bcode);
 	int getTotalArticleCount(Map<String, String> map);
-	
+	String getCategory(int bcode);
 }
