@@ -36,7 +36,7 @@ function writeArticle() {
 		<div class="form-group">
 			<legend style="font-weight:bold">${category}작성하기</legend>
 			<div class="form-group">
-				<input type="text" class="form-control" name="subject" id="subject" placeholder="글 제목을 입력해주세요" value="답변입니다:">
+				<input type="text" class="form-control" name="subject" id="subject" placeholder="글 제목을 입력해주세요" value="답변입니다:${article.subject}">
 			</div>
 	    
 	    	<textarea class="form-control" name="content" id="content" rows="20">

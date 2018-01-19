@@ -138,8 +138,8 @@ public class ReboardController {
 		if(memberDto != null) {
 			int seq = commonService.getNextSeq();
 			reboardDto.setSeq(seq);
-			reboardDto.setId("memberDto.getId()");
-			reboardDto.setEmail("memberDto.getEmail1() + @ + memberDto.getEmail2()");
+			reboardDto.setId(memberDto.getMem_id());
+			reboardDto.setEmail("");
 			int cnt = reboardService.replyArticle(reboardDto);
 			mav.addObject("querystring", map);
 			mav.addObject("seq", seq);
