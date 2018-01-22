@@ -60,6 +60,24 @@ public class MemberController {
 		return "redirect:/index.jsp";
 	}
 	
+	@RequestMapping(value="/pwcheck.tfarm")
+	public String confirmpass() {
+		return "redirect:/join/confirmpass.jsp";
+	}
+	
+	@RequestMapping(value="/mypage.tfarm")
+	public String mypage(@RequestParam(value="mem_id", required=true) String id, 
+			@RequestParam(value="mem_pw", required=true) String pass) {
+		System.out.println("마이페이지:"+ id + "  "+ pass);
+		int cnt = memberService.pwCheck(id, pass);
+		String mv = "/join/confirmpass.jsp";
+		if(cnt !=0) {
+			mv = "/mypage.jsp";
+		}
+		return "redirect:"+mv;
+	}
+	
+	
 	@RequestMapping(value="/login.tfarm", method=RequestMethod.GET)
 	public String login() {
 		return "redirect:/login/login.jsp";
@@ -69,8 +87,8 @@ public class MemberController {
 	public String login(@RequestParam(value="mem_id", required=true) String id,
 			@RequestParam(value="mem_pw", required=true) String pass, HttpServletRequest request, HttpSession session) {
 		String url = request.getHeader("referer");
-		MemberDto memberDto = memberService.login(id, pass);
-		session.setAttribute("userInfo", memberDto);
+		MemberDetailDto memberdetailDto = memberService.login(id, pass);
+		session.setAttribute("userInfo", memberdetailDto);
 		if(url.contains("login.jsp")) {
 			url = "/index.jsp";
 		}

@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp"%>
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-    	</script>
+ <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script type="text/javascript">
 var idflag = false;
 function idcheck() {
@@ -72,13 +70,13 @@ $(document).ready(function(){
 			  	
 			  	return false;
 			 }
-
+			 
 			 if(pw.search(/₩s/) != -1){
 				$("#passok").empty();
-				$("#passok").append("비밀번호는 공백업이 입력해주세요");
-				
+				$("#passok").append("비밀번호는 공백업이 입력해주세요");				
 				return false;
 			 }
+			 
 			 if(num < 0 || eng < 0 || spe < 0 ){
 				$("#passok").empty();
 				$("#passok").append("영문,숫자, 특수문자를 혼합하여 입력해주세요");
@@ -106,11 +104,18 @@ $(document).ready(function(){
 		
 	});
 	
+	function chkCaptcha(){
+		if(typeof(grecaptcha) != 'undefined') {
+		       if (grecaptcha.getResponse() == "") {
+		           return false;
+		       }
+		     }
+		     else {
+		    	 return true;
+		     }
+	}
 	
-	
-
-	
-	$("#registerBtn").click(function() {
+	$("#registerBtn").on('click',function() {
 		if($("#mem_name").val() == "") {
 			alert("이름을 입력하세요!!!!");
 			return;
@@ -126,7 +131,11 @@ $(document).ready(function(){
 		} else if(!passflag) {
 			alert("비밀번호를 확인하세요!!!!");
 			return;
-		}else {
+		} else if(chkCaptcha() == false){
+			console.log(chkCaptcha());
+			alert("스팸방지코드를 확인해 주세요.");
+		}
+		else {
 			$("#memberregist").attr("action", "${root}/user/join.tfarm").submit();
 		}
 	});
@@ -207,21 +216,10 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	      <input type="text" class="form-control" readonly="readonly" id="mem_address1" name="mem_address1" style="margin-bottom:10px">
 	      <label>상세주소</label>
 	      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2" >
-	    </div>
-	    
-
-	   
-	    <script type="text/javascript">
-	      var onloadCallback = function() {
-	        grecaptcha.render('recap', {
-	          'sitekey' : '6LfDVEEUAAAAALwm3xwWfCO2rv5S6zE0sXbrTqPg',
-	          'theme' : 'dark'
-	        });
-	      };
-	    </script>
-      		
-    	</script>
-	    <div id="recap"></div>
+	    </div>   
+	  
+	    <div class="g-recaptcha" data-sitekey="6LfDVEEUAAAAALwm3xwWfCO2rv5S6zE0sXbrTqPg">
+	    </div><br>
 		
 	  	<div style="text-align:center">
 	    <button type="button" id="registerBtn" class="btn btn-primary">회원가입</button>
