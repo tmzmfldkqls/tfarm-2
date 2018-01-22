@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header_board.jsp"%>
 <script type="text/javascript">
-control="/board";
+control="/reboard";
 </script>
 	<div class="card mr-sm-2 col-xl-9" style="text-align:center; border:0px">
 	  	<div class="card-body" style="padding-top: 150px;">
