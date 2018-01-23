@@ -1,136 +1,149 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/common/header.jsp" %>
+    <%@ include file="/common/header.jsp" %>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="${root}/js/httpRequest.js"></script>
+<!--  
+<script src="jquery.nailthumb.1.1.min.js"></script>
+<link rel="stylesheet" href="jquery.nailthumb.1.1.min.css">
+-->
+<script>
+control = "/main";
+</script>
 
+
+
+<style>
+img {
+    border: 1px solid #ddd; /* Gray border */
+    border-radius: 4px;  /* Rounded border */
+    padding: 5px; /* Some padding */
+    width: 150px; /* Set a small width */
+}
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+</style>
 
 <!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
 <!---------------------------------  최신 앨범-------------------------------    -->
+<script type="text/javascript">
+	$(document).ready(function() {
+		$.ajax({
+		type: 'POST',
+		dataType: 'json',
+		url: '${root}/main/totallist.tfarm',
+		success: function(data) {
+			//alert("넘어왔니???"+data.blist[0].subject);
+			makelist(data);
+			}
+	 	});
+	});
 
+function makelist(data) {
+	var output = "";
+	var bsize = data.blist.length;
+	for(var i=0;i<6;i++){
+		output += '<tr style="text-align:center">';
+		output += '<td>';
+		output += '' + decodeURI(data.blist[i].id);
+		output += '</td>';
+		output += '<a href = "javascript:move"'
+		output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+		output += ' ' + decodeURI(data.blist[i].subject);
+		output += '</td>';
+		output += '<td>';
+		output += '' + decodeURI(data.blist[i].hit);
+		output += '</td>';
+		output += '</tr>';
+		
+	}
+	
+	$("#boardlist").empty();
+	$("#boardlist").append(output);
+}
+
+
+$(document).ready(function() {
+	$.ajax({
+	type: 'POST',
+	dataType: 'json',
+	url: '${root}/main/totallist1.tfarm',
+	success: function(data) {
+		//alert("넘어왔니???"+data.blist[0].subject);
+		makelist1(data);
+		}
+ 	});
+});
+
+function makelist1(data) {
+var output = "";
+var nsize = data.nlist.length;
+for(var i=0;i<6;i++){
+	output += '<tr style="text-align:center">';
+	output += '<td>';
+	output += '' + decodeURI(data.nlist[i].id);
+	output += '</td>';
+	output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+	output += ' ' + decodeURI(data.nlist[i].subject);
+	output += '</td>';
+	output += '<td>';
+	output += '' + decodeURI(data.nlist[i].hit);
+	output += '</td>';
+	output += '</tr>';
+	
+	}
+
+	$("#noticelist").empty();
+	$("#noticelist").append(output);
+}
+
+</script>
    <div class="col-xl-10">
-   
         	<div>
-                <h4 id="container">[인기앨범]</h4>
+                <h4 id="container">[최신티켓]</h4>
             </div>
+            
         	<div class="row">
 				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/0.PNG" class="img-rounded" alt="Lights" style="width:100%">
+					<div class="thumbnail" id="ticketlist">
+					<a href="javascript:ticketView();">
+  						<img src="${root}/img/1.PNG" class="img-rounded">
+  					</a>
 						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/1.PNG" class="img-rounded" alt="Nature" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/2.PNG" class="img-rounded" alt="Fjords" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/3.PNG" class="img-rounded" alt="Fjords" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
+							<p>subject</p>
 						</div>
 					</div>
 				</div>
 			</div>
-        	<div class="row">
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/4.PNG" class="img-rounded" alt="Lights" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/0.PNG" class="img-rounded" alt="Nature" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/0.PNG" class="img-rounded" alt="Fjords" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="thumbnail">
-						<img src="${root }/img/6.PNG" class="img-rounded" alt="Fjords" style="width:100%">
-						<div class="caption">
-							<p>그림1</p>
-						</div>
-					</div>
-				</div>
-			</div>
+	
 			<br><br>
-			<div class="row">					
-				<div class="col-sm-5" style="margin-left:16%;">
+			
+			<div class="row" id="poplist">					
+				<div class="col-sm-5">
 		        	<div>
-		                <h4 id="container">[인기글]</h4>
+		                <h4 id="container">[최신공지사항]</h4>
 		            </div>
 		            <div class="table-responsive">
 		                <!-- <table class="table table-bordered"> -->
-		                <table class="table table-hover">
+		                <table class="table table-hover" style="table-layout:fixed;">
 		                    <colgroup>
+		                        <col width="80">
 		                        <col width="*">
-		                        <col width="60">
-		                        <col width="60">
+		                        <col width="70">
 		                    </colgroup>
 		                    <thead>
 		                    <tr><th colspan="3"></th></tr>
 		                    <tr>
-		                        <th class="text-center">제목</th>
 		                        <th class="text-center">작성자</th>
-		                        <th class="text-center">조회수</th>
+		                        <th class="text-center" width="40%">제목</th>
+		                        <th class="text-center" width="40%">조회수</th>
 		                    </tr>
 		                    </thead>
-		                    <tbody class="article_list">
-		                    <!-- 글목록 start -->
-		                    <tr>
-		                        <td class="text-left">
-		                        <a href="${root}/board/notice.tfarm">200. 안녕하세요~~~~~</a>		                  
-		                        </td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>		                      
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">199. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>		                        
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">198. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">197. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">196. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <!-- 글목록 end -->
+		                    <tbody class="article_list" id="boardlist">
+		                     <!-- 글목록 -->
 		                    </tbody>
 						</table>
 					</div>
@@ -138,59 +151,35 @@
 				
 				<div class="col-sm-5">
 		        	<div>
-		                <h4 id="container">[최신글]</h4>
+		                <h4 id="container">[인기글]</h4>
 		            </div>
 		            <div class="table-responsive">
 		                <!-- <table class="table table-bordered"> -->
-		                <table class="table table-hover">
+		                <table class="table table-hover" style="table-layout:fixed;">
 		                    <colgroup>
+		                        <col width="80">
 		                        <col width="*">
-		                        <col width="60">
-		                        <col width="60">
+		                        <col width="70">
 		                    </colgroup>
 		                    <thead>
 		                    <tr><th colspan="3"></th></tr>
 		                    <tr>
-		                        <th class="text-center">제목</th>
 		                        <th class="text-center">작성자</th>
-		                        <th class="text-center">조회수</th>
+		                        <th class="text-center" width="40%">제목</th>
+		                        <th class="text-center" width="40%">조회수</th>
 		                    </tr>
 		                    </thead>
-		                    <tbody class="article_list">
-		                    <!-- 글목록 start -->
-		                    <tr>
-		                        <td class="text-left">100. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">99. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">98. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">97. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <tr>
-		                        <td class="text-left">96. 안녕하세요~~~~~</td>
-		                        <td class="text-center">안효인</td>
-		                        <td class="text-center">777</td>
-		                    </tr>
-		                    <!-- 글목록 end -->
+		                    
+		                    <tbody class="article_list" id="noticelist">
+		                    <!-- 글목록 -->
 		                    </tbody>
 						</table>
 					</div>
 				</div>
 			</div>
        
-        </div>
+  </div>
+   
 
 <!-- ******************우리가 코딩해야하는 부분 끝********************** -->
 <%@ include file="/common/footer.jsp" %>

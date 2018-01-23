@@ -11,6 +11,7 @@
 	<context:component-scan base-package="com.tfarm.admin.board.controller"/>
 	<context:component-scan base-package="com.tfarm.board.controller"/>
 	<context:component-scan base-package="com.tfarm.member.controller"/>
+	<context:component-scan base-package="com.tfarm.main.controller"/>
 	
 	<!-- <bean id="acontrol" class="com.kitri.board.controller.AlbumController">
 		<property name="upFolder" value="D:\javadate\workspace\framework\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\kitricafe\upload"></property>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tfarm.board.dao.MainDao">
+    <select id="mainboardlist" resultType="com.tfarm.board.model.BoardDto">
+        select b.*
+        from board b
+        where bcode = 1
+        order by b.seq desc
+        
+    </select>
+    
+    <select id="mainticketlist" resultType="com.tfarm.board.model.TicketDto">
+        select *
+        from ticket
+        order by ticket.seq desc
+    </select>
+    
+    <select id="mainnoticelist" resultType="com.tfarm.board.model.BoardDto">
+        select *
+        from board  
+        where bcode = 3
+        order by board.hit desc
+    </select>
+    
+</mapper>
+
