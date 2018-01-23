@@ -16,7 +16,7 @@ public interface MemberService {
 	String bringPw(String number);
 	MemberDetailDto login(String id, String pass);
 	MemberDetailDto socialLogin(String id);
-	int modifyMember(MemberDetailDto memberDetailDto);
+	int modify(MemberDetailDto memberDetailDto);
 	int socialRegister(String id, String name, String email1, String email2);
 	
 	List<MemberDetailDto> listMember(String key, String word);

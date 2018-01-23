@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
@@ -79,9 +80,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int modifyMember(MemberDetailDto memberDetailDto) {
+	@Transactional
+	public int modify(MemberDetailDto memberDetailDto) {
 		MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
-		return memberDao.modifyMember(memberDetailDto);
+		memberDao.modifyMember(memberDetailDto);
+		memberDao.modifyDetail(memberDetailDto);			
+		return 1;		
 	}
 
 	@Override

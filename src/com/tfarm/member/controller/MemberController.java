@@ -100,6 +100,14 @@ public class MemberController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	
+	@RequestMapping(value="/socialmypage.tfarm")
+	public ModelAndView mypage() {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/WEB-INF/mypage/mypage");
+		return mav;
+	}
+	
 	@RequestMapping(value="/modifyPass.tfarm")
 	public @ResponseBody String modifyPass(@RequestParam(value="mem_no", required=true) String number){
 		String password = memberService.bringPw(number);
@@ -107,16 +115,18 @@ public class MemberController {
 		json.put("pass", password);
 		return json.toJSONString();
 	}
+	
 	@RequestMapping(value="/infomodify.tfarm")
-	public ModelAndView infomodify(MemberDetailDto memberDetailDto){
+	public ModelAndView soInfomodify(MemberDetailDto memberDetailDto){
 		ModelAndView mav = new ModelAndView();
-		int cnt = memberService.modifyMember(memberDetailDto);
+		int cnt = memberService.modify(memberDetailDto);
+		String viewName = "/WEB-INF/mypage/mypage";
 		if(cnt != 0){
-			System.out.println("성공");
+			viewName = "/WEB-INF/mypage/mypage";
 		}
+		mav.setViewName(viewName);
 		return mav;
 	}
-	
 	@RequestMapping(value="/login.tfarm", method=RequestMethod.GET)
 	public String login() {
 		return "redirect:/login/login.jsp";
@@ -136,10 +146,9 @@ public class MemberController {
 		return "redirect:"+url;
 	}
 	@RequestMapping(value="/social.tfarm", method=RequestMethod.POST)
-	public String kakaologin(@RequestParam(value="semail", required=true) String semail,
+	public String sociallogin(@RequestParam(value="semail", required=true) String semail,
 			@RequestParam(value="sname",required=true) String sname, 
 			@RequestParam(value="sid",required=true) String sid, HttpSession session){
-		
 		String id = sid;
 		String name = sname;
 		String email1 = semail.split("@")[0];		
@@ -155,8 +164,7 @@ public class MemberController {
 				System.out.println("카카오 등록실패");
 			}
 		}
-		return "redirect:/index.jsp";
-		
+		return "redirect:/index.jsp";		
 	}
 	
 	

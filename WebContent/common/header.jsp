@@ -24,14 +24,19 @@ root = "${root}";
   </button>
 
   <div class="navbar-collapse collapse" id="navbarColor01" style="">
-  
+ 
     <c:if test="${userInfo != null}">
     	 <ul class="navbar-nav mr-auto navbar-right" >
 	      <li class="nav-item active">
 	        <a class="nav-link" href="#">${userInfo.mem_name}님 안녕하세요</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
+	      	<c:if test="${userInfo.mem_social == 0}">
+	        	<a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
+	        </c:if>
+	        <c:if test="${userInfo.mem_social != 0}">
+	        	<a class="nav-link" href="${root}/user/socialmypage.tfarm">마이페이지</a>
+	        </c:if>
 	      </li>  
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/logout.tfarm">로그아웃</a>

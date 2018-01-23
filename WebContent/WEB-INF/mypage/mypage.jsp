@@ -53,26 +53,47 @@
 		<div style="margin-top:20px;">
 			 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">E-Mail</span>
 			 <span class="offset-1">${userInfo.mem_email1} @ ${userInfo.mem_email2}</span>
-			 <div style="margin-top:20px;">
-				 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">전화번호</span>
-				 <span class="offset-1">${userInfo.mem_tel1} - 	${userInfo.mem_tel2} - ${userInfo.mem_tel3}</span>
-			 </div>
-			 <div style="margin-top:20px;">
-				 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">생년월일</span>
-				 <span class="offset-1">${userInfo.mem_birth}</span>
-			 </div>
+			 <c:if test="${userInfo.mem_tel1 != null}">
+				 <div style="margin-top:20px;">
+					 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">전화번호</span>
+					 <span class="offset-1">${userInfo.mem_tel1} - 	${userInfo.mem_tel2} - ${userInfo.mem_tel3}</span>
+				 </div>
+			 </c:if>
+			 <c:if test="${userInfo.mem_birth != null}">
+				 <div style="margin-top:20px;">
+					 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">생년월일</span>
+					 <span class="offset-1">${userInfo.mem_birth}</span>
+				 </div>
+			 </c:if>
 			 <div style="margin-top:20px;">
 				 <span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">가입일</span>
 				 <span class="offset-1">${userInfo.mem_join_date}</span>
 			 </div>
-			 <div style="margin-top:20px;">
-			 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">주소</span>
-			 	<span class="offset-1">[${userInfo.mem_zipcode1}] &nbsp; ${userInfo.mem_address1} &nbsp; ${userInfo.mem_address2}</span>
-			 </div>
-			 <div style="margin-top:20px;">
-			 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">회원상태</span>
-			 	<span class="offset-1"></span>
-			 </div>
+			  <c:if test="${userInfo.mem_zipcode1 != null}">
+				 <div style="margin-top:20px;">
+				 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">주소</span>
+				 	<span class="offset-1">[${userInfo.mem_zipcode1}] &nbsp; ${userInfo.mem_address1} &nbsp; ${userInfo.mem_address2}</span>
+				 </div>
+			 </c:if>
+			 <c:if test="${userInfo.mem_state == 0}">
+				 <div style="margin-top:20px;">
+				 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">회원상태</span>
+				 	<span class="offset-1">일반회원</span>
+				 </div>
+			 </c:if>
+			 <c:if test="${userInfo.mem_state == 1}">
+				 <div style="margin-top:20px;">
+				 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">회원상태</span>
+				 	<span class="offset-1">블랙리스트</span>
+				 </div>
+			 </c:if>
+			 <c:if test="${userInfo.mem_social == 1}">
+			 	<c:if test="${userInfo.mem_tel1 == null || userInfo.mem_zipcode1 == null}">
+					 <div style="margin-top:20px; width:100%; background: aliceblue;">
+				 		<marquee width="100%" behavior=alternate style="color: red;">정보를 더 추가해 주세요</marquee> 
+				 	 </div>
+			 	 </c:if>
+			 </c:if>
 		</div>
     </div>
     
@@ -115,23 +136,35 @@ $(document).ready(function(){
 			$("#passchecked").append("비밀번호를 확인해 주세요");
 		}
 	});
-	
-	$("#email3").change(function() {
-		$("#mem_email2").val($("#email3").val());
-	});
-	
+
 	$("#modifyBtn").click(function() {
-		if($("#mem_pw").val() == "") {
-			alert("비밀번호를 입력하세요!!!!");
-			return;
-		} else if($("#mem_pw").val() != $("#passcheck").val()) {
-			alert("비밀번호를 확인하세요!!!!");
-			return;
-		} else if(chkCaptcha() == false){
-			console.log(chkCaptcha());
-			alert("스팸방지코드를 확인해 주세요.");
-		} else {
-			$("#infomodify").attr("action","${root}/user/infomodify.tfarm").submit();
+		var mem_social = ${userInfo.mem_social};
+		var mem_no = ${userInfo.mem_no};
+		alert(mem_social+ "    " + mem_no);
+		if(mem_social == 0){
+			if($("#mem_pw").val() == "") {
+				alert("비밀번호를 입력하세요!!!!");
+				return;
+			} else if($("#mem_pw").val() != $("#passcheck").val()) {
+				alert("비밀번호를 확인하세요!!!!");
+				return;
+			} else if(chkCaptcha() == false){
+				console.log(chkCaptcha());
+				alert("스팸방지코드를 확인해 주세요.");
+			} else {
+				$("#mem_no").val(mem_no);
+				$("#mem_social").val(mem_social);
+				$("#infomodify").attr("action","${root}/user/infomodify.tfarm").submit();
+			}
+		}else {
+			if(chkCaptcha() == false){
+				console.log(chkCaptcha());
+				alert("스팸방지코드를 확인해 주세요.");
+			} else {
+				$("#mem_no").val(mem_no);
+				$("#mem_social").val(mem_social);
+				$("#infomodify").attr("action","${root}/user/infomodify.tfarm").submit();
+			}
 		}
 	});
 });
@@ -149,6 +182,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 		}		
 </script>
     <form id="infomodify" name="infomodify" class="container tab-pane fade" action="" method="post">
+    <input type="hidden" id="mem_no" name="mem_no">
+    <input type="hidden" id="mem_social" name="mem_social">
 	 <fieldset>
 	  	<div style="width:600px; margin-top:20px; margin-left:250px; margin-bottom: 200px">
 		    <legend style="font-weight:bold">회원정보수정</legend>
@@ -156,40 +191,37 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 		      <label>이름</label>
 		      <input type="text" class="form-control" id="mem_name" name="mem_name" placeholder="Enter name" value="${userInfo.mem_name}" readonly="readonly">
 		    </div>
-		    <div class="form-group">
-		      <label>생년월일</label>
-		      <input type="text" class="form-control" id="mem_birth" name="mem_birth" placeholder="ex)911129" value="${userInfo.mem_birth}" readonly="readonly">
-		    </div>
+		    <c:if test="${userInfo.mem_social == 0}">
+			    <div class="form-group">
+			      <label>생년월일</label>
+			      <input type="text" class="form-control" id="mem_birth" name="mem_birth" placeholder="ex)911129" value="${userInfo.mem_birth}" readonly="readonly">
+			    </div>
+		    </c:if>
 			<div class="form-group">
 		      <label>아이디</label>
 		      <input type="text" class="form-control" id="mem_id" name="mem_id" value="${userInfo.mem_id}" placeholder="Enter ID" onkeyup="javascript:idcheck();">
-		      <small id="idinfo" class="form-text text-muted">아이디는 8자이상 20자 이하입니다</small>
+		      <small id="idinfo" class="form-text text-muted">아이디는 4자이상 20자 이하입니다</small>
 		    </div>
-		    <div class="form-group">
-		      <label>패스워드</label>
-		      <input type="password" class="form-control" id="mem_pw" name="mem_pw" placeholder="Enter PASS" onkeypress="javascript:if(event.keyCode==13){chkPwd();};">
-		      <small id="passok" class="form-text text-muted">비밀번호는 8자이상 20자 이하입니다</small>
-		    </div>
-		    <div class="form-group">
-		      <label>패스워드확인</label>
-		      <input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="Once more input PASS">
-		      <small id="passchecked" class="form-text text-muted">비밀번호를 입력하세요</small>
-		    </div>
-		    <div class="form-group">
-		      <label for="exampleInputEmail1">이메일</label>
-		      <div class="form-inline">
-			      <input type="text" class="form-control" id="mem_email1" name="mem_email1" value="${userInfo.mem_email1}" placeholder="Enter email" style="width:210px">
-				  <span style="margin:10px; font-weight:bold">@</span>
-				  <input type="text" class="form-control" id="mem_email2" name="mem_email2" value="${userInfo.mem_email2}" style="width:210px">
-			      <select class="form-control" id="email3" name="email3" style="margin-left: 15px">
-			        <option selected="selected">직접입력</option>
-			        <option>naver.com</option>
-			        <option>hanmail.com</option>
-			        <option>gmail.com</option>
-			        <option>nate.com</option>
-			      </select>
-		      </div>
-		    </div>
+		     <c:if test="${userInfo.mem_social == 0}">
+			    <div class="form-group">
+			      <label>패스워드</label>
+			      <input type="password" class="form-control" id="mem_pw" name="mem_pw" placeholder="Enter PASS" onkeypress="javascript:if(event.keyCode==13){chkPwd();};">
+			      <small id="passok" class="form-text text-muted">비밀번호는 8자이상 20자 이하입니다</small>
+			    </div>
+			    <div class="form-group">
+			      <label>패스워드확인</label>
+			      <input type="password" class="form-control" id="passcheck" name="passcheck" placeholder="Once more input PASS">
+			      <small id="passchecked" class="form-text text-muted">비밀번호를 입력하세요</small>
+			    </div>
+		     </c:if> 
+			    <div class="form-group">
+			      <label for="exampleInputEmail1">이메일</label>
+			      <div class="form-inline">
+				      <input type="text" class="form-control" id="mem_email1" name="mem_email1" value="${userInfo.mem_email1}" readonly="readonly" style="width:210px">
+					  <span style="margin:10px; font-weight:bold">@</span>
+					  <input type="text" class="form-control" id="mem_email2" name="mem_email2" value="${userInfo.mem_email2}" readonly="readonly" style="width:210px">				    
+			      </div>
+			    </div>
 		    <div class="form-group">
 		      <label>전화번호</label>
 		      <div class="form-inline">
@@ -200,23 +232,37 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 			      <input type="text" class="form-control" id="mem_tel3" name="mem_tel3" value="${userInfo.mem_tel3}" style="width:116px" maxlength="4">
 		  	  </div>
 		    </div>
-		    <div class="form-group">
-		      <label>주소</label>
-		      <div class="form-inline" style="margin-bottom:10px">
-		      <input type="text" class="form-control" readonly="readonly" id="mem_zipcode1" name="mem_zipcode1" value="${userInfo.mem_zipcode1}" style="width:200px; margin-right:10px">
-		      <input type="hidden" class="form-control" readonly="readonly" id="mem_zipcode2" name="mem_zipcode2" value="${userInfo.mem_zipcode2}" style="width:200px; margin-right:10px">
-			  <button type="button" class="btn btn-primary" id="zipsearchBtn" onclick="javascript:juso();">우편번호검색</button>
-		      </div>
-		      <input type="text" class="form-control" readonly="readonly" id="mem_address1" name="mem_address1" value="${userInfo.mem_address1}" style="margin-bottom:10px">
-		      <label>상세주소</label>
-		      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2" value="${userInfo.mem_address2}">
-		    </div>   
-		  
+		    <c:if test="${userInfo.mem_social == 0}">
+			    <div class="form-group">
+			      <label>주소</label>
+			      <div class="form-inline" style="margin-bottom:10px">
+			      <input type="text" class="form-control" readonly="readonly" id="mem_zipcode1" name="mem_zipcode1" value="${userInfo.mem_zipcode1}" style="width:200px; margin-right:10px">
+			      <input type="hidden" class="form-control" readonly="readonly" id="mem_zipcode2" name="mem_zipcode2" value="${userInfo.mem_zipcode2}" style="width:200px; margin-right:10px">
+				  <button type="button" class="btn btn-primary" id="zipsearchBtn" onclick="javascript:juso();">우편번호검색</button>
+			      </div>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address1" name="mem_address1" value="${userInfo.mem_address1}" style="margin-bottom:10px">
+			      <label>상세주소</label>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2" value="${userInfo.mem_address2}">
+			    </div>   
+		  	</c:if>
+		  	<c:if test="${userInfo.mem_social != 0}">
+			    <div class="form-group">
+			      <label>주소</label>
+			      <div class="form-inline" style="margin-bottom:10px">
+			      <input type="text" class="form-control" readonly="readonly" id="mem_zipcode1" name="mem_zipcode1"  style="width:200px; margin-right:10px">
+			      <input type="hidden" class="form-control" readonly="readonly" id="mem_zipcode2" name="mem_zipcode2" style="width:200px; margin-right:10px">
+				  <button type="button" class="btn btn-primary" id="zipsearchBtn" onclick="javascript:juso();">우편번호검색</button>
+			      </div>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address1" name="mem_address1" style="margin-bottom:10px">
+			      <label>상세주소</label>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2">
+			    </div>   
+		  	</c:if>
 		    <div class="g-recaptcha" data-sitekey="6LfDVEEUAAAAALwm3xwWfCO2rv5S6zE0sXbrTqPg">
 		    </div><br>
 			
 		  	<div style="text-align:center">
-		    <button type="button" id="modifyBtn" class="btn btn-primary">수정완료</button>
+		    	<button type="button" id="modifyBtn" class="btn btn-primary">수정완료</button>
 		    </div>
 	    </div>
 	 </fieldset>

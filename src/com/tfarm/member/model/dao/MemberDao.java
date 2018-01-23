@@ -12,7 +12,10 @@ public interface MemberDao {
 	int idCheck(String id);
 	int pwCheck(Map<String,String> map);
 	String bringPw(String number);
-	int modifyMember(MemberDetailDto memberDetailDto);
+	void modifyMember(MemberDetailDto memberDetailDto);
+	void modifyDetail(MemberDetailDto memberDetailDto);
+	
+	
 	List<ZipDto> zipSearch(String dong);
 	int registerMember(MemberDetailDto memberDetailDto);
 	int socialRegister(Map<String, String> map);

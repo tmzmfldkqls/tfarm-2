@@ -28,17 +28,21 @@ $(document).ready(function(){
 	      <label for="exampleInputPassword1">Password</label>
 	      <input type="password" class="form-control" id="mem_pw" name="mem_pw" placeholder="Enter Password">
 	    </div>
-		<div style="width:100%">
+		<div style="width:100%; margin-bottom:20px">
 	    	<button type="button" id="loginBtn" class="btn btn-primary" style="width:100%">LOGIN</button>
 		</div>
-	<a id="kakao-login-btn" href="javascript:loginWithKakao()"></a>
-    <a href="http://developers.kakao.com/logout"></a>
-    <!-- <div id="naverIdLogin"></div> 네이버로그인 보류 -->
-    <!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button> -->
-    <div class="fb-login-button" data-size="large" data-button-type="continue_with" data-auto-logout-link="true"  onlogin="fbLogin();"></div>
-   <!--  scope="public_profile,email,publish_pages,manage_pages" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" -->
-    <a href="#">아이디 찾기</a>
-	<a href="#">비밀번호 찾기</a>
+		<div style="text-align: center;">
+			<a id="kakao-login-btn" href="javascript:loginWithKakao()"></a>
+		    <a href="http://developers.kakao.com/logout"></a>
+		    <!-- <div id="naverIdLogin"></div> 네이버로그인 보류 -->
+		    <!-- <div class="fb-login-button" size="large" data-button-type="continue_with" onlogin="fbLogin();"></div> -->
+		   	<a href="#" onclick="fbLogin();"><img src="${root}/img/facebook.png" style="width: 56%; height: 50px;"></a>
+		   <!--  scope="public_profile,email,publish_pages,manage_pages" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" -->
+	    </div><br>
+	    <div>
+		    <a href="#">아이디 찾기</a>
+			<a href="#">비밀번호 찾기</a>
+		</div>
 	</div>
 	
 	<!-- ---------------------------------------------카카오---------------------------------------- -->
@@ -76,20 +80,15 @@ $(document).ready(function(){
       </script>
       
       <!-- ---------------------------------------------카카오끝---------------------------------------- -->
-      <!-- ---------------------------------------------페이스북 시작---------------------------------------- -->
-      
-      
-		<script>
-			      
+      <!-- ---------------------------------------------페이스북 시작---------------------------------------- -->   
+		<script>			      
 		    function fbLogin() {
 		    	// 로그인 여부 체크
-		    	FB.getLoginStatus(function(response) {
-
+		    	FB.login(function(response) {
 		    		if (response.status === 'connected') {
 		    			 getMyprofile();
 		    		} else if (response.status === 'not_authorized') {
 		    			// 사람은 Facebook에 로그인했지만 앱에는 로그인하지 않다
-		    			alert('앱에 로그인해야 이용가능한 기능입니다.');
 		    		} else {
 		    			// 그 사람은 Facebook에 로그인하지 않았으므로이 앱에 로그인했는지 여부는 확실하지 않다
 		    			alert('페이스북에 로그인해야 이용가능한 기능입니다.');
@@ -111,7 +110,7 @@ $(document).ready(function(){
 		    window.fbAsyncInit = function() {
 		    	FB.init({
 		    		appId   : '191953874874648',
-		    		cookie  : true,
+		    		cookie  :  true,
 		    		xfbml   : true,
 		    		version : 'v2.11'
 		    	});
