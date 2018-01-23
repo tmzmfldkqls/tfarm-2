@@ -13,6 +13,6 @@ public interface BoardService {
 	int replyArticle(ReboardDto reboardDto);
 	BoardDto viewArticle(int seq);
 	List<ReboardDto> listArticle(Map<String, String> map);
-	void modifyArticle(ReboardDto reboardDto);
-	void deleteArticle(int seq);
+	int modifyArticle(ReboardDto reboardDto);
+	int deleteArticle(int seq);
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 import com.tfarm.admin.board.model.BoardListDto;
 import com.tfarm.admin.board.service.BoardAdminService;
@@ -103,6 +102,7 @@ public class BoardController {
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("Seq==="+seq);
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		System.out.println(category);
 		BoardDto boardDto = boardService.viewArticle(seq);
@@ -111,6 +111,52 @@ public class BoardController {
 		mav.addObject("category", category);
 		mav.setViewName("/WEB-INF/notice/view");
 		
+		return mav;
+	}
+	
+	@RequestMapping(value="/delete.tfarm", method=RequestMethod.GET)
+	public ModelAndView delete(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("삭제할 Seq==="+seq);
+		int cnt= boardService.deleteArticle(seq);
+		System.out.println("삭제성공??==="+cnt);
+		mav.addObject("querystring", map);
+		if(cnt!=0){
+			mav.setViewName("/WEB-INF/notice/deleteok");
+		}else{
+			mav.setViewName("/WEB-INF/notice/deletefail");
+		}
+		return mav;
+	}
+	@RequestMapping(value="/modify.tfarm", method=RequestMethod.GET)
+	public ModelAndView modify(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("수정할 Seq==="+seq);
+		BoardDto boardDto = boardService.viewArticle(seq);
+		mav.addObject("querystring", map);
+		mav.addObject("article", boardDto);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/notice/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
+	public ModelAndView modify(ReboardDto reboardDto, @RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(map.get("seq"));
+		int cnt = boardService.modifyArticle(reboardDto);
+		System.out.println(cnt);
+		mav.addObject("querystring", map);
+		mav.addObject("seq", seq);
+		if (cnt != 0) {
+			mav.setViewName("/WEB-INF/notice/writeok");
+		} else {
+			mav.setViewName("/WEB-INF/notice/writefail");
+		}
+
 		return mav;
 	}
 }

@@ -46,7 +46,7 @@
 
 			<div class="form-group">
 				<div style="float: left">
-					<c:if test="${userInfo.mem_id eq article.id}">
+					<c:if test="${userInfo.mem_id eq article.id||userInfo.mem_state == 1}">
 						<button class="btn btn-secondary" type="button">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정
 						</button>
@@ -62,12 +62,10 @@
 							<i class="fa fa-reply" aria-hidden="true"></i> 답변
 						</button>
 					</c:if>
-					<button class="btn btn-secondary" type="button">
+					<button class="btn btn-secondary" type="button" onclick="javascript:listArticle('${bcode}', '${pg}', '${key}', '${word}')">
 						<i class="fa fa-list" aria-hidden="true"></i> 목록
 					</button>
 				</div>
-
-
 			</div>
 
 
@@ -89,7 +87,12 @@
 		</div>
 	</div>
 </div>
-
+<c:if test="${article == null}">
+<script>
+alert("글이 삭제되었거나 존재하지 않는 글입니다.");
+listArticle('${bcode}', '${pg}', '${key}', '${word}');
+</script>
+</c:if>
 
 
 <!-- ******************우리가 코딩해야하는 부분 끝********************** -->

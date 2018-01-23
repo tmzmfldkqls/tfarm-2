@@ -30,3 +30,25 @@ function viewArticle(bcode, pg, key, word, seq) {
 	document.getElementById("commonForm").action = root + control + "/view.tfarm";
 	document.getElementById("commonForm").submit();
 }
+
+function deleteArticle(bcode, pg, key, word, seq) {
+	document.getElementById("bcode").value = bcode;
+	document.getElementById("pg").value = pg;
+	document.getElementById("key").value = key;
+	document.getElementById("word").value = word;
+	document.getElementById("seq").value = seq;
+	
+	document.getElementById("commonForm").action = root + control + "/delete.tfarm";
+	document.getElementById("commonForm").submit();
+}
+
+function modifyArticle(bcode, pg, key, word, seq){
+	document.getElementById("bcode").value = bcode;
+	document.getElementById("pg").value = pg;
+	document.getElementById("key").value = key;
+	document.getElementById("word").value = word;
+	document.getElementById("seq").value = seq;
+	
+	document.getElementById("commonForm").action = root + control + "/modify.tfarm";
+	document.getElementById("commonForm").submit();
+}

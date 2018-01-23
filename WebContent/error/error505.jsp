@@ -36,7 +36,7 @@
 		  </div>
 		</div>
 		<p class="lead" style=" text-align: center;">
-			<a class="btn btn-primary btn-lg" role="button" href="#">메인으로</a>
+			<a class="btn btn-primary btn-lg" role="button" href="<%=root%>/index.jsp">메인으로</a>
 		</p> 
 	</center>
 </body>
