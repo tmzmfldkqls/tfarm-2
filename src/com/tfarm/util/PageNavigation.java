@@ -102,29 +102,22 @@ public class PageNavigation {
 		StringBuffer tmpNavigator = new StringBuffer();
 
 		int pageSize = BoardConstance.PAGE_SIZE;
-		
-		tmpNavigator.append("<table cellpadding='0' cellspacing='0' border='0'>\n");
-		tmpNavigator.append(" <tr>\n");
+		tmpNavigator.append("<div style='padding-left:400px; padding-top:100px; padding-bottom:50px'>\n");
+		tmpNavigator.append("<ul class='pagination'>\n");
 		if (this.isNowFirst()) {
-			tmpNavigator.append("  <td><font color='#999999'>\n<a href=\"javascript:listArticle('" + bcode + "', '1', '', '');\">");
-			tmpNavigator.append("   <img src='" + root + "/img/board/icon_prev02.gif' width='7' height='11' border='0' align='absmiddle' hspace='3'>최신목록</a>\n");
-			tmpNavigator.append("   <img src='" + root + "/img/board/icon_prev01_dim.gif' width='3' height='11' border='0' align='absmiddle' hspace='3'>\n");
-			tmpNavigator.append("   이전</font>\n");
+			tmpNavigator.append("<li class='page-item'>\n");
+			tmpNavigator.append("<a class='page-link' href=\"javascript:listArticle('" + bcode + "', '1', '', '');\">&laquo;&laquo;</a></li>\n");
+			tmpNavigator.append("<li class='page-item'>\n");
+			tmpNavigator.append("<a class='page-link'>&laquo;</a>\n");
+
 		} else {
 			int prePage = (pageNo - 1) / pageSize * pageSize;
-			tmpNavigator.append("  <td>\n<a href=\"javascript:listArticle('" + bcode + "', '1', '', '');\">");
-			tmpNavigator.append("   <img src='" + root + "/img/board/icon_prev02.gif' width='7' height='11' border='0' align='absmiddle' hspace='3'>최신목록 </a>\n");
-			tmpNavigator.append("   <a href=\"javascript:listArticle('" + bcode + "', '" + prePage + "', '" + key + "', '" + word + "');\">");
-			tmpNavigator.append("   <img src='" + root + "/img/board/icon_prev01_dim.gif' width='3' height='11' border='0' align='absmiddle' hspace='3'>\n");
-			tmpNavigator.append("   이전</a>");
+			tmpNavigator.append("<li class='page-item'>\n");
+			tmpNavigator.append(" <a class='page-link' href=\"javascript:listArticle('" + bcode + "', '1', '', '');\"'>&laquo;&laquo;</a></li>\n");
+			tmpNavigator.append("<li class='page-item'>\n");
+			tmpNavigator.append("<a class='page-link' href=\"javascript:listArticle('" + bcode + "', '" + prePage + "', '" + key + "', '" + word + "');\">&laquo;</a>\n");
+
 		}
-		tmpNavigator.append("  \n</td>\n");
-		tmpNavigator.append("  <td style='padding: 0 5 0 5'>\n");
-		tmpNavigator.append("   <table cellpadding='0' cellspacing='0' border='0'>\n");
-		tmpNavigator.append("    <tr>\n");
-		tmpNavigator.append("     <td width='1' nowrap><img src='" + root + "/img/board/n_tab.gif' width='1'");
-		tmpNavigator.append(" height='11' border='0' align='absmiddle'><br>");
-		tmpNavigator.append("     </td>\n");
 		
 		int startPage = (pageNo - 1) / pageSize * pageSize + 1;
 		int endPage = startPage + pageSize - 1;
@@ -133,39 +126,35 @@ public class PageNavigation {
 		
 		for (int i = startPage; i <= endPage; i++) {
 			if (pageNo == i) {
-				tmpNavigator.append("     <td style='padding:0 7 0 7;' nowrap><font class='text_acc_02'><b>" + i + "</b></font></td>\n");
-				tmpNavigator.append("     <td width='1' nowrap><img src='" + root + "/img/board/n_tab.gif' width='1'");
-				tmpNavigator.append(" height='11' border='0' align='absmiddle'><br>\n");
+				tmpNavigator.append("<li class='page-item'>\n");
+				tmpNavigator.append("<a class='page-link'>"+i+"</a>\n");
+				tmpNavigator.append("</li>\n");
 			} else {
-				tmpNavigator.append("     <td style='padding:0 7 0 7;' nowrap><a href=\"javascript:listArticle('" + bcode + "', '" + i + "', '" + key + "', '" + word + "');\">" + i + "</td>\n");
-				tmpNavigator.append("     <td width='1' nowrap><img src='" + root + "/img/board/n_tab.gif' width='1'");
-				tmpNavigator.append(" height='11' border='0' align='absmiddle'><br>\n");
+				tmpNavigator.append("<li class='page-item'>\n");
+				tmpNavigator.append("<a class='page-link' href=\"javascript:listArticle('" + bcode + "', '" + i + "', '" + key + "', '" + word + "');\">"+i+"</a>\n");
+				tmpNavigator.append("</li>");
 			}
 		}
-		tmpNavigator.append("     </td>\n");
-		tmpNavigator.append("    </tr>\n");
-		tmpNavigator.append("   </table>\n");
-		tmpNavigator.append("  </td>\n");
-		tmpNavigator.append("  <td>\n");
 		
 		if (this.isNowEnd()) {
-			tmpNavigator.append("   <font color='#999999'>다음<img");
-			tmpNavigator.append("   src='" + root + "/img/board/icon_next01_dim.gif' width='3' height='11'");
-			tmpNavigator.append(" border='0' align='absmiddle' hspace='3'> \n");
-			tmpNavigator.append("   끝목록<img src='" + root + "/img/board/icon_next02_dim.gif' width='7' height='11'");
-			tmpNavigator.append(" border='0' align='absmiddle' hspace='3'></font>\n");
+			tmpNavigator.append("<li class='page-item'>");
+			tmpNavigator.append("<a class='page-link'>&raquo;</a>");
+			tmpNavigator.append("</li>");
+			tmpNavigator.append(" <li class='page-item'>");
+			tmpNavigator.append("<a class='page-link'>&raquo;&raquo;</a>");
+			tmpNavigator.append("</li>");
 		} else {
 			int nextPage = (pageNo - 1) / pageSize * pageSize + pageSize + 1;//(pageNo + pageSize - 1) / pageSize * pageSize + 1
-			tmpNavigator.append("   <a href=\"javascript:listArticle('" + bcode + "', '" + nextPage + "', '" + key + "', '" + word + "');\">다음<img");
-			tmpNavigator.append(" src='" + root + "/img/board/icon_next01_dim.gif' width='3' height='11'");
-			tmpNavigator.append(" border='0' align='absmiddle' hspace='3'></a>\n");
-			tmpNavigator.append("   <a href=\"javascript:listArticle('" + bcode + "', '" + totalPageCount + "', '" + key + "', '" + word + "');\">끝목록<img src='" + root + "/img/board/icon_next02_dim.gif' width='7' height='11'");
-			tmpNavigator.append(" border='0' align='absmiddle' hspace='3'>\n");
+			tmpNavigator.append("<li class='page-item'>");
+			tmpNavigator.append("<a class='page-link' href=\"javascript:listArticle('" + bcode + "', '" + nextPage + "', '" + key + "', '" + word + "');\">&raquo;</a>");
+			tmpNavigator.append("</li>");
+			tmpNavigator.append(" <li class='page-item'>");
+			tmpNavigator.append("<a class='page-link' href=\"listArticle('" + bcode + "', '" + totalPageCount + "', '" + key + "', '" + word + "');\">&raquo;&raquo;</a>");
+			tmpNavigator.append("</li>");
 		}
 
-		tmpNavigator.append("  </td>\n");
-		tmpNavigator.append(" </tr>\n");
-		tmpNavigator.append("</table>\n");
+		tmpNavigator.append("  </ul>\n");
+		tmpNavigator.append(" </div>\n");
 
 		this.navigator = tmpNavigator.toString();
 	}
