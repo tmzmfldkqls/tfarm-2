@@ -28,7 +28,7 @@ root = "${root}";
     <c:if test="${userInfo != null}">
     	 <ul class="navbar-nav mr-auto navbar-right" >
 	      <li class="nav-item active">
-	        <a class="nav-link" href="#">${userInfo.mem_id}님 안녕하세요</a>
+	        <a class="nav-link" href="#">${userInfo.mem_name}님 안녕하세요</a>
 	      </li>
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
