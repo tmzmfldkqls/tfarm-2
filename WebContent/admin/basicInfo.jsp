@@ -1,9 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+//열자마자 기본 정보 보이도록
+	$(document).ready(function() {
+		$.ajax({
+			url : "${root}/admin/basicInfo.tfar",
+			dataType : "json",
+			success : function(data) {
+				showBasicInfo(data);
+			}
+		});
+	});
 
+	//테이블 그리기
+	function showBasicInfo(data) {
+		
+	}
+</script>
 	<!-- 단순누적량-->
 	<h6>
-		<strong> >총 누적 </strong><span><img src="${root }/img/linSec01.gif" alt="" > 
+		<strong> >총 누적 </strong><span><img src="${root}/img/linSec01.gif" alt="" > 
 		<small>개설일(2018.01.04)이후 어제까지 누적된 수치 입니다</small></span>
 	</h6>
 	<br>

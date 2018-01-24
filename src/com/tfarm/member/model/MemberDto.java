@@ -8,7 +8,14 @@ public class MemberDto{
 	private String mem_name;
 	private String mem_birth;
 	private int mem_state;
+	private int mem_social;
 	
+	public int getMem_social() {
+		return mem_social;
+	}
+	public void setMem_social(int mem_social) {
+		this.mem_social = mem_social;
+	}
 	public int getMem_no() {
 		return mem_no;
 	}

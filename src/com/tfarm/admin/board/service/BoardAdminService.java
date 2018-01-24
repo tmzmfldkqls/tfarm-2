@@ -1,6 +1,7 @@
 package com.tfarm.admin.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tfarm.admin.board.model.BoardListDto;
 import com.tfarm.member.model.MemberDetailDto;
@@ -10,6 +11,9 @@ public interface BoardAdminService {
 
 	List<BoardListDto> boardMenu();
 
-	List<MemberDetailDto> memberList();
+	List<MemberDetailDto> memberList(Map<String, String> map);
+
+	int memberDelete(int[] amno);
 	
+	Map<String, Integer>basicInfo();
 }

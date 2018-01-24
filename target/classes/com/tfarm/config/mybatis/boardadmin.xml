@@ -13,11 +13,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from board_list bl, category c 
         where bl.ctype = c.ctype 
         order by bl.bcode
-    </select>  
-    
-    <select id="memberList" resultType="com.tfarm.member.model.MemberDetailDto">
-        select p.mem_no, p.mem_id, d.mem_email1,d.mem_email2,p.mem_state,d.mem_join_date
+    </select>    
+   
+    <select id="memberList" parameterType="java.util.Map" resultType="com.tfarm.member.model.MemberDetailDto">
+        select  p.mem_birth,p.mem_name, p.mem_no, p.mem_id, d.mem_email1,d.mem_email2,p.mem_state,
+                d.mem_join_date,d.mem_tel1,d.mem_tel2,d.mem_tel3,d.mem_zipcode1,d.mem_zipcode2,
+                d.mem_address1,d.mem_address2
         from member p, member_detail d
         where p.mem_no = d.mem_no
-    </select>   
+        <if test="word != null and word != ''">
+            <if test="key == 'ID'">
+                AND p.mem_id like '%'||#{word}||'%'
+            </if>
+            <if test="key == 'STATE'" >
+                AND p.mem_state like '%'||#{word}||'%'
+            </if>
+        </if>
+    </select>  
+    
+    <delete id="memberDelete" parameterType="int">
+         delete from member
+         where mem_no = #{mno}
+    </delete>
+    
+    <delete id="memberDetailDelete" parameterType="int">
+        delete from member_detail
+        where mem_no = #{mno}
+    </delete>
+    
+    <select id="totalmember" resultType="int">
+        select count(*) totalmember from member;
+    </select>
+    <select id="totalacticle" resultType="int">
+        select count(*) totalacticle from board;
+    </select>
+    <select id="totalmemo" resultType="int">
+        select count(*) totalmemo from memo;
+    </select>
 </mapper>

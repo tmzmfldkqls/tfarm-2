@@ -24,7 +24,7 @@ public class BoardAdminController {
 	@RequestMapping("/boardmenu.kitri")
 	public String boardMenu(HttpServletRequest request) {
 		List<BoardListDto> list = boardAdminService.boardMenu();
-		System.out.println("갯수 : " + list.size());
+		System.out.println(" : " + list.size());
 		ServletContext context = request.getServletContext();
 		context.setAttribute("boardmenu", list);
 		return "redirect:/index.jsp";
