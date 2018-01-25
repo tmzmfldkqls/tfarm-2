@@ -39,8 +39,8 @@ $(document).ready(function(){
 		   	<a href="#" onclick="fbLogin();"><img src="${root}/img/facebook.png" style="width: 56%; height: 50px;"></a>
 		   <!--  scope="public_profile,email,publish_pages,manage_pages" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="true" data-auto-logout-link="true" data-use-continue-as="true" -->
 	    </div><br>
-	    <div>
-		    <a href="#">아이디 찾기</a>
+	    <div style="text-align: center;">
+		    <a href="${root}/user/idfind.tfarm">아이디 찾기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="#">비밀번호 찾기</a>
 		</div>
 	</div>

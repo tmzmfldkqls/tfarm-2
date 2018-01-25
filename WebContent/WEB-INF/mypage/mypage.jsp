@@ -18,9 +18,6 @@
       <a id="infoMenu" class="nav-link" data-toggle="pill" href="#infomodify">회원정보수정</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="pill" href="#menu2">비밀번호 변경</a>
-    </li>
-    <li class="nav-item">
       <a class="nav-link" data-toggle="pill" href="#menu3">통계?</a>
     </li>
   </ul>
@@ -28,25 +25,25 @@
    <!-- Tab panes -->
    <div class="tab-content" style="margin-top:  60px;">
     <div id="home" class="container tab-pane active card" style="border:  0px;">
-     	<div class="container-fluid bg-3 text-center" style="border:3px solid black">    
+     	<div class="container-fluid bg-3 text-center" style="border:3px solid gray">    
 		  <div class="row">
-		    <div class="col-sm-3">
+		    <div class="col-sm-6">
 		      <p>내가 쓴 글</p>
 		      <!-- <img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"> -->
 		      <span>0건</span>
 		    </div>
-		    <div class="col-sm-3"> 
+		    <div class="col-sm-6"> 
 		      <p>내가 쓴 댓글</p>
 		      <span>0건</span>
 		    </div>
-		    <div class="col-sm-3"> 
+<!-- 		    <div class="col-sm-3"> 
 		      <p>Some text..</p>
 		      
 		    </div>
 		    <div class="col-sm-3">
 		      <p>Some text..</p>
 		      
-		    </div>
+		    </div> -->
 		  </div>
 		</div>
 		
@@ -98,8 +95,51 @@
     </div>
     
 <script type="text/javascript">
-
+var idflag = false;
 $(document).ready(function(){
+	
+	$("#mem_id").keyup(function() {
+		var output = '아이디는 4자 이상 20자 이하입니다.';
+		var sid = $("#mem_id").val();		
+		if(sid.length >= 4 && sid.length <= 20) {
+			if(chkid($.trim(sid))){
+				$.ajax({
+					type: 'GET',
+					dataType:'json',
+					url:'${root}/user/idcheck.tfarm',
+					data:{'sid':sid},
+					success: function(data){
+						if(data.idcount == '0'){
+							idflag = true;
+							output = '<font color="blue"><b>' + data.sid + "</b></font>는 사용가능합니다";
+						}else{
+							idflag = false;
+							output = '<font color="red"><b>' + data.sid + "</b></font>는 사용중입니다";
+						}
+						$("#idinfo").empty();
+						$("#idinfo").append(output);
+					}			
+				});		
+			}			
+		}else{
+			idflag = false;
+			$("#idinfo").empty();
+			$("#idinfo").append(output);
+		}		
+		function chkid(str){
+			var id = str;
+			var spe = id.search(/[`~!@@#$%^&*|;:]/gi);
+			var eng = id.search(/[a-z]/ig);
+			var num = id.search(/[0-9]/g);
+			if(spe > 0){
+				$("#idinfo").empty();
+				$("#idinfo").append("특수문자는 입력하실 수 없습니다.");
+				return false;
+			}else{			
+				return true;
+			}		
+		}
+	});
 	
 	$("#infoMenu").click(function() {
 		var mem_no = '${userInfo.mem_no}';
@@ -142,7 +182,9 @@ $(document).ready(function(){
 		var mem_no = ${userInfo.mem_no};
 		alert(mem_social+ "    " + mem_no);
 		if(mem_social == 0){
-			if($("#mem_pw").val() == "") {
+			if(!idflag){
+				alert("아이디를  입력하세요.");
+			} else if($("#mem_pw").val() == "") {
 				alert("비밀번호를 입력하세요!!!!");
 				return;
 			} else if($("#mem_pw").val() != $("#passcheck").val()) {
@@ -199,7 +241,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 		    </c:if>
 			<div class="form-group">
 		      <label>아이디</label>
-		      <input type="text" class="form-control" id="mem_id" name="mem_id" value="${userInfo.mem_id}" placeholder="Enter ID" onkeyup="javascript:idcheck();">
+		      <input type="text" class="form-control" id="mem_id" name="mem_id" value="${userInfo.mem_id}" placeholder="Enter ID">
 		      <small id="idinfo" class="form-text text-muted">아이디는 4자이상 20자 이하입니다</small>
 		    </div>
 		     <c:if test="${userInfo.mem_social == 0}">
@@ -245,7 +287,20 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 			      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2" value="${userInfo.mem_address2}">
 			    </div>   
 		  	</c:if>
-		  	<c:if test="${userInfo.mem_social != 0}">
+		  	<c:if test="${userInfo.mem_social != 0 && userInfo.mem_zipcode1 != null}">
+		  		<div class="form-group">
+			      <label>주소</label>
+			      <div class="form-inline" style="margin-bottom:10px">
+			      <input type="text" class="form-control" readonly="readonly" id="mem_zipcode1" name="mem_zipcode1" value="${userInfo.mem_zipcode1}" style="width:200px; margin-right:10px">
+			      <input type="hidden" class="form-control" readonly="readonly" id="mem_zipcode2" name="mem_zipcode2" value="${userInfo.mem_zipcode2}" style="width:200px; margin-right:10px">
+				  <button type="button" class="btn btn-primary" id="zipsearchBtn" onclick="javascript:juso();">우편번호검색</button>
+			      </div>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address1" name="mem_address1" value="${userInfo.mem_address1}" style="margin-bottom:10px">
+			      <label>상세주소</label>
+			      <input type="text" class="form-control" readonly="readonly" id="mem_address2" name="mem_address2" value="${userInfo.mem_address2}">
+			    </div>  
+		  	</c:if>
+		  	<c:if test="${userInfo.mem_social != 0 && userInfo.mem_zipcode1 == null}">
 			    <div class="form-group">
 			      <label>주소</label>
 			      <div class="form-inline" style="margin-bottom:10px">
@@ -259,8 +314,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 			    </div>   
 		  	</c:if>
 		    <div class="g-recaptcha" data-sitekey="6LfDVEEUAAAAALwm3xwWfCO2rv5S6zE0sXbrTqPg">
-		    </div><br>
-			
+		    </div><br>		
 		  	<div style="text-align:center">
 		    	<button type="button" id="modifyBtn" class="btn btn-primary">수정완료</button>
 		    </div>

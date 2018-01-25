@@ -20,7 +20,7 @@
     <insert id="socialRegister" parameterType="java.util.Map">
         insert all
             into member(mem_no,mem_id,mem_name,mem_state,mem_pw,mem_social)
-            values(seq_mem_no.nextval,#{userid},#{username},0,#{userid},1)
+            values(seq_mem_no.nextval,#{userid},#{username},0,#{userpw},1)
             into member_detail(mem_no,mem_email1,mem_email2,mem_join_date)
             values(seq_mem_no.currval,#{useremail1},#{useremail2},sysdate)
         select * from dual
@@ -35,7 +35,7 @@
     <select id="socialLogin" parameterType="String" resultType="com.tfarm.member.model.MemberDetailDto">
         select m.mem_no, mem_id, mem_name,mem_social, mem_birth, mem_join_date, mem_state, mem_email1, mem_email2, mem_tel1, mem_tel2, mem_tel3, mem_zipcode1, mem_address1, mem_address2
         from member m, member_detail d
-        where m.mem_no= d.mem_no and mem_id = #{id}
+        where m.mem_no= d.mem_no and m.mem_pw = #{userpwd}
     </select>
     
     <select id="pwCheck" parameterType="java.util.Map" resultType="int">
@@ -65,6 +65,24 @@
             mem_zipcode1 = #{mem_zipcode1}, mem_zipcode2 = #{mem_zipcode2}, 
             mem_address1 = #{mem_address1}, mem_address2 = #{mem_address2}
         where mem_no = #{mem_no}
+    </update>
+    
+    <select id="getSoInfo" parameterType="int" resultType="com.tfarm.member.model.MemberDetailDto">
+        select m.mem_no, mem_id, mem_name,mem_social, mem_birth, mem_join_date, mem_state, mem_email1, mem_email2, mem_tel1, mem_tel2, mem_tel3, mem_zipcode1, mem_address1, mem_address2
+        from member m, member_detail d
+        where m.mem_no= d.mem_no and m.mem_no = #{memNo}
+    </select>
+    
+    <select id="idfind" parameterType="java.util.Map" resultType="String">
+        select mem_id
+        from member m, member_detail d
+        where mem_name = #{name} and mem_email1 = #{email}
+    </select>
+    
+    <update id="pwUpdate" parameterType="java.util.Map">
+        update member
+        set mem_pw = #{joincode}
+        where mem_id = #{id}
     </update>
     
 </mapper>
