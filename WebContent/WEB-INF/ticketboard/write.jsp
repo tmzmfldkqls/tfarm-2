@@ -12,7 +12,9 @@ function writeTicket() {
 			alert("내용입력!!!");
 			return;
 		} else {
-			document.writeForm.action = root + control + "/write.tfarm";
+			console.log("글쓰기 >>>>>"+$("#sbcode").val());
+			$("#wbcode").val($("#sbcode").val());
+			document.writeForm.action = "${root}/ticket/write.tfarm";
 			document.writeForm.submit();
 		}
 	}
@@ -26,8 +28,9 @@ function writeTicket() {
 	style="margin: 0px">
 <div id="attach_file_hdn"></div>
 
-<input type="hidden" name="bcode" value="${bcode}">
-<input type="hidden" name="pg" value="1">
+<input type="hidden" id="wbcode" name="bcode" value="">
+<input type="hidden" name="pg" value
+="1">
 <input type="hidden" name="key" value="">
 <input type="hidden" name="word" value="">
 
@@ -36,14 +39,14 @@ function writeTicket() {
       <label for="writeTicket" >티켓올리기</label>
       <br>
       <div class="form-group">
-  <input type="text" class="form-control" placeholder="글 제목을 입력해주세요" id="inputSubject">
+  <input type="text" class="form-control" placeholder="글 제목을 입력해주세요" id="subject" name ="subject">
 </div>
 </div>
       
 <!-- 게시판 리스트 -->
 <div class="form-group" style="float:left; margin-right: 6px;">
 <div style="float:left;">   
-    <select name="bcode" class="custom-select">
+    <select id="sbcode" class="custom-select">
       <option selected="">티켓종류</option>
       <option value="4">뮤지컬</option>
       <option value="5">콘서트</option>
@@ -81,7 +84,7 @@ function writeTicket() {
 
 <!-- 내용 작성 -->
 	<div>
-	<textarea class="form-control" id="writeBoard" rows="20"></textarea>
+	<textarea name="content" class="form-control" id="content" rows="20"></textarea>
     </div>
 <!-- 내용 작성 -->
 

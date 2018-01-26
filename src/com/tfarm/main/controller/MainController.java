@@ -41,8 +41,6 @@ public class MainController {
 	@RequestMapping(value="totallist.tfarm")
 	public @ResponseBody String totallist(){
 		List<BoardDto> blist = mainService.boardlist();
-//		List<TicketDto> tlist = mainService.ticketlist();
-//		List<BoardDto> nlist = mainService.noticelist();
 		
 		JSONObject json = new JSONObject();
 		JSONArray jarray = new JSONArray();
@@ -58,14 +56,11 @@ public class MainController {
 		}
 		
 		json.put("blist", jarray);
-		System.out.println(json.toJSONString());
 		return json.toJSONString();
 	}
 	
 	@RequestMapping(value="totallist1.tfarm")
 	public @ResponseBody String totallist1(){
-//		List<BoardDto> blist = mainService.boardlist();
-//		List<TicketDto> tlist = mainService.ticketlist();
 		List<BoardDto> nlist = mainService.noticelist();
 		
 		JSONObject json = new JSONObject();
@@ -76,14 +71,11 @@ public class MainController {
 			board.put("id", boardDto.getId());
 			board.put("hit", boardDto.getHit());
 			board.put("seq", boardDto.getSeq());
-			board.put("bcode",boardDto.getBcode());
-			
-						
+			board.put("bcode",boardDto.getBcode());						
 			jarray.add(board);
 		}
 		
 		json.put("nlist", jarray);
-		System.out.println(json.toJSONString());
 		return json.toJSONString();
 	}
 	
@@ -103,21 +95,19 @@ public class MainController {
 			ticket.put("seq", ticketDto.getSeq());
 			ticket.put("bcode",ticketDto.getBcode());
 			ticket.put("save_picture", ticketDto.getSave_picture());
-			System.out.println(ticketDto.getSeq());
-			System.out.println("tlist size>>>"+ tlist.size());	
 			jarray.add(ticket);
 			
 		}
 		
 		json.put("tlist", jarray);
-		System.out.println(json.toJSONString());
+	
 		return json.toJSONString();
 	}
 	
 	
 	@RequestMapping(value="view.tfarm")
 	public ModelAndView view(String seq){
-		System.out.println("noticeview>>>>"+seq);
+		
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		BoardDto boardDto = boardService.viewArticle(seq1);
@@ -125,12 +115,11 @@ public class MainController {
 		mav.addObject("article", boardDto);
 
 		return mav;
-		
 	}
 	
 	@RequestMapping(value="boardview.tfarm")
 	public ModelAndView boardview(String seq){
-		System.out.println("boardview >>>"+seq);
+		
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		ReboardDto reboardDto = reboardService.viewArticle(seq1);
@@ -143,7 +132,6 @@ public class MainController {
 	
 	@RequestMapping(value="ticketview.tfarm")
 	public ModelAndView ticketview(String seq){
-		System.out.println("ticketview>>"+ seq);
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		TicketDto ticketDto = ticketService.viewArticle(seq1);

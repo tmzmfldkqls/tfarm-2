@@ -27,8 +27,7 @@ public class TicketServiceImpl implements TicketService {
 	public TicketDto viewArticle(int seq) {
 		CommonDao commonDao = sqlSession.getMapper(CommonDao.class);
 		commonDao.updateHit(seq);
-		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);
-		
+		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);		
 		return ticketDao.viewArticle(seq);
 	}
 

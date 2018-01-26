@@ -110,7 +110,7 @@ $(document).ready(function(){
 		    window.fbAsyncInit = function() {
 		    	FB.init({
 		    		appId   : '191953874874648',
-		    		cookie  :  true,
+		    		cookie  :  false,
 		    		xfbml   : true,
 		    		version : 'v2.11'
 		    	});

@@ -15,15 +15,14 @@ control = "/ticket";
             <c:forEach varStatus="i" var="article" items="${articlelist}">
            <div class="row">
             <div class="col- md-3">              
-                  <img src="${root}/upload/${article.savefolder}/${article.save_picture}" class="img-thumbnail" alt="Lights" style="width:100%; height:130px">
-                  <div class="caption">
+                  <img src="${root}/upload/${article.savefolder}/${article.save_picture}" class="img-thumbnail" alt="Lights" style="height:200px">
+                  <div class="caption" style="text-align:center">
                   <a style="color:black;" href="javascript:viewArticle('${bcode}', '${pg}', '${key}', '${word}', '${article.seq}')">${article.subject}</a>
                   </div>              
             </div>
          </div>
          </c:forEach>
-          <!-- 리스트 끝 -->
-         
+          <!-- 리스트 끝 -->         
          <div>
 			<button type="button" class="btn btn-info" onclick="javascript:moveWrite('${bcode}');">티켓 올리기</button>
 		</div>   
