@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tfarm.admin.board.dao.BoardAdminDao;
 import com.tfarm.admin.board.model.BoardListDto;
+import com.tfarm.admin.board.model.TargetDto;
 import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 
@@ -50,5 +52,10 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		map.put("totalmemo", boardAdminDao.totalmemo());
 		
 		return map;
+	}
+	@Override
+	public List<TargetDto> wholeArticle() {
+		BoardAdminDao boardAdminDao = sqlSession.getMapper(BoardAdminDao.class);
+		return boardAdminDao.wholeArticle();
 	}
 }

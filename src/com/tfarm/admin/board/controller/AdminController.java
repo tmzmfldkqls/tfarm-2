@@ -1,5 +1,6 @@
 package com.tfarm.admin.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tfarm.admin.board.model.TargetDto;
 import com.tfarm.admin.board.service.BoardAdminService;
 import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.util.StringEncoder;
@@ -89,9 +91,32 @@ public class AdminController {
 	public @ResponseBody String basicInfo(HttpServletRequest request) {
 		
 		Map<String, Integer> basicInfo = boardAdminService.basicInfo();
-		JSONObject json = new JSONObject();		
-		json.put("basicInfo", jarray);
+		JSONObject json = new JSONObject();	
+		
+		json.put("totalmember", basicInfo.get("totalmember"));
+		json.put("totalacticle",  basicInfo.get("totalacticle"));
+		json.put("totalmemo",  basicInfo.get("totalmemo"));
+		
 		return json.toJSONString(); 		
 	}
 	
+	@RequestMapping(value="/articlegragh.tfarm", method=RequestMethod.POST)
+	public @ResponseBody String gragh(HttpServletRequest request) {
+		List<TargetDto> targets = boardAdminService.wholeArticle();
+		JSONObject json = new JSONObject();
+		JSONArray jarray = new JSONArray();
+		//일자별 아티클 개수
+		for(TargetDto target : targets) {
+			JSONObject js = new JSONObject();
+			js.put("rownum",target.getRownum());
+			js.put("logtime",StringEncoder.urlUtf(target.getLogtime() + "일"));
+			System.out.println(target.getLogtime());
+			js.put("count",target.getTarget());
+			
+			jarray.add(js);
+		}		
+		json.put("wholeArticleSet", jarray);
+
+		return json.toString(); 	
+	}
 }

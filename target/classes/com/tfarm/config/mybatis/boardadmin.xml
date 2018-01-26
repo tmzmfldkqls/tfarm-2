@@ -42,12 +42,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
     
     <select id="totalmember" resultType="int">
-        select count(*) totalmember from member;
+        select count(*) totalmember from member
     </select>
     <select id="totalacticle" resultType="int">
-        select count(*) totalacticle from board;
+        select count(*) totalacticle from board
     </select>
     <select id="totalmemo" resultType="int">
-        select count(*) totalmemo from memo;
+        select count(*) totalmemo from memo
+    </select>
+    
+    <select id="wholeArticle" resultType="com.tfarm.admin.board.model.TargetDto">
+        select rownum,logtime,target
+        from(
+                SELECT to_char(logtime, 'yymmdd')logtime , COUNT(*) target
+                FROM board
+                GROUP BY to_char(logtime, 'yymmdd')
+                order by logtime
+        )
     </select>
 </mapper>

@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script type="text/javascript">
 //열자마자 기본 정보 보이도록
 	$(document).ready(function() {
 		$.ajax({
-			url : "${root}/admin/basicInfo.tfar",
+			url : "${root}/admin/basicInfo.tfarm",
 			dataType : "json",
 			success : function(data) {
 				showBasicInfo(data);
@@ -13,9 +12,12 @@
 		});
 	});
 
-	//테이블 그리기
+	//리콜 함수
 	function showBasicInfo(data) {
 		
+		$('#totalmember').text(""+data.totalmember+"");
+		$('#totalacticle').text(""+data.totalacticle+"");
+		$('#totalmemo').text(""+data.totalmemo+"");
 	}
 </script>
 	<!-- 단순누적량-->
@@ -35,10 +37,10 @@
 	  </thead>
 	  <tbody>
 	    <tr >
-	      <td scope="row">회원</td>
-	      <td>게시글수</td>
-	      <td>댓글수</td>
-	      <td>방문수</td>
+	      <td id = "totalmember" scope="row"></td>
+	      <td id = "totalacticle" ></td>
+	      <td id = "totalmemo" ></td>
+	      <td id = "totalvisit">186</td>
 	    </tr>
 	  </tbody>
 	</table> 
