@@ -10,9 +10,6 @@
 <script>
 control = "/main";
 </script>
-
-
-
 <style>
 img {
     border: 1px solid #ddd; /* Gray border */
@@ -41,7 +38,6 @@ img:hover {
 			}
 	 	});
 	});
-
 function makelist(data) {
 	var output = "";
 	var bsize = data.blist.length;
@@ -99,6 +95,117 @@ for(var i=0;i<6;i++){
 	$("#noticelist").empty();
 	$("#noticelist").append(output);
 }
+//최신공지 ajax
+
+	$(document).ready(function() {
+		$.ajax({
+		type: 'POST',
+		dataType: 'json',
+		url: '${root}/main/totallist.tfarm',
+		success: function(data) {
+			//alert("넘어왔니???"+data.blist[0].subject);
+			makelist(data);
+			}
+	 	});
+	});
+
+function makelist(data) {
+	var output = "";
+	var bsize = data.blist.length;
+	for(var i=0;i<6;i++){
+		output += '<tr style="text-align:center">';
+		output += '<td>';
+		output += '' + decodeURI(data.blist[i].id);
+		output += '</td>';
+		output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+		output += '<a href = "${root}/main/view.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
+		output += ' ' + decodeURI(data.blist[i].subject);
+		output += '</a>';
+		output += '</td>';
+		output += '<td>';
+		output += '' + decodeURI(data.blist[i].hit);
+		output += '</td>';
+		output += '</tr>';
+		
+	}
+	
+	$("#boardlist").empty();
+	$("#boardlist").append(output);
+}
+
+
+//인기글 ajax
+
+$(document).ready(function() {
+	$.ajax({
+	type: 'POST',
+	dataType: 'json',
+	url: '${root}/main/totallist1.tfarm',
+	success: function(data) {
+		//alert("넘어왔니???"+data.blist[0].subject);
+		makelist1(data);
+		}
+ 	});
+});
+
+function makelist1(data) {
+var output = "";
+var nsize = data.nlist.length;
+for(var i=0;i<6;i++){
+	output += '<tr style="text-align:center">';
+	output += '<td>';
+	output += '' + decodeURI(data.nlist[i].id);
+	output += '</td>';
+	output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+	output += '<a href = "${root}/main/boardview.tfarm?seq='+decodeURI(data.nlist[i].seq)+'">';
+	output += ' ' + decodeURI(data.nlist[i].subject);
+	output += '</a>';
+	output += '</td>';
+	output += '<td>';
+	output += '' + decodeURI(data.nlist[i].hit);
+	output += '</td>';
+	output += '</tr>';
+	
+	}
+
+	$("#noticelist").empty();
+	$("#noticelist").append(output);
+}
+
+
+//최신티켓 ajax
+
+$(document).ready(function() {
+	//alert("넘어왔니???2");
+	$.ajax({
+	type: 'POST',
+	datatype: 'json',
+	url: '${root}/main/totallist2.tfarm',
+	success: function (data) {
+		makelist2(data);
+		}
+	});
+});
+
+function makelist2(data) {
+	var output = "";
+	var tsize = data.tlist.length;
+	alert("넘어왔니???");
+	for(var i=0;i<tsize;i++){
+		output += '<a href="${root}/main/totallist2.tfarm?seq='+decodeURI(data.tlist[i].seq)+'">';
+		output += '<img src="${root}/upload/'+ decodeURI+(data.tlist[i].save_picture)+'" class="img-rounded">';
+		output += '</a>';
+		output += '<div class="caption">';
+		output += '<p>제목</p>';
+		output += '</div>';
+		
+		
+	}
+	
+	$("#ticketlist").empty();
+	$("#ticketlist").append(output);
+}
+
 
 </script>
    <div class="col-xl-10">
@@ -109,12 +216,17 @@ for(var i=0;i<6;i++){
         	<div class="row">
 				<div class="col-md-3">
 					<div class="thumbnail" id="ticketlist">
+					<!--  
+>>>>>>> refs/remotes/origin/Hanpil
 					<a href="javascript:ticketView();">
   						<img src="${root}/img/1.PNG" class="img-rounded">
   					</a>
 						<div class="caption">
 							<p>subject</p>
 						</div>
+
+						-->
+
 					</div>
 				</div>
 			</div>

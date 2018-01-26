@@ -13,3 +13,4 @@ public interface BoardDao {
 	int modifyArticle(ReboardDto reboardDto);
 	int deleteArticle(int seq);
 }
+

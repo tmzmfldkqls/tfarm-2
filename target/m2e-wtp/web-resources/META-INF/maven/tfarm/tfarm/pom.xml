@@ -113,21 +113,25 @@
     <artifactId>commons-lang3</artifactId>
     <version>3.4</version>
 </dependency>
-	<dependency>
-	    <groupId>net.tanesha.recaptcha4j</groupId>
-	    <artifactId>recaptcha4j</artifactId>
-	    <version>0.0.7</version>
-	</dependency>
-	<dependency>
-	    <groupId>javax.mail</groupId>
-	    <artifactId>mail</artifactId>
-	    <version>1.4</version>
-	</dependency>
+
+<dependency>
+	<groupId>net.tanesha.recaptcha4j</groupId>
+	<artifactId>recaptcha4j</artifactId>
+	<version>0.0.7</version>
+</dependency>
+
+<dependency>
+	<groupId>javax.mail</groupId>
+	<artifactId>mail</artifactId>
+	<version>1.4</version>
+</dependency>
+	
 	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
-	<dependency>
-	    <groupId>org.springframework</groupId>
-	    <artifactId>spring-context-support</artifactId>
-	    <version>4.1.4.RELEASE</version>
-	</dependency>
-  </dependencies>
+<dependency>
+  <groupId>org.springframework</groupId>
+   <artifactId>spring-context-support</artifactId>
+   <version>4.1.4.RELEASE</version>
+</dependency>
+	
+ </dependencies>
 </project>

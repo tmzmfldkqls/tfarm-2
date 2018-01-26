@@ -3,7 +3,7 @@
 <%@ include file="/common/header_board.jsp" %>
 <script src="https://use.fontawesome.com/b4e68bb341.js"></script>
 <script>
-control="/main";
+control="/ticket";
 </script>
 
 <!-- ******************일반 게시판 뷰********************** -->

@@ -12,8 +12,8 @@
     
     <select id="mainticketlist" resultType="com.tfarm.board.model.TicketDto">
         select *
-        from ticket
-        order by ticket.seq desc
+        from ticket t
+        where t.seq = 109
     </select>
     
     <select id="mainnoticelist" resultType="com.tfarm.board.model.BoardDto">
