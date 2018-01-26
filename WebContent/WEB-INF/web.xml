@@ -58,6 +58,11 @@
     <location>/error/error505.jsp</location>
   </error-page>
   
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error/error505.jsp</location>
+  </error-page>
+  
 </web-app>
 
 

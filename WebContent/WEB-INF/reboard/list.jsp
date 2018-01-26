@@ -2,8 +2,34 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header_board.jsp"%>
 <script type="text/javascript" src="${root}/js/board.js"></script>
-<script>
-control = "/reboard";
+<script type="text/javascript">
+	control = "/reboard";
+	$(document).ready(function() {
+		var seqfind = false;
+		$("#searchForm #searchbtn").click(function() {
+			function numbercheck(word) {
+				var pw = word;
+				var num = pw.search(/[0-9]/g);
+				if (pw.length < 1) {
+					alert("글번호를 입력하세요");
+					return false;
+				}else if (num < 0) {
+					alert("숫자만 입력하세요");
+					return false;
+				}else{
+					return true;
+				}
+			}
+			
+			if($("#searchForm #key").val()=='seq'){
+				if (numbercheck($.trim($('#searchForm #word').val()))) {
+					$("#searchForm").attr("action", "${root}/board/list.tfarm").submit();
+				}
+			}else{
+				$("#searchForm").attr("action", "${root}/board/list.tfarm").submit();
+			}
+		});
+	});
 </script>
 <!-- ***********************게시판 테이블************************* -->
 <div class="mr-sm-2 col-xl-9"style="margin:26px; float:left;" >
@@ -53,16 +79,21 @@ ${navigator.navigator}
 
 <!-- ************************검색창**************************** -->
 	<div style="padding-left:280px">
-		<form class="form-inline my-2 my-lg-0">
-		  <select class="custom-select" style="width:100px">
-		      <option selected="">전체</option>
-		      <option value="1">글번호</option>
-		      <option value="2">작성자</option>
-		      <option value="3">제목</option>
-	      </select>
-	      <input class="form-control mr-sm-2" type="text" placeholder="Sdddsfsearch" style="width:300px">
-	      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-	    </form>
+		<form class="form-inline my-2 my-lg-0" name="searchForm"
+			id="searchForm" method="get" action="">
+			<input type="hidden" id="bcode" name="bcode" value="${bcode}">
+			<input type="hidden" id="pg" name="pg" value="1">
+			<select
+				class="custom-select" name="key" id="key" style="width: 120px">
+				<option selected="">선택하세요</option>
+				<option value="seq">글번호</option>
+				<option value="id">작성자</option>
+				<option value="subject">제목</option>
+			</select>
+			<input class="form-control mr-sm-2" name="word" id="word" type="text" style="width: 300px">
+			<button class="btn btn-secondary my-2 my-sm-0" type="submit"
+				onclick="javascript:searchArticle();">Search</button>
+		</form>
 	</div>
 <!-- ************************검색창**************************** -->
 </div>

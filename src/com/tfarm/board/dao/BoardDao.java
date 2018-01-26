@@ -8,11 +8,9 @@ import com.tfarm.board.model.ReboardDto;
 
 public interface BoardDao {
 	int writeArticle(ReboardDto reboardDto);
-	void updateStep(ReboardDto reboardDto);
-	int replyArticle(ReboardDto reboardDto);
-	void updateReply(int pseq);
+	void updateHit(int seq);
 	BoardDto viewArticle(int seq);
 	List<ReboardDto> listArticle(Map<String, String> map);
-	void modifyArticle(ReboardDto reboardDto);
-	void deleteArticle(int seq);
+	int modifyArticle(ReboardDto reboardDto);
+	int deleteArticle(int seq);
 }

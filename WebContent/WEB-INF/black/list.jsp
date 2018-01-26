@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ include file="/common/header_board.jsp"%>
 <script type="text/javascript">
-	control = "/board";
+	control = "/black";
 	$(document).ready(function() {
 		var seqfind = false;
 		$("#searchForm #searchbtn").click(function() {

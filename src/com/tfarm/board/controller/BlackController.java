@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 import com.tfarm.admin.board.model.BoardListDto;
 import com.tfarm.admin.board.service.BoardAdminService;
@@ -25,8 +26,8 @@ import com.tfarm.util.BoardConstance;
 import com.tfarm.util.PageNavigation;
 
 @Controller
-@RequestMapping("/board")
-public class BoardController {
+@RequestMapping("/black")
+public class BlackController {
 
 	@Autowired
 	private BoardService boardService;
@@ -49,6 +50,7 @@ public class BoardController {
 	@RequestMapping(value = "/list.tfarm", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		System.out.println("black controller 들오옴~");
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		List<ReboardDto> list = boardService.listArticle(map);
 		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
@@ -62,7 +64,7 @@ public class BoardController {
 		mav.addObject("navigator", navigation);
 		mav.addObject("querystring", map);
 		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/notice/list");
+		mav.setViewName("/WEB-INF/black/list");
 		return mav;
 	}
 
@@ -102,61 +104,14 @@ public class BoardController {
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		int seq = Integer.parseInt(map.get("seq"));
-		System.out.println("Seq==="+seq);
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		System.out.println(category);
 		BoardDto boardDto = boardService.viewArticle(seq);
 		mav.addObject("querystring", map);
 		mav.addObject("article", boardDto);
 		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/notice/view");
+		mav.setViewName("/WEB-INF/black/view");
 		
-		return mav;
-	}
-	
-	@RequestMapping(value="/delete.tfarm", method=RequestMethod.GET)
-	public ModelAndView delete(@RequestParam Map<String,String> map){
-		ModelAndView mav = new ModelAndView();
-		int seq = Integer.parseInt(map.get("seq"));
-		System.out.println("삭제할 Seq==="+seq);
-		int cnt= boardService.deleteArticle(seq);
-		System.out.println("삭제성공??==="+cnt);
-		mav.addObject("querystring", map);
-		if(cnt!=0){
-			mav.setViewName("/WEB-INF/notice/deleteok");
-		}else{
-			mav.setViewName("/WEB-INF/notice/deletefail");
-		}
-		return mav;
-	}
-	@RequestMapping(value="/modify.tfarm", method=RequestMethod.GET)
-	public ModelAndView modify(@RequestParam Map<String,String> map){
-		ModelAndView mav = new ModelAndView();
-		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-		int seq = Integer.parseInt(map.get("seq"));
-		System.out.println("수정할 Seq==="+seq);
-		BoardDto boardDto = boardService.viewArticle(seq);
-		mav.addObject("querystring", map);
-		mav.addObject("article", boardDto);
-		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/notice/modify");
-		return mav;
-	}
-	
-	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
-	public ModelAndView modify(ReboardDto reboardDto, @RequestParam Map<String, String> map) {
-		ModelAndView mav = new ModelAndView();
-		int seq = Integer.parseInt(map.get("seq"));
-		int cnt = boardService.modifyArticle(reboardDto);
-		System.out.println(cnt);
-		mav.addObject("querystring", map);
-		mav.addObject("seq", seq);
-		if (cnt != 0) {
-			mav.setViewName("/WEB-INF/notice/writeok");
-		} else {
-			mav.setViewName("/WEB-INF/notice/writefail");
-		}
-
 		return mav;
 	}
 }

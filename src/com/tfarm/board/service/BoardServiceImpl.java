@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDto viewArticle(int seq) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		boardDao.updateHit(seq);
 		return boardDao.viewArticle(seq);
 	}
 
@@ -48,14 +49,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modifyArticle(ReboardDto reboardDto) {
-		// TODO Auto-generated method stub
+	public int modifyArticle(ReboardDto reboardDto) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		return boardDao.modifyArticle(reboardDto);
 		
 	}
 
 	@Override
-	public void deleteArticle(int seq) {
-		// TODO Auto-generated method stub
+	public int deleteArticle(int seq) {
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		return boardDao.deleteArticle(seq);
 		
 	}
 
