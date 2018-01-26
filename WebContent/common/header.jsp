@@ -31,14 +31,19 @@ function searchArticle() {
   </button>
 
   <div class="navbar-collapse collapse" id="navbarColor01" style="">
-  
+ 
     <c:if test="${userInfo != null}">
     	 <ul class="navbar-nav mr-auto navbar-right" >
 	      <li class="nav-item active">
 	        <a class="nav-link" href="#">${userInfo.mem_name}님 안녕하세요</a>
 	      </li>
 	      <li class="nav-item">
-	        <a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
+	      	<c:if test="${userInfo.mem_social == 0}">
+	        	<a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
+	        </c:if>
+	        <c:if test="${userInfo.mem_social != 0}">
+	        	<a class="nav-link" href="${root}/user/socialmypage.tfarm">마이페이지</a>
+	        </c:if>
 	      </li>  
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/logout.tfarm">로그아웃</a>
@@ -58,13 +63,11 @@ function searchArticle() {
     </c:if>
     <!-- 검색 부분 -->
     <form id="searchForm" name="searchForm" method="get" action="" class="form-inline my-2 my-lg-0">
-      <input type="hidden" id="act" name="act" value="boardlist">
+      <input type="hidden" id="act" name="act" value="listarticle">
       <input type="hidden" id="bcode" name="bcode" value="${bcode}">
       <input type="hidden" id="pg" name="pg" value="1">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <a href="javascript:searchArticle();">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </a>
+      <input class="form-control mr-sm-2" id="word" name="word" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="javascript:searchArticle();">Search</button>
     </form>
     <!-- 검색 부분 끝-->
   </div>

@@ -10,15 +10,17 @@ public interface MemberService {
 	
 	int idCheck(String id);
 	int pwCheck(String id, String pass);
+	String idfind(String name, String email);
+	int pwUpdate(String id, String joinCode);
 	List<ZipDto> zipSearch(String dong);
 	int registerMember(MemberDetailDto memberDetailDto);
 	void deleteMember(String id);
 	String bringPw(String number);
 	MemberDetailDto login(String id, String pass);
-	MemberDetailDto socialLogin(String id);
-	int modifyMember(MemberDetailDto memberDetailDto);
-	int socialRegister(String id, String name, String email1, String email2);
-	
+	MemberDetailDto socialLogin(String pass);
+	int modify(MemberDetailDto memberDetailDto);
+	int socialRegister(String id, String  pass, String name, String email1, String email2);
+	MemberDetailDto getSoInfo(int memNo);
 	List<MemberDetailDto> listMember(String key, String word);
 
 }

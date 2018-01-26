@@ -11,14 +11,20 @@ public interface MemberDao {
 	
 	int idCheck(String id);
 	int pwCheck(Map<String,String> map);
+	String idfind(Map<String, String> map);
+	int pwUpdate(Map<String, String> map);
 	String bringPw(String number);
-	int modifyMember(MemberDetailDto memberDetailDto);
+	void modifyMember(MemberDetailDto memberDetailDto);
+	void modifyDetail(MemberDetailDto memberDetailDto);
+	
+	
 	List<ZipDto> zipSearch(String dong);
 	int registerMember(MemberDetailDto memberDetailDto);
 	int socialRegister(Map<String, String> map);
 	void deleteMember(String id);
 	MemberDetailDto login(Map<String, String> map);
-	MemberDetailDto socialLogin(String id);
+	MemberDetailDto socialLogin(String pass);
+	MemberDetailDto getSoInfo(int memNo);
 	List<MemberDetailDto> listMember(Map<String, String> map);
 	
 }

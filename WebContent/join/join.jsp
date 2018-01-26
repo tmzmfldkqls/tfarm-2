@@ -14,13 +14,12 @@ function idcheck() {
 			url: '${root}/user/idcheck.tfarm',
 			data: {'sid' : sid},
 			success: function(data) {//data >> {idcount : 0, sid : java2}
-				//alert(data.idcount + "   " + data.sid);
 				if(data.idcount == '0') {
 					idflag = true;
-					output = '<font color="blue"><b>' + data.sid + "</b></font>는 사용가능합니다";
+					output = '<font color="blue"><b>' + decodeURI(data.sid) + "</b></font>는 사용가능합니다";
 				} else {
 					idflag = false;
-					output = '<font color="red"><b>' + data.sid + "</b></font>는 사용중입니다";
+					output = '<font color="red"><b>' + decodeURI(data.sid) + "</b></font>는 사용중입니다";
 				}
 				$("#idinfo").empty();
 				$("#idinfo").append(output);
@@ -99,7 +98,6 @@ $(document).ready(function(){
 			}
 	});
 	$("#email3").change(function() {
-		alert($("#email3").val());
 		$("#mem_email2").val($("#email3").val());
 		
 	});
@@ -145,22 +143,17 @@ $(document).ready(function(){
 		}
 		
 	});
-	
-	$("#auth").keyup(function() {
-		if($("#auth").val() != ""){
+	var authflag = false;
+	$("#auth").keyup(function() {		
 			if($("#auth").val() == $("#temporNum").val()){ //저장소 값과 입력한 값이 같으면
 				$("#authok").empty();
 				$("#authok").append('<font color="blue"><b>인증완료</b></font>');
-			}else{
-				
+				authflag = true;
+			}else{				
 				$("#authok").empty();
-				$("#authok").append('<font color="red"><b>인증번호가 일치하지 않습니다. 다시 확인해 주세요</b></font>');
-				
-			}
-		}else{
-			$("#authok").empty();
-			$("#authok").append("인증번호를 입력해 주세요");
-		}
+				$("#authok").append('<font color="red"><b>인증번호가 일치하지 않습니다. 다시 확인해 주세요</b></font>');	
+				authflag = false;
+			}		
 	});
 	
 	/* --------------------------------------- 메일인증 끝    -------------------------------- */
@@ -185,10 +178,9 @@ $(document).ready(function(){
 		} else if(chkCaptcha() == false){
 			console.log(chkCaptcha());
 			alert("스팸방지코드를 확인해 주세요.");
-		} else if($("#auth").val() != ""){
+		} else if(!authflag){
 			alert("인증번호가 틀립니다.");
-		}
-		else {
+		} else {
 			$("#memberregist").attr("action", "${root}/user/join.tfarm").submit();
 		}
 	});
@@ -218,7 +210,7 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	    </div>
 	    <div class="form-group">
 	      <label>생년월일</label>
-	      <input type="text" class="form-control" id="mem_birth" name="mem_birth" placeholder="ex)911129">
+	      <input type="text" class="form-control" id="mem_birth" name="mem_birth" placeholder="ex)199911129">
 	    </div>
 		<div class="form-group">
 	      <label>아이디</label>

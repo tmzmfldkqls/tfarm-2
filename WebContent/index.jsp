@@ -123,7 +123,7 @@ $(document).ready(function() {
 
 function makelist2(data) {
 	var output = "";
-	var tsize = data.tlist.length;
+	var tsize = data.tlist.size;
 	alert("넘어왔니???");
 	for(var i=0;i<tsize;i++){
 		output += '<a href="${root}/main/totallist2.tfarm?seq='+decodeURI(data.tlist[i].seq)+'">';
@@ -151,14 +151,7 @@ function makelist2(data) {
         	<div class="row">
 				<div class="col-md-3">
 					<div class="thumbnail" id="ticketlist">
-					<!--  
-					<a href="javascript:ticketView();">
-  						<img src="${root}/img/1.PNG" class="img-rounded">
-  					</a>
-						<div class="caption">
-							<p>subject</p>
-						</div>
-						-->
+				<!-- 티켓 목록 -->
 					</div>
 				</div>
 			</div>
