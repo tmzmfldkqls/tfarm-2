@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tfarm.board.dao.BoardDao;
 import com.tfarm.board.model.BoardDto;
 import com.tfarm.board.model.ReboardDto;
+import com.tfarm.common.dao.CommonDao;
 import com.tfarm.util.BoardConstance;
 
 @Service
@@ -33,6 +34,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public BoardDto viewArticle(int seq) {
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		CommonDao commonDao = sqlSession.getMapper(CommonDao.class);
+		commonDao.updateHit(seq);
 		return boardDao.viewArticle(seq);
 	}
 

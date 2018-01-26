@@ -12,6 +12,6 @@ public interface BoardDao {
 	int replyArticle(ReboardDto reboardDto);
 	void updateReply(int pseq);
 	BoardDto viewArticle(int seq);
-	List<BoardDto> listArticle(Map<String, String> map);
+	List<ReboardDto> listArticle(Map<String, String> map);
 
 }

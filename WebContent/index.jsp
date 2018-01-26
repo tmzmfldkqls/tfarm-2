@@ -11,8 +11,6 @@
 control = "/main";
 </script>
 
-
-
 <style>
 img {
     border: 1px solid #ddd; /* Gray border */
@@ -30,6 +28,9 @@ img:hover {
 <!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
 <!---------------------------------  최신 앨범-------------------------------    -->
 <script type="text/javascript">
+
+//최신공지 ajax
+
 	$(document).ready(function() {
 		$.ajax({
 		type: 'POST',
@@ -50,9 +51,10 @@ function makelist(data) {
 		output += '<td>';
 		output += '' + decodeURI(data.blist[i].id);
 		output += '</td>';
-		output += '<a href = "javascript:move"'
 		output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+		output += '<a href = "${root}/main/view.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
 		output += ' ' + decodeURI(data.blist[i].subject);
+		output += '</a>';
 		output += '</td>';
 		output += '<td>';
 		output += '' + decodeURI(data.blist[i].hit);
@@ -65,6 +67,8 @@ function makelist(data) {
 	$("#boardlist").append(output);
 }
 
+
+//인기글 ajax
 
 $(document).ready(function() {
 	$.ajax({
@@ -87,7 +91,9 @@ for(var i=0;i<6;i++){
 	output += '' + decodeURI(data.nlist[i].id);
 	output += '</td>';
 	output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+	output += '<a href = "${root}/main/boardview.tfarm?seq='+decodeURI(data.nlist[i].seq)+'">';
 	output += ' ' + decodeURI(data.nlist[i].subject);
+	output += '</a>';
 	output += '</td>';
 	output += '<td>';
 	output += '' + decodeURI(data.nlist[i].hit);
@@ -100,6 +106,42 @@ for(var i=0;i<6;i++){
 	$("#noticelist").append(output);
 }
 
+
+//최신티켓 ajax
+
+$(document).ready(function() {
+	//alert("넘어왔니???2");
+	$.ajax({
+	type: 'POST',
+	datatype: 'json',
+	url: '${root}/main/totallist2.tfarm',
+	success: function (data) {
+		makelist2(data);
+		}
+	});
+});
+
+function makelist2(data) {
+	var output = "";
+	var tsize = data.tlist.length;
+	alert("넘어왔니???");
+	for(var i=0;i<tsize;i++){
+		output += '<a href="${root}/main/totallist2.tfarm?seq='+decodeURI(data.tlist[i].seq)+'">';
+		output += '<img src="${root}/upload/'+ decodeURI+(data.tlist[i].save_picture)+'" class="img-rounded">';
+		output += '</a>';
+		output += '<div class="caption">';
+		output += '<p>제목</p>';
+		output += '</div>';
+		
+		
+	}
+	
+	$("#ticketlist").empty();
+	$("#ticketlist").append(output);
+}
+
+
+
 </script>
    <div class="col-xl-10">
         	<div>
@@ -109,12 +151,14 @@ for(var i=0;i<6;i++){
         	<div class="row">
 				<div class="col-md-3">
 					<div class="thumbnail" id="ticketlist">
+					<!--  
 					<a href="javascript:ticketView();">
   						<img src="${root}/img/1.PNG" class="img-rounded">
   					</a>
 						<div class="caption">
 							<p>subject</p>
 						</div>
+						-->
 					</div>
 				</div>
 			</div>
