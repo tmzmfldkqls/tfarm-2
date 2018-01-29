@@ -86,14 +86,12 @@ $(document).ready(function(){
 		    	// 로그인 여부 체크
 		    	FB.login(function(response) {
 		    		if (response.status === 'connected') {
+		    			FB.logout();
 		    			 getMyprofile();
 		    		} else if (response.status === 'not_authorized') {
-		    			// 사람은 Facebook에 로그인했지만 앱에는 로그인하지 않다
-		    		} else {
-		    			// 그 사람은 Facebook에 로그인하지 않았으므로이 앱에 로그인했는지 여부는 확실하지 않다
-		    			alert('페이스북에 로그인해야 이용가능한 기능입니다.');
-		    		}
-		    	}, true); // 중복실행방지 {scope: "user_about_me,email,user_birthday"}
+		    			FB.logout();
+		    		} 
+		    	}, true); //로그인 시킬 권한{scope: "user_about_me,email,user_birthday"}
 		    }
 		    
 		    function getMyprofile(){
@@ -110,13 +108,13 @@ $(document).ready(function(){
 		    window.fbAsyncInit = function() {
 		    	FB.init({
 		    		appId   : '191953874874648',
-		    		cookie  :  false,
+		    		cookie  :  true,
 		    		xfbml   : true,
 		    		version : 'v2.11'
 		    	});
 		    };
 
-		    (function(d, s, id) {
+		    (function(d, s, id) { 
 		    	var js, fjs = d.getElementsByTagName(s)[0];
 		    	if (d.getElementById(id)) return;
 		    	js = d.createElement(s); js.id = id;

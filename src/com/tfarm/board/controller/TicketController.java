@@ -80,7 +80,6 @@ public class TicketController {
 			}
 			return mav;
 		}
-	
 	@RequestMapping(value ="/write.tfarm", method = RequestMethod.GET)
 	public ModelAndView write(@RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
@@ -95,7 +94,6 @@ public class TicketController {
 	public ModelAndView write(TicketDto ticketDto, 
 			@RequestParam Map<String, String> map,
 			HttpSession session) throws IllegalStateException, IOException {
-		System.out.println(">!!!!!!!!!!!!!!!"+ ticketDto.getOrign_picture());
 		ModelAndView mav = new ModelAndView();
 		MemberDetailDto memberDetailDto = (MemberDetailDto) session.getAttribute("userInfo");
 		if(memberDetailDto != null) {

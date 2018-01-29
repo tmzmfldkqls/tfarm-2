@@ -3,10 +3,8 @@
     <%@ include file="/common/header.jsp" %>
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script type="text/javascript" src="${root}/js/httpRequest.js"></script>
-<!--  
-<script src="jquery.nailthumb.1.1.min.js"></script>
-<link rel="stylesheet" href="jquery.nailthumb.1.1.min.css">
--->
+<!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
+<!---------------------------------  최신 앨범-------------------------------    -->
 <script>
 control = "/main";
 </script>
@@ -27,183 +25,115 @@ img:hover {
 <!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
 <!---------------------------------  최신 앨범-------------------------------    -->
 <script type="text/javascript">
-	$(document).ready(function() {
-		$.ajax({
-		type: 'POST',
-		dataType: 'json',
-		url: '${root}/main/totallist.tfarm',
-		success: function(data) {
-			//alert("넘어왔니???"+data.blist[0].subject);
-			makelist(data);
-			}
-	 	});
-	});
-function makelist(data) {
-	var output = "";
-	var bsize = data.blist.length;
-	for(var i=0;i<6;i++){
-		output += '<tr style="text-align:center">';
-		output += '<td>';
-		output += '' + decodeURI(data.blist[i].id);
-		output += '</td>';
-		output += '<a href = "javascript:move"'
-		output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
-		output += ' ' + decodeURI(data.blist[i].subject);
-		output += '</td>';
-		output += '<td>';
-		output += '' + decodeURI(data.blist[i].hit);
-		output += '</td>';
-		output += '</tr>';
-		
-	}
-	
-	$("#boardlist").empty();
-	$("#boardlist").append(output);
-}
-
-
-$(document).ready(function() {
-	$.ajax({
-	type: 'POST',
-	dataType: 'json',
-	url: '${root}/main/totallist1.tfarm',
-	success: function(data) {
-		//alert("넘어왔니???"+data.blist[0].subject);
-		makelist1(data);
-		}
- 	});
-});
-
-function makelist1(data) {
-var output = "";
-var nsize = data.nlist.length;
-for(var i=0;i<6;i++){
-	output += '<tr style="text-align:center">';
-	output += '<td>';
-	output += '' + decodeURI(data.nlist[i].id);
-	output += '</td>';
-	output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
-	output += ' ' + decodeURI(data.nlist[i].subject);
-	output += '</td>';
-	output += '<td>';
-	output += '' + decodeURI(data.nlist[i].hit);
-	output += '</td>';
-	output += '</tr>';
-	
-	}
-
-	$("#noticelist").empty();
-	$("#noticelist").append(output);
-}
+   
 //최신공지 ajax
 
-	$(document).ready(function() {
-		$.ajax({
-		type: 'POST',
-		dataType: 'json',
-		url: '${root}/main/totallist.tfarm',
-		success: function(data) {
-			//alert("넘어왔니???"+data.blist[0].subject);
-			makelist(data);
-			}
-	 	});
-	});
+   $(document).ready(function() {
+      $.ajax({
+      type: 'POST',
+      dataType: 'json',
+      url: '${root}/main/totallist.tfarm',
+      success: function(data) {
+         //alert("넘어왔니???"+data.blist[0].subject);
+         makelist(data);
+         }
+       });
+   });
 
 function makelist(data) {
-	var output = "";
-	var bsize = data.blist.length;
-	for(var i=0;i<6;i++){
-		output += '<tr style="text-align:center">';
-		output += '<td>';
-		output += '' + decodeURI(data.blist[i].id);
-		output += '</td>';
-		output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
-		output += '<a href = "${root}/main/view.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
-		output += ' ' + decodeURI(data.blist[i].subject);
-		output += '</a>';
-		output += '</td>';
-		output += '<td>';
-		output += '' + decodeURI(data.blist[i].hit);
-		output += '</td>';
-		output += '</tr>';
-		
-	}
-	
-	$("#boardlist").empty();
-	$("#boardlist").append(output);
+   var output = "";
+   var bsize = data.blist.length;
+   for(var i=0;i<6;i++){
+      output += '<tr style="text-align:center">';
+      output += '<td>';
+      output += '' + decodeURI(data.blist[i].id);
+      output += '</td>';
+      output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+      output += '<a href = "${root}/main/view.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
+      output += ' ' + decodeURI(data.blist[i].subject);
+      output += '</a>';
+      output += '</td>';
+      output += '<td>';
+      output += '' + decodeURI(data.blist[i].hit);
+      output += '</td>';
+      output += '</tr>';
+      
+   }
+   
+   $("#boardlist").empty();
+   $("#boardlist").append(output);
 }
 
 
 //인기글 ajax
 
 $(document).ready(function() {
-	$.ajax({
-	type: 'POST',
-	dataType: 'json',
-	url: '${root}/main/totallist1.tfarm',
-	success: function(data) {
-		//alert("넘어왔니???"+data.blist[0].subject);
-		makelist1(data);
-		}
- 	});
+   $.ajax({
+   type: 'POST',
+   dataType: 'json',
+   url: '${root}/main/totallist1.tfarm',
+   success: function(data) {
+     
+      makelist1(data);
+      }
+    });
 });
 
 function makelist1(data) {
 var output = "";
 var nsize = data.nlist.length;
 for(var i=0;i<6;i++){
-	output += '<tr style="text-align:center">';
-	output += '<td>';
-	output += '' + decodeURI(data.nlist[i].id);
-	output += '</td>';
-	output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
-	output += '<a href = "${root}/main/boardview.tfarm?seq='+decodeURI(data.nlist[i].seq)+'">';
-	output += ' ' + decodeURI(data.nlist[i].subject);
-	output += '</a>';
-	output += '</td>';
-	output += '<td>';
-	output += '' + decodeURI(data.nlist[i].hit);
-	output += '</td>';
-	output += '</tr>';
-	
-	}
+   output += '<tr style="text-align:center">';
+   output += '<td>';
+   output += '' + decodeURI(data.nlist[i].id);
+   output += '</td>';
+   output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
+   output += '<a href = "${root}/main/boardview.tfarm?seq='+decodeURI(data.nlist[i].seq)+'">';
+   output += ' ' + decodeURI(data.nlist[i].subject);
+   output += '</a>';
+   output += '</td>';
+   output += '<td>';
+   output += '' + decodeURI(data.nlist[i].hit);
+   output += '</td>';
+   output += '</tr>';
+   
+   }
 
-	$("#noticelist").empty();
-	$("#noticelist").append(output);
+   $("#noticelist").empty();
+   $("#noticelist").append(output);
 }
 
 
 //최신티켓 ajax
 
 $(document).ready(function() {
-	//alert("넘어왔니???2");
-	$.ajax({
-	type: 'POST',
-	datatype: 'json',
-	url: '${root}/main/totallist2.tfarm',
-	success: function (data) {
-		makelist2(data);
-		}
-	});
+   $.ajax({
+   type: 'POST',
+   dataType: 'json',
+   url: '${root}/main/totallist2.tfarm',
+   success: function (data) { 
+      makelist2(data);
+      }
+   });
 });
 
 function makelist2(data) {
-	var output = "";
-	var tsize = data.tlist.length;
-	alert("넘어왔니???");
-	for(var i=0;i<tsize;i++){
-		output += '<a href="${root}/main/totallist2.tfarm?seq='+decodeURI(data.tlist[i].seq)+'">';
-		output += '<img src="${root}/upload/'+ decodeURI+(data.tlist[i].save_picture)+'" class="img-rounded">';
-		output += '</a>';
-		output += '<div class="caption">';
-		output += '<p>제목</p>';
-		output += '</div>';
-		
-		
-	}
-	
-	$("#ticketlist").empty();
-	$("#ticketlist").append(output);
+   var output = "";
+   var len = data.tlist.length;
+   for(var i=0 ; i<len ; i++){
+	  output += '<div class="col-md-3">';
+	  output +=	'	<div class="thumbnail">';
+      output += '		<a href="${root}/main/ticketview.tfarm?seq='+data.tlist[i].seq+'">';
+      output += '		<img src="${root}/upload/'+data.tlist[i].savafolder+'/'+data.tlist[i].save_picture+'" class="img-rounded" style="height:200px; width:100%">';
+      output += '		</a>';
+      output += '	<div class="caption">';
+      output += '		<p>'+decodeURI(data.tlist[i].subject)+'</p>';
+      output += '	</div>'; 
+      output += '	</div>'; 
+      output += '</div>'; 
+   }  
+   $("#ticketlist").empty();
+   $("#ticketlist").append(output);	
 }
 
 
@@ -213,23 +143,7 @@ function makelist2(data) {
                 <h4 id="container">[최신티켓]</h4>
             </div>
             
-        	<div class="row">
-				<div class="col-md-3">
-					<div class="thumbnail" id="ticketlist">
-					<!--  
->>>>>>> refs/remotes/origin/Hanpil
-					<a href="javascript:ticketView();">
-  						<img src="${root}/img/1.PNG" class="img-rounded">
-  					</a>
-						<div class="caption">
-							<p>subject</p>
-						</div>
-
-						-->
-
-					</div>
-				</div>
-			</div>
+        	<div class="row" id ="ticketlist" style="width: 95%;"></div>
 	
 			<br><br>
 			
@@ -261,7 +175,7 @@ function makelist2(data) {
 					</div>
 				</div>
 				
-				<div class="col-sm-5">
+				<div class="col-sm-5 offset-1">
 		        	<div>
 		                <h4 id="container">[인기글]</h4>
 		            </div>
