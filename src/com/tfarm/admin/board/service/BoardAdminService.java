@@ -18,5 +18,6 @@ public interface BoardAdminService {
 	int memberDelete(int[] amno);
 	
 	Map<String, Integer>basicInfo();
-	List<TargetDto>wholeArticle();
+
+	List<TargetDto> graghByArg(String arg);
 }

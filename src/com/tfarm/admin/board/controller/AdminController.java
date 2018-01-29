@@ -99,24 +99,71 @@ public class AdminController {
 		
 		return json.toJSONString(); 		
 	}
-	
-	@RequestMapping(value="/articlegragh.tfarm", method=RequestMethod.POST)
-	public @ResponseBody String gragh(HttpServletRequest request) {
-		List<TargetDto> targets = boardAdminService.wholeArticle();
+	@RequestMapping(value="/totalgragh.tfarm", method=RequestMethod.GET)
+	public @ResponseBody String totalgragh(@RequestParam("query") String query) {
+		
+		List<TargetDto> targets = boardAdminService.graghByArg(query);
 		JSONObject json = new JSONObject();
 		JSONArray jarray = new JSONArray();
-		//일자별 아티클 개수
-		for(TargetDto target : targets) {
-			JSONObject js = new JSONObject();
-			js.put("rownum",target.getRownum());
-			js.put("logtime",StringEncoder.urlUtf(target.getLogtime() + "일"));
-			System.out.println(target.getLogtime());
-			js.put("count",target.getTarget());
-			
-			jarray.add(js);
-		}		
-		json.put("wholeArticleSet", jarray);
+		
+		if ("article".equals(query)) {
+			// 일자별 아티클 개수
+			for (TargetDto target : targets) {
+				JSONObject js = new JSONObject();
+				js.put("logtime", StringEncoder.urlUtf((target.getLogtime() + "일").substring(2)));
+				js.put("count", target.getTarget());
 
+				jarray.add(js);
+			}
+			json.put("wholeArticleSet", jarray);
+		}else if ("category".equals(query)) {
+		//카테고리별 아티클수			
+			Map<Integer,String> map = new HashMap();
+			map.put(1, "공지사항");
+			map.put(2, "FAQ");
+			map.put(3, "Q&A");
+			map.put(4, "뮤지컬");
+			map.put(5, "콘서트");
+			map.put(6,"연극");
+			map.put(7, "클래식/무용");
+			map.put(8, "스포츠/레저");
+			map.put(9, "전시/행사");
+			map.put(10, "아동/가족");
+			map.put(11, "신고게시판");
+			map.put(12, "블랙리스트");
+		
+			for (TargetDto target : targets) {
+				JSONObject js = new JSONObject();
+				js.put("category", StringEncoder.urlUtf(map.get(target.getBcode())));
+				js.put("count", target.getTarget());
+				jarray.add(js);
+			}
+			json.put("categorySet", jarray);
+			System.out.println( json.toString());
+		}else if ("member".equals(query)) {
+		//회원수 개수
+			for (TargetDto target : targets) {
+				JSONObject js = new JSONObject();
+				js.put("joinDate", StringEncoder.urlUtf((target.getLogtime() + "일").substring(2)));
+				js.put("count", target.getTarget());
+
+				jarray.add(js);
+			}	
+			json.put("memberSet", jarray);
+		}else if ("memo".equals(query)) {
+			// 일자별 아티클 개수
+			for (TargetDto target : targets) {
+				JSONObject js = new JSONObject();
+				
+				js.put("joinDate", StringEncoder.urlUtf(target.getLogtime() + "일"));
+				js.put("count", target.getTarget());
+
+				jarray.add(js);
+			}
+			json.put("wholeArticleSet", jarray);
+		}
+		
 		return json.toString(); 	
 	}
+	
 }

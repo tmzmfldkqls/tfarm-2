@@ -1,36 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	    pageEncoding="UTF-8"%>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
-
-function drawChart () {
-    $.ajax({
-    	type : "POST",
-		url : "${root}/admin/articlegragh.tfarm",
-		dataType : "json",
-        success: function (jsonData) {
-            var data = new google.visualization.DataTable();
-            // assumes "word" is a string and "count" is a number
-      		var len = jsonData.wholeArticleSet.length;
-            data.addColumn('string', 'logtime');
-            data.addColumn('number', 'count');
-            
-            for (var i = 0; i < len; i++) {
-               data.addRow([decodeURIComponent(jsonData.wholeArticleSet[i].logtime),jsonData.wholeArticleSet[i].count]);
-            }
-
-            var options = {
-                title: '전체 게시글 증가 추이',
-            };
-            var chart = new google.visualization.LineChart(document.getElementById('articleInfo'));
-            chart.draw(data, options);
-        }
-    });
-}
-   
-</script>
 
 	<!-- 단순누적량-->
 	<h6>

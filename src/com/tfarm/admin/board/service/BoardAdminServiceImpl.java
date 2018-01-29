@@ -53,9 +53,18 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		
 		return map;
 	}
+
 	@Override
-	public List<TargetDto> wholeArticle() {
+	public List<TargetDto> graghByArg(String arg) {
 		BoardAdminDao boardAdminDao = sqlSession.getMapper(BoardAdminDao.class);
-		return boardAdminDao.wholeArticle();
+		if("article".equals(arg))
+			return boardAdminDao.graghByArticle();
+		else if("category".equals(arg)){
+			return boardAdminDao.graghByCategory();
+		}else if("member".equals(arg)){
+			return boardAdminDao.graghByMember();
+		}else{//메모
+			return null;
+		}
 	}
 }

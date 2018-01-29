@@ -24,6 +24,9 @@ public interface BoardAdminDao {
 	int totalmember();	
 	int totalacticle();	
 	int totalmemo();	
+
 	
-	List<TargetDto> wholeArticle();
+	List<TargetDto> graghByArticle();
+	List<TargetDto> graghByMember();
+	List<TargetDto> graghByCategory();
 }
