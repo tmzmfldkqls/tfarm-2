@@ -74,12 +74,11 @@ $(document).ready(function() {
 			               data.addRow([decodeURIComponent(jsonData.categorySet[i].category),jsonData.categorySet[i].count]);
 			            }
 			            var options = {
-			                title: '회원수 증감 현황',
-			                curveType: 'function'
+			                title: '가테고리별 게시글 현황'
 			            };
 			            var categorychart = new google.visualization.PieChart(document.getElementById('totalgragh'));
 			            categorychart.draw(data, options);
-			            }
+			         }
 	        }
 	    });
       }
