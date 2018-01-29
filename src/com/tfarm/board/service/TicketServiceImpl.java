@@ -5,7 +5,10 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.tfarm.board.dao.BoardDao;
 import com.tfarm.board.dao.TicketDao;
+import com.tfarm.board.model.ReboardDto;
 import com.tfarm.board.model.TicketDto;
 import com.tfarm.common.dao.CommonDao;
 import com.tfarm.util.BoardConstance;
@@ -27,8 +30,7 @@ public class TicketServiceImpl implements TicketService {
 	public TicketDto viewArticle(int seq) {
 		CommonDao commonDao = sqlSession.getMapper(CommonDao.class);
 		commonDao.updateHit(seq);
-		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);
-		
+		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);		
 		return ticketDao.viewArticle(seq);
 	}
 
@@ -44,14 +46,16 @@ public class TicketServiceImpl implements TicketService {
 	}
 
 	@Override
-	public void modifyArticle(TicketDto ticketDto) {
+	public int modifyArticle(TicketDto ticketDto) {
 		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);
+		return ticketDao.modifyArticle(ticketDto);
 		
 	}
 
 	@Override
-	public void deleteArticle(int seq) {
+	public int deleteArticle(int seq) {
 		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);
+		return ticketDao.deleteArticle(seq);
 		
 	}
 }

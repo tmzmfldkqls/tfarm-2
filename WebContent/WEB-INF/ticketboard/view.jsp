@@ -20,12 +20,12 @@ control="/ticket";
     <span style="margin:10px;"><strong  style="float:right;"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="card-subtitle mb-2 text-muted" >${article.logtime}</span></strong></span>
     </h6>  
     <hr style="border:solid 0.5px gray;">
-     
-    <p class="card-text" style="margin:10px 0 30px; line-height:1.7em; min-height:200px;">${article.content}</p>
-
-
+    <p class="card-text" style="margin:10px 0 30px; line-height:1.7em;">${article.content}</p>	
+   	<div style="text-align:center">
+   		<img src="${root}/upload/${article.savefolder}/${article.save_picture}" class="img-thumbnail" alt="Lights" style="height:200px; width:200px">
+   	</div><br><br>
 	<div class="form-group" >
-	<button class="btn btn-secondary" type="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정</button>
+	<button class="btn btn-secondary" type="button" onclick="modifyArticle('${bcode}', '${pg}', '${key}', '${word}', '${article.seq}');"> 수정</button>
 	<button class="btn btn-secondary" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</button>	
 	
 	<span  style="float:right;">

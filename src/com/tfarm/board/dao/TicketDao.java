@@ -10,8 +10,8 @@ public interface TicketDao {
 	int writeArticle(TicketDto ticketDto);
 	TicketDto viewArticle(int seq);
 	List<TicketDto> listArticle(Map<String, String> map);
-	void modifyArticle(TicketDto ticketDto);
-	void deleteArticle(int seq);
+	int modifyArticle(TicketDto ticketDto);
+	int deleteArticle(int seq);
 
 
 }

@@ -38,21 +38,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="writeArticle" parameterType="com.tfarm.board.model.TicketDto">
         insert all
-        into board (seq, id, email, subject, content, hit, logtime, bcode)
-        values (#{seq}, #{id}, #{email}, #{subject}, #{content}, 0, sysdate, #{bcode})
-        into ticket (aseq, seq, savefolder, orign_picture, save_picture, type, price, loc)
-        values (album_aseq.nextval, #{seq}, #{saveFolder}, #{orignPicture}, #{savePicture},0,#{price},#{loc})
+            into board (seq, id, email, subject, content, hit, logtime, bcode)
+            values (#{seq}, #{id}, #{email}, #{subject}, #{content}, 0, sysdate, #{bcode})
+            into ticket (aseq, seq, savefolder, orign_picture, save_picture, type, price, loc)
+            values (seq_aseq.nextval, #{seq}, #{savefolder}, #{orign_picture}, #{save_picture},0,#{price},#{loc})
         select * from dual
     </insert>
     
     <select id="viewArticle" parameterType="int" resultType="com.tfarm.board.model.TicketDto">
         select b.seq, b.id, b.email, b.subject, 
         b.content, b.hit, b.logtime, b.bcode, 
-        r.aseq, r.seq, r.savefolder, r.orign_picture orignpicture, r.save_picture savepicture, r.type
+        r.aseq, r.seq, r.savefolder, r.orign_picture, r.save_picture, r.type
         from board b, ticket r
         where b.seq = r.seq
         and b.seq = #{seq}
     </select>
+    
+    <update id="updateHit" parameterType="com.tfarm.board.model.TicketDto">
+        update ticket 
+        set hit=hit+1 
+        where seq=#{seq}
+    </update>
+    
+    <delete id="deleteArticle" parameterType="int">
+        delete from board
+        where seq=#{seq}
+    </delete>
+    <update id="modifyArticle" parameterType="com.tfarm.board.model.TicketDto">
+        update ticket set subject=#{subject}, content=#{content}, orign_picture=#{orign_picture} where seq=#{seq}
+    </update>
+    
 </mapper>
 
 

@@ -10,7 +10,6 @@
 <script>
 control = "/main";
 </script>
-
 <style>
 img {
     border: 1px solid #ddd; /* Gray border */
@@ -28,7 +27,7 @@ img:hover {
 <!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
 <!---------------------------------  최신 앨범-------------------------------    -->
 <script type="text/javascript">
-
+	
 //최신공지 ajax
 
 	$(document).ready(function() {
@@ -141,7 +140,6 @@ function makelist2(data) {
 }
 
 
-
 </script>
    <div class="col-xl-10">
         	<div>
@@ -150,6 +148,7 @@ function makelist2(data) {
             
         	<div class="row">
 				<div class="col-md-3">
+
 					<div class="thumbnail" id="ticketlist">
 				<!-- 티켓 목록 -->
 					</div>

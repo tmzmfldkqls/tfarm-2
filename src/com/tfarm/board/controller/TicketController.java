@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tfarm.board.model.BoardDto;
+import com.tfarm.board.model.ReboardDto;
 import com.tfarm.board.model.TicketDto;
 import com.tfarm.board.service.TicketService;
 import com.tfarm.common.service.CommonService;
+import com.tfarm.member.model.MemberDetailDto;
 import com.tfarm.member.model.MemberDto;
 import com.tfarm.util.BoardConstance;
 import com.tfarm.util.PageNavigation;
@@ -49,7 +52,6 @@ public class TicketController {
 		public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request) {
 			ModelAndView mav = new ModelAndView();
 			List<TicketDto> list = ticketService.listArticle(map);
-			System.out.println(list.get(0).getSave_picture());
 			map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
 			PageNavigation navigation = commonService.makePageNavigation(map);
 			navigation.setRoot(request.getContextPath());
@@ -58,7 +60,6 @@ public class TicketController {
 			navigation.setWord(map.get("word"));
 			navigation.setNavigator();
 			mav.addObject("articlelist", list);
-			System.out.println("controller"+ list);
 			mav.addObject("navigator", navigation);
 			mav.addObject("querystring", map);
 			mav.setViewName("/WEB-INF/ticketboard/list");
@@ -73,7 +74,6 @@ public class TicketController {
 			if(memberDto != null) {
 				int seq = Integer.parseInt(map.get("seq"));
 				TicketDto ticketDto = ticketService.viewArticle(seq);
-				
 				mav.addObject("querystring", map);
 				mav.addObject("article", ticketDto);
 				mav.setViewName("/WEB-INF/ticketboard/view");
@@ -83,7 +83,7 @@ public class TicketController {
 			return mav;
 		}
 	
-	@RequestMapping(value = "/write.tfarm", method = RequestMethod.GET)
+	@RequestMapping(value ="/write.tfarm", method = RequestMethod.GET)
 	public ModelAndView write(@RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
@@ -93,17 +93,19 @@ public class TicketController {
 		return mav;
 	}
 
-	@RequestMapping(value="/write.tfram", method=RequestMethod.POST)
+	@RequestMapping(value="/write.tfarm",method = RequestMethod.POST)
 	public ModelAndView write(TicketDto ticketDto, 
 			@RequestParam Map<String, String> map,
 			HttpSession session) throws IllegalStateException, IOException {
+		System.out.println(">!!!!!!!!!!!!!!!"+ ticketDto.getOrign_picture());
 		ModelAndView mav = new ModelAndView();
-		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-		if(memberDto != null) {
+		MemberDetailDto memberDetailDto = (MemberDetailDto) session.getAttribute("userInfo");
+		if(memberDetailDto != null) {
 			int seq = commonService.getNextSeq();
 			ticketDto.setSeq(seq);
-			ticketDto.setId(memberDto.getMem_id());
-			
+			ticketDto.setId(memberDetailDto.getMem_id());
+			String email =memberDetailDto.getMem_email1() +"@"+ memberDetailDto.getMem_email2();
+			ticketDto.setEmail(email);
 			//여기서부터 해서
 			DateFormat df = new SimpleDateFormat("yyMMdd");
 			String saveFolder = df.format(new Date());
@@ -119,7 +121,6 @@ public class TicketController {
 			List<MultipartFile> list = ticketDto.getUpfile();
 			for (MultipartFile multipartFile : list) {
 				if(!multipartFile.isEmpty()){
-					
 					String ofile = multipartFile.getOriginalFilename();
 					ticketDto.setOrign_picture(ofile);//파일이름
 					String savePicture = UUID.randomUUID().toString() + ofile.substring(ofile.lastIndexOf("."));//이걸 파일의 이름으로 하자.
@@ -130,12 +131,44 @@ public class TicketController {
 			}
 			
 			int cnt = ticketService.writeArticle(ticketDto);
+			System.out.println("TicketController" + cnt);
 			mav.addObject("querystring", map);
 			mav.addObject("seq", seq);
 			mav.setViewName("/WEB-INF/ticketboard/writeok");
 		} else {
 			mav.setViewName("/WEB-INF/ticketboard/writefail");
 		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/modify.tfarm", method=RequestMethod.GET)
+	public ModelAndView modify(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("수정할 Seq==="+seq);
+		TicketDto ticketDto = ticketService.viewArticle(seq);
+		mav.addObject("querystring", map);
+		mav.addObject("article", ticketDto);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/ticketboard/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
+	public ModelAndView modify(TicketDto ticketDto, @RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(map.get("seq"));
+		int cnt = ticketService.modifyArticle(ticketDto);
+		System.out.println(cnt);
+		mav.addObject("querystring", map);
+		mav.addObject("seq", seq);
+		if (cnt != 0) {
+			mav.setViewName("/WEB-INF/ticketboard/writeok");
+		} else {
+			mav.setViewName("/WEB-INF/ticketboard/writefail");
+		}
+
 		return mav;
 	}
 	
