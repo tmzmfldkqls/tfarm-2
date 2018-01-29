@@ -173,23 +173,21 @@ public class AdminController {
 	public @ResponseBody ModelAndView calimlist(@RequestParam("targetMno") String targetMno) {	
 		ModelAndView mav = new ModelAndView();
 		
-		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-		List<ReboardDto> list = boardService.listArticle(map);
-		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
-		PageNavigation navigation = commonService.makePageNavigation(map);
-		navigation.setRoot(request.getContextPath());
-		navigation.setBcode(Integer.parseInt(map.get("bcode")));
-		navigation.setKey(map.get("key"));
-		navigation.setWord(map.get("word"));
-		navigation.setNavigator();
-		mav.addObject("articlelist", list);
-		mav.addObject("navigator", navigation);
-		mav.addObject("querystring", map);
-		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/notice/list");
+//		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+//		List<ReboardDto> list = boardService.listArticle(map);
+//		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
+//		PageNavigation navigation = commonService.makePageNavigation(map);
+//		navigation.setRoot(request.getContextPath());
+//		navigation.setBcode(Integer.parseInt(map.get("bcode")));
+//		navigation.setKey(map.get("key"));
+//		navigation.setWord(map.get("word"));
+//		navigation.setNavigator();
+//		mav.addObject("articlelist", list);
+//		mav.addObject("navigator", navigation);
+//		mav.addObject("querystring", map);
+//		mav.addObject("category", category);
+//		mav.setViewName("/WEB-INF/notice/list");
 		return mav;
-		
-		return json.toString();
 	}
 	
 	
