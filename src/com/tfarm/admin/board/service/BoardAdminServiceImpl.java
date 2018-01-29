@@ -67,5 +67,11 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 			return boardAdminDao.graghBybcode();
 		}
 	}
+	@Override
+	public void memberUpdate(int targetMno) {
+		BoardAdminDao boardAdminDao = sqlSession.getMapper(BoardAdminDao.class);
+		
+		boardAdminDao.memberUpdate(targetMno);
+	}
 }
 

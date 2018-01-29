@@ -17,12 +17,22 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tfarm.admin.board.model.TargetDto;
 import com.tfarm.admin.board.service.BoardAdminService;
+import com.tfarm.board.model.ReboardDto;
+import com.tfarm.board.service.BoardService;
+import com.tfarm.common.service.CommonService;
 import com.tfarm.member.model.MemberDetailDto;
+import com.tfarm.util.BoardConstance;
+import com.tfarm.util.PageNavigation;
 import com.tfarm.util.StringEncoder;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	@Autowired
+	private BoardService boardService;
+
+	@Autowired
+	private CommonService commonService;
 
 	@Autowired
 //	@Qualifier("BoardAdminService1")
@@ -52,7 +62,7 @@ public class AdminController {
 				js.put("mstate", StringEncoder.urlUtf("관리자"));
 			}
 			else {
-				js.put("mstate", StringEncoder.urlUtf("블랙리스트"));
+				js.put("mstate", StringEncoder.urlUtf("차단"));
 				}
 			
 			js.put("mno", member.getMem_no());
@@ -72,6 +82,11 @@ public class AdminController {
 		return json.toJSONString(); 		
 	}	
 	
+	@RequestMapping(value="/memberUpdate.tfarm", method=RequestMethod.GET)
+	public void memberUpdate(@RequestParam("targetMno") int targetMno) {
+		
+		 boardAdminService.memberUpdate(targetMno);
+	}
 	@RequestMapping(value="/memberDelete.tfarm", method=RequestMethod.GET)
 	public ModelAndView memberDelete(@RequestParam("targetMno") String targetMno) {
 		 ModelAndView mav = new ModelAndView();
@@ -153,4 +168,29 @@ public class AdminController {
 		}
 		return json.toString(); 
 	}
+	
+	@RequestMapping(value="/calimlist.tfarm", method=RequestMethod.GET)
+	public @ResponseBody ModelAndView calimlist(@RequestParam("targetMno") String targetMno) {	
+		ModelAndView mav = new ModelAndView();
+		
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		List<ReboardDto> list = boardService.listArticle(map);
+		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
+		PageNavigation navigation = commonService.makePageNavigation(map);
+		navigation.setRoot(request.getContextPath());
+		navigation.setBcode(Integer.parseInt(map.get("bcode")));
+		navigation.setKey(map.get("key"));
+		navigation.setWord(map.get("word"));
+		navigation.setNavigator();
+		mav.addObject("articlelist", list);
+		mav.addObject("navigator", navigation);
+		mav.addObject("querystring", map);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/notice/list");
+		return mav;
+		
+		return json.toString();
+	}
+	
+	
 }

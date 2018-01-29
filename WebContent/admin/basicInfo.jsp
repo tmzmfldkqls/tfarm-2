@@ -78,7 +78,6 @@ function drawChart(query) {
     	                }
     	                var options = {
     	                    title: '회원수 증가 추이',
-    	                    curveType: 'function'
     	                };
     	                var ComboChart = new google.visualization.ComboChart(document.getElementById('totalChart'));
     	                ComboChart.draw(data, options);
@@ -134,7 +133,7 @@ function drawChart(query) {
 	<div class="card">
 		<div class="card-body">
 			<div class="row" >
-				<div class = "col-9" id="totalChart" style="background-color: grey ; height : 500px; ">차트 들어올 자리</div>
+				<div class = "col-9" id="totalChart" style="background-color: grey ; height : 400px; ">차트 들어올 자리</div>
 				<div class = "col-3">
 					<select class="form-control">
 						<option>최근 1주</option>

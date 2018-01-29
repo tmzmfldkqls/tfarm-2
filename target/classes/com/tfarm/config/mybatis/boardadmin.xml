@@ -86,4 +86,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by logtime
     </select>
     
+    <update id="memberUpdate" parameterType="int">
+        UPDATE  member
+        SET mem_state = case
+                            WHEN mem_state = -1 THEN 0
+                            WHEN mem_state = 0 THEN -1
+                            ELSE 1
+                            end
+        WHERE mem_no = #{targetMno}
+    </update>
+    
+    
 </mapper>

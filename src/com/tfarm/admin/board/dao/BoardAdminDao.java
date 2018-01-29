@@ -31,4 +31,6 @@ public interface BoardAdminDao {
 	List<TargetDto> graghBybcode();
 	List<TargetDto> graghByjoinDate();
 	List<TargetDto> graghByArticle();
+
+	int memberUpdate(int targetMno);
 }

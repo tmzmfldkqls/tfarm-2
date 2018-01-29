@@ -2,65 +2,26 @@
 	    pageEncoding="UTF-8"%>
 
 <script type="text/javascript">
-//google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawArticleChart);
-function drawArticleChart() {
-    $.ajax({
-    	type : "GET",
-		url : "${root}/admin/wholegragh.tfarm",
+$(document).ready(function() {
+	$.ajax({
+		url : "${root}/admin/calimlist.tfarm",
 		dataType : "json",
-        success: function (jsonData) {
-            var data = new google.visualization.DataTable();
-            // assumes "word" is a string and "count" is a number
-      		var len = jsonData.wholeArticleSet.length;
-            data.addColumn('string', 'logtime');
-            data.addColumn('number', 'count');
-            
-            for (var i = 0; i < len; i++) {
-               data.addRow([decodeURIComponent(jsonData.wholeArticleSet[i].logtime),jsonData.wholeArticleSet[i].count]);
-            }
-            var options = {
-                title: '전체 게시글 증가 추이',
-            };
-            var chart = new google.visualization.LineChart(document.getElementById('articleChart'));
-            chart.draw(data, options);
-        }
-    });
-}
-   
+		success : function(data) {
+			makeClaimList(data);
+		}
+	});
+call('category');	
+});
+
 </script>
 
 	<!-- 단순누적량-->
 	<h6>
-		<strong> >게시글 누적 </strong>
+		<strong> >미처리 신고 누적 </strong>
 		<span><img src="${root }/img/linSec01.gif" alt="">
 				<small>개설일(2018.01.04)이후 어제까지 누적된 수치 입니다</small></span>
 	</h6>
-	<br>
-	
-	<!-- 게시판 별 게시글 도넛차트 넣을것-->
-	<div class="card">
-		<div class="card-body">
-			<div class="row">
-				<div class = "col-9" id="articleChart" style="background-color: grey ; height : 300px;">차트 들어올 자리</div>
-				<div class = "col-3">
-					<select class="form-control">
-						<option>최근 1주</option>
-						<option>최근 1개월</option>
-						<option>최근 3개월</option>
-						<option>최근 6개월</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 차트샘플 끝-->
-	<br>
-	<br>
-	<br>
-	<br>
-	
-<div class="row" style="margin-bottom: 3%;">
+<div class="row" style="margin-bottom: 3%;margin-top: 2%;">
 		<table class="tableDft table table-hover table-sm">
 			<thead>
 				<tr class="table-success">

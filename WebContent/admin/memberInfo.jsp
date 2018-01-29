@@ -18,7 +18,7 @@
                 		 $('#chkAll').prop('checked', false);
                 	}   
                 });
-                //체크 항목 확인
+                //체크 항목 확인(후 지우기)
                 $("#check").click(function(){                     
                 	var arr1 = new Array(); 
                 	var k=0;
@@ -31,7 +31,24 @@
                 		location.href = "${root}/admin/memberDelete.tfarm?targetMno=" + arr1;
                 }); 
             });
-            
+            //블랙리스트
+            $(document).on("dblclick","td[name=\"state\"]",function(){                 
+                	var mno = $(this).parent().children().first().text();
+                	if($(this).text() == "일반회원"){
+                		$(this).text("차단");
+                	}
+                	else if($(this).text() == "차단"){
+                		$(this).text("일반회원");
+                	}
+                	$.ajax({
+            			type : "GET",
+            			url : "${root}/admin/memberUpdate.tfarm?targetMno=" + mno,            			
+            			success : function() {
+            				alert("빠름");
+            			}
+            		});
+             	
+                });
           //멤버 인포클릭하자 마자 켜자마자 실행되는 것. 			
         	$("#memberli").click(function() {
         		$.ajax({
@@ -74,7 +91,7 @@
         			output += "<th name = \"memberId\" class = \"pnt\"  data-toggle=\"modal\" data-target=\"#memberModal\" onclick=\"javascript:toss('"+member.mname+"','"+member.mbirth+"','"+member.memail+"','"+member.mtel+"','"+member.maddress+"','"+member.mno+"');\">" + member.mid + "</th>";
         			output += "<td>" + member.memail + "</td>";
         			output += "<td>" + member.joindate + "</td>";
-        			output += "<td>" + member.mstate + "</td>";
+        			output += "<td name=\"state\" value = '"+ member.mno+"'>" + member.mstate + "</td>";
         			output += "<td><input class=\"form-check-input\" type=\"checkbox\" name=\"deleteList\" value = \""+ member.mno+"\" ></td><tr>";
         		}	
         		$("#memberlist").html(output);
@@ -89,9 +106,39 @@
         			$('#maddress').text(""+maddress+"");
         	}
 </script>
-	
-	<!-- 검색 폼 -->
-	<div class="row" style="margin-bottom: 3%;">
+
+<!--멤버 리스트 테이블-->
+<form action="${root}/admin/memberDelete.tfarm" method="post"
+	name="memberInfo" id="memberInfo">
+	<div class="row" style="margin-bottom: 1%;">
+		<div class="col-12" align="right">
+			<button id="check" type="button" class="btn btn-primary">
+				<strong>회원정보 삭제</strong>
+			</button>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom: 3%;margin-left:2%;">
+
+		<table class="tableDft table table-hover table-sm">
+			<thead>
+				<tr class="table-success">
+					<td width="15%">회원번호</td>
+					<td width="20%">ID</td>
+					<td width="20%">E-Mail</td>
+					<td width="20%">가입일</td>
+					<td width="20%">상태</td>
+					<td width="5%"><input class="form-check-input" id="chkAll"
+						name="chkAll" type="checkbox"></td>
+				</tr>
+			</thead>
+			<tbody id="memberlist">
+			</tbody>
+		</table>
+	</div>
+</form>
+
+<!-- 검색 폼 -->
+<div class="row" style="margin-bottom: 3%;">
 	<div class="col"></div>
 	<div class="col-8">
 		<form onsubmit="return false;" class="form-inline" name="memberSearch"
@@ -107,36 +154,7 @@
 	</div>
 	<div class="col"></div>
 </div>
-	
-	<!--멤버 리스트 테이블-->	
-<form action="${root}/admin/memberDelete.tfarm" method="post" name="memberInfo" id = "memberInfo">
-	<div class="row" style="margin-bottom: 3%;">
-
-		<table class="tableDft table table-hover table-sm">
-			<thead>
-				<tr class="table-success">
-					<td width="15%">회원번호</td>
-					<td width="20%">ID</td>
-					<td width="20%">E-Mail</td>
-					<td width="20%">가입일</td>
-					<td width="20%">상태</td>
-					<td width="5%"><input class="form-check-input" id = "chkAll" name="chkAll" type="checkbox"></td>
-				</tr>
-			</thead>
-			<tbody id="memberlist">
-			</tbody>
-		</table>
-	</div>
-	<div class="row" style="margin-top: 3%;">
-		<div class="col-12" align="center">
-			<button id="check" type="button" class="btn btn-primary">
-				<strong>회원정보 삭제</strong>
-			</button>
-		</div>
-	</div>
-</form>
 <!-- 회원상세정보 모달 시작 -->
-
 	<div class="modal fade" id="memberModal">
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
@@ -181,12 +199,7 @@
 					</table>
 					<hr>
 					<div class = "row" align = "center" style = "margin-bottom:3%;margin-top:3%">
-						<div class = "col-6">
-							<button type="button" class="btn btn-primary" width = "15%">&nbsp;블랙리스트&nbsp;</button>
-						</div>
-						<div class = "col-6">
-							<button type="button" class="btn btn-primary" width = "15%">회원정보삭제</button>
-						</div>	
+						
 					</div>
 				</div>
 			</div>

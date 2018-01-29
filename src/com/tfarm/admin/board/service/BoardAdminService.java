@@ -20,4 +20,6 @@ public interface BoardAdminService {
 	Map<String, Integer>basicInfo();
 
 	List<TargetDto> graghBycondition(String query);
+
+	void memberUpdate(int targetMno);
 }
