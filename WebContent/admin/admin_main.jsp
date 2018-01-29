@@ -1,8 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp" %>
+
 <!-- google charts -->
+
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <link rel="stylesheet" href="${root }/css/admin.css">
 
 	<!-- ******************우리가 코딩해야하는 부분 시작********************** -->

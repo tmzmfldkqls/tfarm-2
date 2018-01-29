@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	    pageEncoding="UTF-8"%>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
 
-function drawChart () {
+<script type="text/javascript">
+//google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawArticleChart);
+function drawArticleChart() {
     $.ajax({
-    	type : "POST",
-		url : "${root}/admin/articlegragh.tfarm",
+    	type : "GET",
+		url : "${root}/admin/wholegragh.tfarm",
 		dataType : "json",
         success: function (jsonData) {
             var data = new google.visualization.DataTable();
@@ -20,11 +19,10 @@ function drawChart () {
             for (var i = 0; i < len; i++) {
                data.addRow([decodeURIComponent(jsonData.wholeArticleSet[i].logtime),jsonData.wholeArticleSet[i].count]);
             }
-
             var options = {
                 title: '전체 게시글 증가 추이',
             };
-            var chart = new google.visualization.LineChart(document.getElementById('articleInfo'));
+            var chart = new google.visualization.LineChart(document.getElementById('articleChart'));
             chart.draw(data, options);
         }
     });
@@ -44,7 +42,7 @@ function drawChart () {
 	<div class="card">
 		<div class="card-body">
 			<div class="row">
-				<div class = "col-9" id="articleInfo" style="background-color: grey ; height : 300px;">차트 들어올 자리</div>
+				<div class = "col-9" id="articleChart" style="background-color: grey ; height : 300px;">차트 들어올 자리</div>
 				<div class = "col-3">
 					<select class="form-control">
 						<option>최근 1주</option>

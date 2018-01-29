@@ -19,4 +19,6 @@ public interface BoardAdminService {
 	
 	Map<String, Integer>basicInfo();
 	List<TargetDto>wholeArticle();
+
+	List<TargetDto> graghBycondition(String query);
 }

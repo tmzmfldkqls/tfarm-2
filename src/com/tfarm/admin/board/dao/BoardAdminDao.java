@@ -26,4 +26,7 @@ public interface BoardAdminDao {
 	int totalmemo();	
 	
 	List<TargetDto> wholeArticle();
+	List<TargetDto> graghBybcode();
+	List<TargetDto> graghByjoinDate();
+	List<TargetDto> graghByArticle();
 }
