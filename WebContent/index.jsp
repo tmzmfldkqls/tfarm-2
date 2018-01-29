@@ -112,7 +112,7 @@ $(document).ready(function() {
 	//alert("넘어왔니???2");
 	$.ajax({
 	type: 'POST',
-	datatype: 'json',
+	dataType: 'json',
 	url: '${root}/main/totallist2.tfarm',
 	success: function (data) {
 		makelist2(data);
@@ -123,7 +123,7 @@ $(document).ready(function() {
 function makelist2(data) {
 	var output = "";
 	var tsize = data.tlist.size;
-	alert("넘어왔니???");
+	//alert("넘어왔니???");
 	for(var i=0;i<tsize;i++){
 		output += '<a href="${root}/main/totallist2.tfarm?seq='+decodeURI(data.tlist[i].seq)+'">';
 		output += '<img src="${root}/upload/'+ decodeURI+(data.tlist[i].save_picture)+'" class="img-rounded">';
