@@ -68,3 +68,4 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		}
 	}
 }
+

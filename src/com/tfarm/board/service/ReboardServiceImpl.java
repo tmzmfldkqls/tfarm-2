@@ -13,6 +13,7 @@ import com.tfarm.board.dao.ReboardDao;
 import com.tfarm.board.model.ReboardDto;
 import com.tfarm.common.dao.CommonDao;
 import com.tfarm.util.BoardConstance;
+import com.tfarm.util.NullCheck;
 
 @Service
 public class ReboardServiceImpl implements ReboardService {

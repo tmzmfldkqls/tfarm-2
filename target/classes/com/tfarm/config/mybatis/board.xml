@@ -42,4 +42,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from board
         where seq=#{seq}
     </select>
+    
+    <update id="updateHit" parameterType="com.tfarm.board.model.ReboardDto">
+        update board 
+        set hit=hit+1 
+        where seq=#{seq}
+    </update>
+    
+    <delete id="deleteArticle" parameterType="int">
+        delete from board
+        where seq=#{seq}
+    </delete>
+    <update id="modifyArticle" parameterType="com.tfarm.board.model.ReboardDto">
+        update board set subject=#{subject}, content=#{content} where seq=#{seq}
+    </update>
 </mapper>

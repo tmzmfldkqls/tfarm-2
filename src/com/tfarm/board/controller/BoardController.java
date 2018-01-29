@@ -67,7 +67,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/write.tfarm", method = RequestMethod.GET)
-	public ModelAndView write(@RequestParam Map<String, String> map) {
+	public ModelAndView write(@RequestParam Map<String, String> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		mav.addObject("querystring", map);
@@ -79,6 +79,7 @@ public class BoardController {
 	@RequestMapping(value = "/write.tfarm", method = RequestMethod.POST)
 	public ModelAndView write(ReboardDto reboardDto, @RequestParam Map<String, String> map, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		MemberDto memberDto = (MemberDto)session.getAttribute("userInfo");
 		int seq = commonService.getNextSeq();
 		reboardDto.setSeq(seq);
 		reboardDto.setId("admin");
@@ -99,20 +100,61 @@ public class BoardController {
 	@RequestMapping(value="/view.tfarm", method=RequestMethod.GET)
 	public ModelAndView view(@RequestParam Map<String, String> map,
 			HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userInfo");
-//		if(memberDto != null) {
+			ModelAndView mav = new ModelAndView();
 			int seq = Integer.parseInt(map.get("seq"));
 			String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-			System.out.println(category);
 			BoardDto boardDto = boardService.viewArticle(seq);
 			mav.addObject("querystring", map);
 			mav.addObject("article", boardDto);
 			mav.addObject("category", category);
 			mav.setViewName("/WEB-INF/notice/view");
-//		} else {
-//			mav.setViewName("/login/login");
-//		}
+		
+		return mav;
+	}
+	
+	@RequestMapping(value="/delete.tfarm", method=RequestMethod.GET)
+	public ModelAndView delete(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("삭제할 Seq==="+seq);
+		int cnt= boardService.deleteArticle(seq);
+		System.out.println("삭제성공??==="+cnt);
+		mav.addObject("querystring", map);
+		if(cnt!=0){
+			mav.setViewName("/WEB-INF/notice/deleteok");
+		}else{
+			mav.setViewName("/WEB-INF/notice/deletefail");
+		}
+		return mav;
+	}
+	@RequestMapping(value="/modify.tfarm", method=RequestMethod.GET)
+	public ModelAndView modify(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("수정할 Seq==="+seq);
+		BoardDto boardDto = boardService.viewArticle(seq);
+		mav.addObject("querystring", map);
+		mav.addObject("article", boardDto);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/notice/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
+	public ModelAndView modify(ReboardDto reboardDto, @RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		int seq = Integer.parseInt(map.get("seq"));
+		int cnt = boardService.modifyArticle(reboardDto);
+		System.out.println(cnt);
+		mav.addObject("querystring", map);
+		mav.addObject("seq", seq);
+		if (cnt != 0) {
+			mav.setViewName("/WEB-INF/notice/writeok");
+		} else {
+			mav.setViewName("/WEB-INF/notice/writefail");
+		}
+
 		return mav;
 	}
 }

@@ -3,7 +3,7 @@
 <%@ include file="/common/header.jsp" %>
 
 
-	<div class="col-xl-10" style="margin-top: 20%;text-align:  center;">
+	<div class="col-xl-10" style="margin-top: 15%;text-align:  center;">
 	  <div class="card-body">
 	    <h4 class="card-title"><b>${registerinfo.mem_name}</b>님</h4>
 	    <h6 class="card-subtitle mb-2">TIFARM 회원가입을 축하합니다.</h6>
@@ -12,7 +12,6 @@
 	    <a class="card-link" href="${root}/user/home.tfarm">메인으로</a>
 	  </div>
 	</div>
-
 
 <%@ include file="/common/footer.jsp" %>
 

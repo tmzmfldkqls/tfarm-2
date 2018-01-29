@@ -113,7 +113,7 @@
 <!-- *************디비 인서트 /ok.jsp로 이동 ************** -->
 
 <div>
-<a href="">
+<a href="javascript:writetarticle">
 <button type="button" class="btn btn-info">
 등록
 </button>
