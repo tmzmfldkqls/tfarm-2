@@ -51,6 +51,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		List<ReboardDto> list = boardService.listArticle(map);
+		System.out.println(map.get("bcode"));
 		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
 		PageNavigation navigation = commonService.makePageNavigation(map);
 		navigation.setRoot(request.getContextPath());
@@ -131,6 +132,7 @@ public class BoardController {
 	public ModelAndView modify(@RequestParam Map<String,String> map){
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		System.out.println("board con "+category);
 		int seq = Integer.parseInt(map.get("seq"));
 		System.out.println("수정할 Seq==="+seq);
 		BoardDto boardDto = boardService.viewArticle(seq);

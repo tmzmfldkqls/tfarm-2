@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tfarm.board.model.BoardDto;
+import com.tfarm.board.model.ReboardDto;
 import com.tfarm.board.model.TicketDto;
 import com.tfarm.board.service.TicketService;
 import com.tfarm.common.service.CommonService;
@@ -43,7 +45,7 @@ public class TicketController {
 		private String upFolder;
 		
 		public TicketController() {
-			this.upFolder = "C:\\javadata\\workspace\\framework\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\tfarm\\upload";
+			this.upFolder = "D:\\javadata\\workspace\\framework\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\tfarm\\upload";
 		}
 		
 		@RequestMapping("/list.tfarm")
@@ -127,12 +129,47 @@ public class TicketController {
 			}
 			
 			int cnt = ticketService.writeArticle(ticketDto);
+			System.out.println("TicketController" + cnt);
 			mav.addObject("querystring", map);
 			mav.addObject("seq", seq);
 			mav.setViewName("/WEB-INF/ticketboard/writeok");
 		} else {
 			mav.setViewName("/WEB-INF/ticketboard/writefail");
 		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/modify.tfarm", method=RequestMethod.GET)
+	public ModelAndView modify(@RequestParam Map<String,String> map){
+		ModelAndView mav = new ModelAndView();
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		System.out.println("ticketcon" + category);
+		int seq = Integer.parseInt(map.get("seq"));
+		System.out.println("수정할 Seq==="+seq);
+		TicketDto ticketDto = ticketService.viewArticle(seq);
+		mav.addObject("querystring", map);
+		mav.addObject("article", ticketDto);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/ticketboard/modify");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
+	public ModelAndView modify(TicketDto ticketDto, @RequestParam Map<String, String> map) {
+		ModelAndView mav = new ModelAndView();
+		int bcode = Integer.parseInt(map.get("bcode"));
+		int seq = Integer.parseInt(map.get("seq"));
+		int cnt = ticketService.modifyArticle(ticketDto);
+		System.out.println(bcode);
+		System.out.println(cnt);
+		mav.addObject("querystring", map);
+		mav.addObject("seq", seq);
+		if (cnt != 0) {
+			mav.setViewName("/WEB-INF/ticketboard/writeok");
+		} else {
+			mav.setViewName("/WEB-INF/ticketboard/writefail");
+		}
+
 		return mav;
 	}
 	

@@ -1,6 +1,8 @@
 package com.tfarm.main.controller;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.json.simple.JSONArray;
@@ -20,6 +22,8 @@ import com.tfarm.board.service.MainService;
 import com.tfarm.board.service.ReboardService;
 import com.tfarm.board.service.TicketService;
 import com.tfarm.common.service.CommonService;
+import com.tfarm.util.BoardConstance;
+import com.tfarm.util.PageNavigation;
 import com.tfarm.util.StringEncoder;
 
 @Controller
@@ -37,6 +41,9 @@ public class MainController {
 	
 	@Autowired
 	private TicketService ticketService;
+	
+	@Autowired
+	private CommonService commonService;
 	
 	@RequestMapping(value="totallist.tfarm")
 	public @ResponseBody String totallist(){
@@ -135,4 +142,26 @@ public class MainController {
 		mav.addObject("article", ticketDto);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/search.tfarm", method = RequestMethod.GET)
+	public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		List<TicketDto> list = ticketService.listArticle(map);
+		System.out.println("첫번재"+map.get("bcode"));
+		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
+		PageNavigation navigation = commonService.makePageNavigation(map);
+		navigation.setRoot(request.getContextPath());
+		navigation.setBcode(Integer.parseInt(map.get("bcode")));
+		navigation.setKey(map.get("key"));
+		navigation.setWord(map.get("word"));
+		navigation.setNavigator();
+		mav.addObject("articlelist", list);
+		mav.addObject("navigator", navigation);
+		mav.addObject("querystring", map);
+		mav.addObject("category", category);
+		mav.setViewName("/WEB-INF/ticketboard/list");
+		return mav;
+	}
+	
 }

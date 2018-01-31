@@ -8,7 +8,7 @@ control = "/ticket";
 	
 	<div class="col-xl-10" style="float:left; width:70%;">
            <div>
-                <h4 id="container">티켓</h4>
+                <h4 id="container">${category}</h4>
             </div>
             <!-- 리스트 -->
             

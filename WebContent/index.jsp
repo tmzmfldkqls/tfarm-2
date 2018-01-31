@@ -24,8 +24,9 @@ img:hover {
 
 <!-- ******************우리가 코딩해야하는 부분 시작  col-xl-10********************** -->
 <!---------------------------------  최신 앨범-------------------------------    -->
+
 <script type="text/javascript">
-   
+
 //최신공지 ajax
 
    $(document).ready(function() {
@@ -49,7 +50,7 @@ function makelist(data) {
       output += '' + decodeURI(data.blist[i].id);
       output += '</td>';
       output += '<td style="white-space: nowrap; word-wrap: break-word; text-overflow: ellipsis; overflow: hidden;">';
-      output += '<a href = "${root}/main/view.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
+      output += '<a href = "${root}/main/ticketview.tfarm?seq='+decodeURI(data.blist[i].seq)+'">';
       output += ' ' + decodeURI(data.blist[i].subject);
       output += '</a>';
       output += '</td>';
@@ -107,6 +108,7 @@ for(var i=0;i<6;i++){
 //최신티켓 ajax
 
 $(document).ready(function() {
+	//alert("넘어왔니???2");
    $.ajax({
    type: 'POST',
    dataType: 'json',
@@ -120,10 +122,10 @@ $(document).ready(function() {
 function makelist2(data) {
    var output = "";
    var len = data.tlist.length;
-   for(var i=0 ; i<len ; i++){
+   for(var i=0 ; i<8 ; i++){
 	  output += '<div class="col-md-3">';
 	  output +=	'	<div class="thumbnail">';
-      output += '		<a href="${root}/main/ticketview.tfarm?seq='+data.tlist[i].seq+'">';
+      output += '		<a href="${root}/main/view.tfarm?seq='+data.tlist[i].seq+'">';
       output += '		<img src="${root}/upload/'+data.tlist[i].savafolder+'/'+data.tlist[i].save_picture+'" class="img-rounded" style="height:200px; width:100%">';
       output += '		</a>';
       output += '	<div class="caption">';
@@ -136,15 +138,17 @@ function makelist2(data) {
    $("#ticketlist").append(output);	
 }
 
-
 </script>
    <div class="col-xl-10">
         	<div>
                 <h4 id="container">[최신티켓]</h4>
             </div>
             
-        	<div class="row" id ="ticketlist" style="width: 95%;"></div>
-	
+
+        	<div class="row">
+					<div class="row" id ="ticketlist" style="width: 95%;"></div>
+				<!-- 티켓 목록 -->
+					</div>
 			<br><br>
 			
 			<div class="row" id="poplist">					

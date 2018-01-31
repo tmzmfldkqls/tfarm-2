@@ -17,7 +17,7 @@ root = "${root}";
 
 <script type="text/javascript">
 function searchArticle() {
-	document.getElementById("searchForm").action = "${root}/board/list.tfarm";
+	document.getElementById("searchForm").action = "${root}/main/search.tfarm";
 	document.getElementById("searchForm").submit();
 }
 </script>
@@ -63,13 +63,24 @@ function searchArticle() {
     </c:if>
     <!-- 검색 부분 -->
     <form id="searchForm" name="searchForm" method="get" action="" class="form-inline my-2 my-lg-0">
-      <input type="hidden" id="act" name="act" value="boardlist">
-      <input type="hidden" id="bcode" name="bcode" value="${bcode}">
       <input type="hidden" id="pg" name="pg" value="1">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <a href="javascript:searchArticle();">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </a>
+      <input type="hidden" id="key" name="key" value="subject">
+      <div class="form-group" style="float:left; margin-right: 6px;">
+<div style="float:left;">   
+    <select id="bcode" name="bcode" class="custom-select">
+      <option selected="">티켓종류</option>
+      <option value="4">뮤지컬</option>
+      <option value="5">콘서트</option>
+      <option value="6">연극</option>
+      <option value="7">클래식/무용</option>
+      <option value="8">스포츠/레저</option>
+      <option value="9">전시/행사</option>
+      <option value="10">아동/가족</option>
+    </select>
+</div>    
+</div>   
+      <input class="form-control mr-sm-2" id="word" name="word" type="text" placeholder="Search">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit" onclick="javascript:searchArticle();">Search</button>
     </form>
     <!-- 검색 부분 끝-->
   </div>

@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     from (
         select rownum rn, a.*
         from (
-            select  b.seq, b.id, b.email, b.subject, b.content, b.hit, b.bcode,
+            select b.seq, b.id, b.email, b.subject, b.content, b.hit, b.bcode,
                 case 
                 when to_char(b.logtime, 'yymmdd') = to_char(sysdate, 'yymmdd')
                 then to_char(b.logtime, 'hh24:mi:ss')
