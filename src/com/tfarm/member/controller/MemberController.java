@@ -187,7 +187,7 @@ public class MemberController {
 	public String sociallogin(@RequestParam(value="semail", required=true) String semail,
 			@RequestParam(value="sname",required=true) String sname, 
 			@RequestParam(value="sid",required=true) String sid, HttpSession session){
-		
+		System.out.println("     뭐지???"+semail);
 		String pass = sid; // 소셜은 우선 sid를 가지고 비밀번호를 찾는다.
 		String name = sname;
 		String email1 = semail.split("@")[0];		

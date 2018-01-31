@@ -98,9 +98,13 @@ $(document).ready(function(){
 			    FB.api('/me',{fields: 'email,name'}, function(user) {
 			    	console.log(user);
 			    	console.log(user.user_about_me+" "+user.email + " " + user.name + " " + user.id + " " + user.user_birthday);
-			    	$("#semail").val(user.email); 	   
-	       			$("#sname").val(user.name);
-	       			$("#sid").val(user.id);
+			    	if(user.email==null){
+			    		$("#semail").val("social@naver.com");
+			    	}else{
+			    		$("#semail").val(user.email); 	   
+	       				$("#sname").val(user.name);
+	       				$("#sid").val(user.id);
+			    	}
 	       			$("#sociallogin").attr("action","${root}/user/social.tfarm").submit();
 				});
 		    }
