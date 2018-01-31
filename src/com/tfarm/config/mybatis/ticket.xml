@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from board
         where seq=#{seq}
     </delete>
-    <update id="modifyArticle" parameterType="com.tfarm.board.model.TicketDto">
-        update ticket set subject=#{subject}, content=#{content}, orign_picture=#{orign_picture} where seq=#{seq}
+    <update id="modifyArticle" parameterType="com.tfarm.board.model.BoardDto">
+        update board set subject=#{subject}, content=#{content}, where seq=#{seq}
     </update>
     
 </mapper>

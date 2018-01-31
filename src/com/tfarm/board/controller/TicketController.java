@@ -82,7 +82,6 @@ public class TicketController {
 			}
 			return mav;
 		}
-	
 	@RequestMapping(value ="/write.tfarm", method = RequestMethod.GET)
 	public ModelAndView write(@RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
@@ -97,7 +96,6 @@ public class TicketController {
 	public ModelAndView write(TicketDto ticketDto, 
 			@RequestParam Map<String, String> map,
 			HttpSession session) throws IllegalStateException, IOException {
-		System.out.println(">!!!!!!!!!!!!!!!"+ ticketDto.getOrign_picture());
 		ModelAndView mav = new ModelAndView();
 		MemberDetailDto memberDetailDto = (MemberDetailDto) session.getAttribute("userInfo");
 		if(memberDetailDto != null) {
@@ -145,6 +143,7 @@ public class TicketController {
 	public ModelAndView modify(@RequestParam Map<String,String> map){
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		System.out.println("ticketcon" + category);
 		int seq = Integer.parseInt(map.get("seq"));
 		System.out.println("수정할 Seq==="+seq);
 		TicketDto ticketDto = ticketService.viewArticle(seq);
@@ -158,8 +157,10 @@ public class TicketController {
 	@RequestMapping(value = "/modify.tfarm", method = RequestMethod.POST)
 	public ModelAndView modify(TicketDto ticketDto, @RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
+		int bcode = Integer.parseInt(map.get("bcode"));
 		int seq = Integer.parseInt(map.get("seq"));
 		int cnt = ticketService.modifyArticle(ticketDto);
+		System.out.println(bcode);
 		System.out.println(cnt);
 		mav.addObject("querystring", map);
 		mav.addObject("seq", seq);

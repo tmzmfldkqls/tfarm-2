@@ -101,16 +101,14 @@ public class BoardController {
 	@RequestMapping(value="/view.tfarm", method=RequestMethod.GET)
 	public ModelAndView view(@RequestParam Map<String, String> map,
 			HttpSession session) {
-		ModelAndView mav = new ModelAndView();
-		int seq = Integer.parseInt(map.get("seq"));
-		System.out.println("Seq==="+seq);
-		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
-		System.out.println(category);
-		BoardDto boardDto = boardService.viewArticle(seq);
-		mav.addObject("querystring", map);
-		mav.addObject("article", boardDto);
-		mav.addObject("category", category);
-		mav.setViewName("/WEB-INF/notice/view");
+			ModelAndView mav = new ModelAndView();
+			int seq = Integer.parseInt(map.get("seq"));
+			String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+			BoardDto boardDto = boardService.viewArticle(seq);
+			mav.addObject("querystring", map);
+			mav.addObject("article", boardDto);
+			mav.addObject("category", category);
+			mav.setViewName("/WEB-INF/notice/view");
 		
 		return mav;
 	}
@@ -134,6 +132,7 @@ public class BoardController {
 	public ModelAndView modify(@RequestParam Map<String,String> map){
 		ModelAndView mav = new ModelAndView();
 		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		System.out.println("board con "+category);
 		int seq = Integer.parseInt(map.get("seq"));
 		System.out.println("수정할 Seq==="+seq);
 		BoardDto boardDto = boardService.viewArticle(seq);

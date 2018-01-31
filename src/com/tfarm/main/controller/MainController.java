@@ -88,9 +88,7 @@ public class MainController {
 	
 	@RequestMapping(value="totallist2.tfarm")
 	public @ResponseBody String totallist2(){
-//		List<BoardDto> blist = mainService.boardlist();
 		List<TicketDto> tlist = mainService.ticketlist();
-//		List<BoardDto> nlist = mainService.noticelist();
 		
 		JSONObject json = new JSONObject();
 		JSONArray jarray = new JSONArray();
@@ -101,20 +99,18 @@ public class MainController {
 			ticket.put("hit", ticketDto.getHit());
 			ticket.put("seq", ticketDto.getSeq());
 			ticket.put("bcode",ticketDto.getBcode());
+			ticket.put("savafolder", ticketDto.getSavefolder());
 			ticket.put("save_picture", ticketDto.getSave_picture());
-			jarray.add(ticket);
-			
+			jarray.add(ticket);	
 		}
-		
 		json.put("tlist", jarray);
-	
 		return json.toJSONString();
 	}
 	
 	
 	@RequestMapping(value="view.tfarm")
 	public ModelAndView view(String seq){
-		
+		//공지
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		BoardDto boardDto = boardService.viewArticle(seq1);
@@ -126,7 +122,6 @@ public class MainController {
 	
 	@RequestMapping(value="boardview.tfarm")
 	public ModelAndView boardview(String seq){
-		
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		ReboardDto reboardDto = reboardService.viewArticle(seq1);
@@ -142,9 +137,9 @@ public class MainController {
 		ModelAndView mav = new ModelAndView();
 		int seq1 = Integer.parseInt(seq);
 		TicketDto ticketDto = ticketService.viewArticle(seq1);
-		mav.setViewName("/WEB-INF/ticketboard/viewTicket");
+		System.out.println(ticketDto.getSubject());
+		mav.setViewName("/WEB-INF/ticketboard/view");
 		mav.addObject("article", ticketDto);
-		
 		return mav;
 	}
 	

@@ -27,7 +27,6 @@ control="/ticket";
 	<div class="form-group" >
 	<button class="btn btn-secondary" type="button" onclick="modifyArticle('${bcode}', '${pg}', '${key}', '${word}', '${article.seq}');"> 수정</button>
 	<button class="btn btn-secondary" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</button>	
-	
 	<span  style="float:right;">
 	<button class="btn btn-secondary" type="button"><i class="fa fa-list" aria-hidden="true"></i> 목록</button>
 

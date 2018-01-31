@@ -56,6 +56,5 @@ public class TicketServiceImpl implements TicketService {
 	public int deleteArticle(int seq) {
 		TicketDao ticketDao = sqlSession.getMapper(TicketDao.class);
 		return ticketDao.deleteArticle(seq);
-		
 	}
 }
