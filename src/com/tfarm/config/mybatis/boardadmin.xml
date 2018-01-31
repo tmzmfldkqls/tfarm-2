@@ -14,4 +14,117 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where bl.ctype = c.ctype 
         order by bl.bcode
     </select>    
+   
+    <select id="memberList" parameterType="java.util.Map" resultType="com.tfarm.member.model.MemberDetailDto">
+        select  p.mem_birth,p.mem_name, p.mem_no, p.mem_id, d.mem_email1,d.mem_email2,p.mem_state,
+                d.mem_join_date,d.mem_tel1,d.mem_tel2,d.mem_tel3,d.mem_zipcode1,d.mem_zipcode2,
+                d.mem_address1,d.mem_address2
+        from member p, member_detail d
+        where p.mem_no = d.mem_no
+        <if test="word != null and word != ''">
+            <if test="key == 'ID'">
+                AND p.mem_id like '%'||#{word}||'%'
+            </if>
+            <if test="key == 'STATE'" >
+                AND p.mem_state like '%'||#{word}||'%'
+            </if>
+        </if>
+    </select>  
+    
+    <delete id="memberDelete" parameterType="int">
+         delete from member
+         where mem_no = #{mno}
+    </delete>
+    
+    <delete id="memberDetailDelete" parameterType="int">
+        delete from member_detail
+        where mem_no = #{mno}
+    </delete>
+    
+    <select id="totalmember" resultType="int">
+        select count(*) totalmember from member
+    </select>
+    <select id="totalacticle" resultType="int">
+        select count(*) totalacticle from board
+    </select>
+    <select id="totalmemo" resultType="int">
+        select count(*) totalmemo from memo
+    </select>
+    
+    <select id="graghByArticle" resultType="com.tfarm.admin.board.model.TargetDto">
+        select rownum,logtime,target
+        from(
+                SELECT to_char(logtime, 'yymmdd')logtime , COUNT(*) target
+                FROM ( 
+                        select *
+                        from board
+                        where to_char(logtime, 'yymmdd') > to_char(sysdate-30, 'yymmdd')
+                     )
+                GROUP BY to_char(logtime, 'yymmdd')
+                order by logtime
+        )
+    </select>
+    
+    <select id="graghBybcode" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT  COUNT(*) target, bcode
+        FROM ( 
+                select bcode,logtime
+                from board
+                where to_char(logtime, 'yymmdd') > to_char(sysdate-7, 'yymmdd')
+            )
+        GROUP BY bcode
+        order by bcode
+    </select>
+    <select id="graghByjoinDate" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT to_char(mem_join_date, 'yymmdd')logtime, COUNT(*) target
+        FROM ( 
+                select mem_join_date, mem_no
+                from  member_detail
+                where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd')
+            )
+        GROUP BY to_char(mem_join_date, 'yymmdd')
+        order by logtime
+    </select>
+    <select id="graghByUnSocial" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT to_char(mem_join_date, 'yymmdd')logtime, COUNT(*) target
+        FROM        
+        (
+        select mem_join_date, mem_no
+        from (
+        select d.mem_join_date, d.mem_no, m.mem_social
+        from  member_detail d, member m 
+        where d.mem_no = m.mem_no
+        )
+        where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd') AND mem_social = 0
+        )
+        GROUP BY to_char(mem_join_date, 'yymmdd')
+        order by logtime
+    </select>
+    <select id="graghBySocial" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT to_char(mem_join_date, 'yymmdd')logtime, COUNT(*) target
+        FROM        
+        (
+        select mem_join_date, mem_no
+        from (
+                select d.mem_join_date, d.mem_no, m.mem_social
+                from  member_detail d, member m 
+                where d.mem_no = m.mem_no
+        )
+        where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd') AND mem_social = 1
+        )
+        GROUP BY to_char(mem_join_date, 'yymmdd')
+        order by logtime
+    </select>
+    
+    <update id="memberUpdate" parameterType="int">
+        UPDATE  member
+        SET mem_state = case
+                            WHEN mem_state = -1 THEN 0
+                            WHEN mem_state = 0 THEN -1
+                            ELSE 1
+                            end
+        WHERE mem_no = #{targetMno}
+    </update>
+    
+    
 </mapper>

@@ -45,7 +45,7 @@ public class TicketController {
 		private String upFolder;
 		
 		public TicketController() {
-			this.upFolder = "D:\\javadata\\workspace\\framework\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\tfarm\\upload";
+			this.upFolder = "C:\\javadata\\workspace\\framework\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\tfarm\\upload";
 		}
 		
 		@RequestMapping("/list.tfarm")

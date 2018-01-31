@@ -49,7 +49,7 @@ $(document).ready(function(){
 	
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script type='text/javascript'>
-        // 사용할 앱의 JavaScript 키를 설정해 주세요.
+       
         Kakao.init('7200f9d45b32773b509fdb430680cabb');
           // 카카오 로그인 버튼을 생성합니다.
           Kakao.Auth.createLoginButton({
@@ -59,8 +59,7 @@ $(document).ready(function(){
               Kakao.API.request({
                 url: '/v1/user/me',
                 success: function(res) {
-                	if(res.kaccount_email_verified){               		
- 	            		alert(res.kaccount_email); 	            		
+                	if(res.kaccount_email_verified){               			            			            		
  	       				var thumbnail = res.properties.thumbnail_image;
  	       				$("#semail").val(res.kaccount_email); 	   
  	       				$("#sname").val(res.properties.nickname);

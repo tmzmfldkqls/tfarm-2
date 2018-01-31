@@ -1,36 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	    pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$.ajax({
+		url : "${root}/admin/calimlist.tfarm",
+		dataType : "json",
+		success : function(data) {
+			makeClaimList(data);
+		}
+	});
+call('category');	
+});
+
+</script>
+
 	<!-- 단순누적량-->
 	<h6>
-		<strong> >게시글 누적 </strong>
+		<strong> >미처리 신고 누적 </strong>
 		<span><img src="${root }/img/linSec01.gif" alt="">
 				<small>개설일(2018.01.04)이후 어제까지 누적된 수치 입니다</small></span>
 	</h6>
-	<br>
-	
-	<!-- 게시판 별 게시글 도넛차트 넣을것-->
-	<div class="card">
-		<div class="card-body">
-			<div class="row">
-				<div class = "col-9"id="recieve" style="background-color: grey ">차트 들어올 자리</div>
-				<div class = "col-3">
-					<select class="form-control">
-						<option>최근 1주</option>
-						<option>최근 1개월</option>
-						<option>최근 3개월</option>
-						<option>최근 6개월</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 차트샘플 끝-->
-	<br>
-	<br>
-	<br>
-	<br>
-	
-<div class="row" style="margin-bottom: 3%;">
+<div class="row" style="margin-bottom: 3%;margin-top: 2%;">
 		<table class="tableDft table table-hover table-sm">
 			<thead>
 				<tr class="table-success">
@@ -43,24 +34,40 @@
 			</thead>
 			<tbody>		
 				<tr>
-					<td>글번호</td>
-					<td>카테고리명</td>
-					<th>글제목</th>
-					<td>글쓴이</td>
-					<td>누적</td>
+					<td>53</td>
+					<td>전시/행사</td>
+					<th>미교 전국투어 콘서트 - 유앤아이(You＆I) in 대구 티켓오픈</th>
+					<td>admin</td>
+					<td>5</td>
 				</tr>
 				<tr>
-					<td>글번호</td>
-					<td>카테고리명</td>
-					<th>글제목</th>
-					<td>글쓴이</td>
-					<td>누적</td>
+					<td>89</td>
+					<td>Q&A</td>
+					<th>안녕하세요</th>
+					<td>qweqwe</td>
+					<td>7</td>
+				</tr>
+				<tr>
+					<td>111</td>
+					<td>뮤지컬</td>
+					<th>바*다*이*야*기</th>
+					<td>dpffpsk1113</td>
+					<td>7</td>
+				</tr>
+				<tr>
+					<td>111</td>
+					<td>클래식/무용</td>
+					<th>바*다*이*야*기</th>
+					<td>dpffpsk1113</td>
+					<td>6</td>
+				</tr>
+				<tr>
+					<td>113</td>
+					<td>스포츠/레저</td>
+					<th>바*다*이*야*기</th>
+					<td>dpffpsk1113</td>
+					<td>7</td>
 				</tr>
 			</tbody>
 		</table>
-	</div>
-	<div class = "row" style = "margin-top : 3%;">
-		<div class="col-12" align = "center">
-			<button type="button" class="btn btn-primary"><strong>회원정보 삭제</strong></button>
-		</div>
 	</div>

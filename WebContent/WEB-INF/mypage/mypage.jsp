@@ -17,8 +17,8 @@
     <li class="nav-item">
       <a id="infoMenu" class="nav-link" data-toggle="pill" href="#infomodify">회원정보수정</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="pill" href="#menu3">통계?</a>
+     <li class="nav-item">
+      <a id="delete" class="nav-link" data-toggle="pill" href="">탈퇴</a>
     </li>
   </ul>
 
@@ -78,7 +78,13 @@
 				 	<span class="offset-1">일반회원</span>
 				 </div>
 			 </c:if>
-			 <c:if test="${userInfo.mem_state == 1}">
+			  <c:if test="${userInfo.mem_state == 1}">
+				 <div style="margin-top:20px;">
+				 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">회원상태</span>
+				 	<span class="offset-1">관리자</span>
+				 </div>
+			 </c:if>
+			 <c:if test="${userInfo.mem_state == -1}">
 				 <div style="margin-top:20px;">
 				 	<span class="badge badge-pill badge-primary" style="width: 10%;font-size:  100%;">회원상태</span>
 				 	<span class="offset-1">블랙리스트</span>
