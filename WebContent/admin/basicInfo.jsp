@@ -71,8 +71,14 @@ function drawChart(query) {
         				else if('member' == query){
     	        		
     	        		var len = jsonData.MemberSet.length;
+    	        		
     	                data.addColumn('string', 'logtime');
     	                data.addColumn('number', '회원수');
+    	                
+    	            //    var sociallen = jsonData.SocialMemberSet.length;
+    	            //  var unsociallen = jsonData.UnSocialMemberSet.length;
+    	                	
+    	                	
     	                for (var i = 0; i < len; i++) {
     	                   data.addRow([decodeURIComponent(jsonData.MemberSet[i].logtime),jsonData.MemberSet[i].count]);
     	                }

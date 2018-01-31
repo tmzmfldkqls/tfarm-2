@@ -30,7 +30,9 @@ public interface BoardAdminDao {
 	List<TargetDto> wholeArticle();
 	List<TargetDto> graghBybcode();
 	List<TargetDto> graghByjoinDate();
+	List<TargetDto> graghBySocial();
 	List<TargetDto> graghByArticle();
-
+	List<TargetDto> graghByUnSocial();
+	
 	int memberUpdate(int targetMno);
 }

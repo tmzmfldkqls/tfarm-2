@@ -148,7 +148,7 @@ public class AdminController {
 		}else if("member".equals(query)){
 			for(TargetDto target : targets) {
 				JSONObject js = new JSONObject();
-				js.put("logtime",StringEncoder.urlUtf(target.getLogtime() + "일"));
+				js.put("logtime",(StringEncoder.urlUtf(target.getLogtime() + "일")).substring(4));
 				js.put("count",target.getTarget());			
 				jarray.add(js);
 			}
@@ -158,7 +158,7 @@ public class AdminController {
 			for(TargetDto target : targets) {
 				JSONObject js = new JSONObject();
 				js.put("rownum",target.getRownum());
-				js.put("logtime",StringEncoder.urlUtf(target.getLogtime() + "일"));
+				js.put("logtime",(StringEncoder.urlUtf(target.getLogtime() + "일")).substring(4));
 				js.put("count",target.getTarget());			
 				jarray.add(js);
 			}		

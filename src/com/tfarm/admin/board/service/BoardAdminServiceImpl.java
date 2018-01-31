@@ -60,7 +60,11 @@ public class BoardAdminServiceImpl implements BoardAdminService {
 		if("category".equals(query)){
 			return boardAdminDao.graghBybcode();
 		}else if("member".equals(query)){
-			return boardAdminDao.graghByjoinDate();
+			return boardAdminDao.graghByjoinDate();			
+		}else if("social".equals(query)){
+			return boardAdminDao.graghBySocial();			
+		}else if("unsocial".equals(query)){
+			return boardAdminDao.graghByUnSocial();			
 		}else if("article".equals(query)){
 			return boardAdminDao.graghByArticle();
 		}else{//메모

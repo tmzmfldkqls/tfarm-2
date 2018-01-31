@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 FROM ( 
                         select *
                         from board
-                        where to_char(logtime, 'yymmdd') > to_char(sysdate-7, 'yymmdd')
+                        where to_char(logtime, 'yymmdd') > to_char(sysdate-30, 'yymmdd')
                      )
                 GROUP BY to_char(logtime, 'yymmdd')
                 order by logtime
@@ -80,8 +80,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM ( 
                 select mem_join_date, mem_no
                 from  member_detail
-                where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-30, 'yymmdd')
+                where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd')
             )
+        GROUP BY to_char(mem_join_date, 'yymmdd')
+        order by logtime
+    </select>
+    <select id="graghByUnSocial" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT to_char(mem_join_date, 'yymmdd')logtime, COUNT(*) target
+        FROM        
+        (
+        select mem_join_date, mem_no
+        from (
+        select d.mem_join_date, d.mem_no, m.mem_social
+        from  member_detail d, member m 
+        where d.mem_no = m.mem_no
+        )
+        where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd') AND mem_social = 0
+        )
+        GROUP BY to_char(mem_join_date, 'yymmdd')
+        order by logtime
+    </select>
+    <select id="graghBySocial" resultType="com.tfarm.admin.board.model.TargetDto">
+        SELECT to_char(mem_join_date, 'yymmdd')logtime, COUNT(*) target
+        FROM        
+        (
+        select mem_join_date, mem_no
+        from (
+                select d.mem_join_date, d.mem_no, m.mem_social
+                from  member_detail d, member m 
+                where d.mem_no = m.mem_no
+        )
+        where to_char(mem_join_date, 'yymmdd') > to_char(sysdate-7, 'yymmdd') AND mem_social = 1
+        )
         GROUP BY to_char(mem_join_date, 'yymmdd')
         order by logtime
     </select>

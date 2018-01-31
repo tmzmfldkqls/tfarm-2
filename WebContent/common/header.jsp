@@ -11,6 +11,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> 
 <link rel="stylesheet" href="${root}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${root}/css/footer.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <script type="text/javascript">
 root = "${root}";
 </script>
@@ -37,6 +38,11 @@ function searchArticle() {
 	      <li class="nav-item active">
 	        <a class="nav-link" href="#">${userInfo.mem_name}님 안녕하세요</a>
 	      </li>
+	      <c:if test="${userInfo.mem_state == 1}">
+	        <li class="nav-item">
+	        	<a class="nav-link" href="${root}/admin/adminpage.tfarm"><i class="fa fa-cogs" aria-hidden="true"></i></a>
+	      	</li> 
+	      </c:if>
 	      <li class="nav-item">
 	      	<c:if test="${userInfo.mem_social == 0}">
 	        	<a class="nav-link" href="${root}/user/pwcheck.tfarm">마이페이지</a>
@@ -45,6 +51,7 @@ function searchArticle() {
 	        	<a class="nav-link" href="${root}/user/socialmypage.tfarm">마이페이지</a>
 	        </c:if>
 	      </li>  
+
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/logout.tfarm">로그아웃</a>
 	      </li>   
@@ -59,9 +66,6 @@ function searchArticle() {
 	      <li class="nav-item">
 	        <a class="nav-link" href="${root}/user/join.tfarm">회원가입</a>
 	      </li>
-	      <li class="nav-item">
-	        <a class="nav-link" href="${root}/admin/adminpage.tfarm">임시admin버튼</a>
-	      </li>     
 	    </ul>
     </c:if>
     <!-- 검색 부분 -->
