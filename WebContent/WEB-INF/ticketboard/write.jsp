@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header_board.jsp" %>
+<c:if test="${userInfo != null}">
 <script>
  control = "/ticket";
  
@@ -117,4 +118,8 @@ function writeTicket() {
 </div>
 </form>
 <!-- ******************우리가 코딩해야하는 부분 끝********************** -->
+</c:if>
+<c:if test="${userInfo == null}">
+<c:redirect url="/user/login.tfarm"/>
+</c:if>
 <%@ include file="/common/footer.jsp" %>

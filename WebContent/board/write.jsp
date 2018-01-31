@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/common/header.jsp" %>
 
-
+<c:if test="${userInfo != null}"> 
 
 <!-- ******************티켓 글쓰기********************** -->
 <form id="writeForm" name="writeForm" method="" action="" style="margin: 0px">
@@ -57,4 +57,5 @@
 
 </form>
 <!-- ******************우리가 코딩해야하는 부분 끝********************** -->
+</c:if>
 <%@ include file="/common/footer.jsp" %>

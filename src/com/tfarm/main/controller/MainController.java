@@ -146,20 +146,21 @@ public class MainController {
 	@RequestMapping(value = "/search.tfarm", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam Map<String, String> map, HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
-		String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
+		//String category = commonService.getCategory(Integer.parseInt(map.get("bcode")));
 		List<TicketDto> list = ticketService.listArticle(map);
-		System.out.println("첫번재"+map.get("bcode"));
 		map.put("listsize", BoardConstance.BOARD_LIST_SIZE + "");
+		System.out.println(map.get("bcode"));System.out.println(map.get("key"));
+		System.out.println(list.size());
 		PageNavigation navigation = commonService.makePageNavigation(map);
 		navigation.setRoot(request.getContextPath());
 		navigation.setBcode(Integer.parseInt(map.get("bcode")));
 		navigation.setKey(map.get("key"));
 		navigation.setWord(map.get("word"));
 		navigation.setNavigator();
-		mav.addObject("articlelist", list);
 		mav.addObject("navigator", navigation);
+		mav.addObject("articlelist", list);
 		mav.addObject("querystring", map);
-		mav.addObject("category", category);
+		//mav.addObject("category", category);
 		mav.setViewName("/WEB-INF/ticketboard/list");
 		return mav;
 	}
